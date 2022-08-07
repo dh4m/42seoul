@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:30:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/07 15:57:06 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 17:16:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 static void	bitset(unsigned char *bit, char c);
 static void	bitmodi(unsigned char *bit);
 static int	free_trick(void *ptr);
+static int	idx_numberskip(char *str);
 
 int	parse(char *str, va_list ap, int re_val, unsigned char bit)
 {
@@ -27,17 +28,20 @@ int	parse(char *str, va_list ap, int re_val, unsigned char bit)
 	fieldw = 0;
 	precision = 0;
 	idx = 0;
+	if (!str)
+		return (-1);
 	while (str[++idx])
 	{
-		if (str[idx] != '0' && ft_isdigit(str[idx]) && str[idx - 1] == '.')
+		if (ft_isdigit(str[idx]) && str[idx - 1] == '.')
 			precision = ft_atoi(&str[idx]);
 		else if (str[idx] != '0' && ft_isdigit(str[idx]))
 			fieldw = ft_atoi(&str[idx]);
 		else
 			bitset(&bit, str[idx]);
-		while (str[idx] != '0' && ft_isdigit(str[idx]))
-			idx++;
+		if ((str[idx - 1] == '.' || str[idx] != '0') && ft_isdigit(str[idx]))
+			idx += idx_numberskip(&str[idx]);
 	}
+	//printf("width=%d, pre=%d\n", fieldw, precision);
 	bitmodi(&bit);
 	if (invalid_put_width(fieldw, precision) && free_trick(str))
 		return (-1);
@@ -47,28 +51,14 @@ int	parse(char *str, va_list ap, int re_val, unsigned char bit)
 	return (re_val);
 }
 
-int	put_conversion(unsigned char bit, int width[2], va_list ap, char spec)
+static int	idx_numberskip(char *str)
 {
-	if (spec == 'c')
-		return (char_put(bit, width[0], ap));
-	else if (spec == 's')
-		return (string_put(bit, width[0], width[1], ap));
-	else if (spec == 'p')
-		return (point_put(bit, width[0], ap));
-	else if (spec == 'd')
-		return (integer_put(bit, width[0], width[1], ap));
-	else if (spec == 'i')
-		return (integer_put(bit, width[0], width[1], ap));
-	else if (spec == 'u')
-		return (unsign_put(bit, width[0], width[1], ap));
-	else if (spec == 'x')
-		return (hex_put(bit, width[0], width[1], ap));
-	else if (spec == 'X')
-		return (bighex_put(bit, width[0], width[1], ap));
-	else if (isset(spec) == 1)
-		return (0);
-	else
-		return (unknown_put(bit, width[0], spec));
+	int num_len;
+
+	num_len = 0;
+	while (ft_isdigit(str[num_len]))
+		num_len++;
+	return (num_len - 1);
 }
 
 static int	free_trick(void *ptr)

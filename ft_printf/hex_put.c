@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 11:10:26 by dham              #+#    #+#             */
-/*   Updated: 2022/07/12 10:45:20 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 16:46:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ static int	left_hex(unsigned int num, int fieldw, int precision, int flag)
 		if (write(1, "0x", 2) < 0)
 			return (-1);
 	}
-	if (filling('0', precision - len - flag) < 0 || print_hex(num) < 0)
+	//printf("pre=%d,len=%d,flag=%d\n", precision,len,flag);
+	if (filling('0', precision - len) < 0 || print_hex(num) < 0)
 		return (-1);
 	if (precision - len > 0)
 	{

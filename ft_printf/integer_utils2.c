@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 21:51:58 by dham              #+#    #+#             */
-/*   Updated: 2022/07/09 22:07:51 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 16:25:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	right_int(int num, unsigned char bit, int fieldw, int precision)
 
 	len = num_len(num);
 	flag = 0;
-	if (((bit & 16) == 16) || (((bit & 4) == 4) && num) || num < 0)
+	if (((bit & 16) == 16) || ((bit & 4) == 4) || num < 0)
 		flag = 1;
 	if (precision - len > 0)
 	{
