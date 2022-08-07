@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 10:27:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/07 17:09:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 17:23:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	excep_process_x(int *flag, int *result_len, int fieldw)
 int	excep_process_i(unsigned char bit, int *result_len, int fieldw)
 {
 	char	flag;
-	*result_len = 0;
 
+	*result_len = 0;
 	flag = 0;
 	if ((bit & 16) == 16)
 		flag = '+';

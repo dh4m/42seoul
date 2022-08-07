@@ -6,14 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 10:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/08/07 16:35:37 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 17:23:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include <stdarg.h>
-#include <stdio.h>
 
 int	ft_printf(const char *str, ...);
 int	parse(char *str, va_list ap, int re_val, unsigned char bit);
