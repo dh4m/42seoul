@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 14:30:45 by dham              #+#    #+#             */
-/*   Updated: 2022/07/10 12:53:55 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 15:57:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	parse(char *str, va_list ap, int re_val, unsigned char bit)
 			fieldw = ft_atoi(&str[idx]);
 		else
 			bitset(&bit, str[idx]);
-		if (str[idx] != '0' && ft_isdigit(str[idx]))
-			idx += num_len(fieldw) - 1;
+		while (str[idx] != '0' && ft_isdigit(str[idx]))
+			idx++;
 	}
 	bitmodi(&bit);
 	if (invalid_put_width(fieldw, precision) && free_trick(str))
