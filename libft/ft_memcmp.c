@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:30:52 by dham              #+#    #+#             */
-/*   Updated: 2022/07/06 15:39:02 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 18:12:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	if (!s1 || !s2 || !n)
+	if (!n)
 		return (0);
 	while (--n)
 	{

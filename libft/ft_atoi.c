@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 15:58:57 by dham              #+#    #+#             */
-/*   Updated: 2022/07/05 18:57:25 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 18:13:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int	ft_atoi(const char *str)
 	int	re_val;
 	int	flag;
 
-	if (!str)
-		return (0);
 	flag = 1;
 	re_val = 0;
 	while (isspace(*str))

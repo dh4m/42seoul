@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 13:54:47 by dham              #+#    #+#             */
-/*   Updated: 2022/07/06 14:51:01 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 18:32:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	idx;
 
-	if (!dst || !src)
+	if (!dst && !src)
 		return (dst);
 	if (dst > src && len > 0)
 	{

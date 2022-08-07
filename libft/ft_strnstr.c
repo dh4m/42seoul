@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:44:26 by dham              #+#    #+#             */
-/*   Updated: 2022/07/06 14:51:01 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 18:39:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strnstr(const char *haystack, const char *niddle, size_t len)
 {
 	size_t	idx;
 
-	if (!niddle || !haystack || ft_strlen(niddle) == 0)
+	if (ft_strlen(niddle) == 0)
 		return ((char *)haystack);
 	idx = 0;
 	if (len < ft_strlen(niddle))
