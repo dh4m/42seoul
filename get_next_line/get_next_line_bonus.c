@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 19:37:18 by dham              #+#    #+#             */
-/*   Updated: 2022/07/13 20:23:57 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/07 17:45:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	init_str(t_backup *buf, char **dst)
 {
 	int	i;
 
-	if (buf->len == 0 || buf->newline_exist)
+	if (buf->len <= 0 || buf->newline_exist)
 	{
 		*dst = NULL;
 		return (0);
