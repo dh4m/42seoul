@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 14:44:26 by dham              #+#    #+#             */
-/*   Updated: 2022/08/07 18:39:03 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/08 14:17:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 char	*ft_strnstr(const char *haystack, const char *niddle, size_t len)
 {
-	size_t	idx;
+	size_t			idx;
+	const size_t	nid_len = ft_strlen(niddle);
 
-	if (ft_strlen(niddle) == 0)
+	if (nid_len == 0)
 		return ((char *)haystack);
 	idx = 0;
-	if (len < ft_strlen(niddle))
+	if (!haystack[idx] || len < nid_len)
 		return (0);
-	while (idx < len - ft_strlen(niddle) + 1)
+	while (haystack[idx] && idx < len - nid_len + 1)
 	{
 		if (haystack[idx] == *niddle && \
-			ft_strncmp(&haystack[idx], niddle, ft_strlen(niddle)) == 0)
+			ft_strncmp(&haystack[idx], niddle, nid_len) == 0)
 		{
 			return ((char *)&haystack[idx]);
 		}
