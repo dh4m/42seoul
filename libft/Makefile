@@ -22,7 +22,6 @@ else
 endif
 
 all: $(NAME)
-	sleep 1
 
 $(NAME): $(OBJECTS)
 	sleep 1
