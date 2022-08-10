@@ -6,13 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:46:33 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/10 19:52:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-# include<pthread.h>
+# include <pthread.h>
 # include <sys/time.h>
 
 enum e_state
