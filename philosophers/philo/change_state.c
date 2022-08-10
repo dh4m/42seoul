@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:08:30 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/10 19:41:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	change_state(t_philo *philo, int state)
 {
 	struct timeval	tv;
-	char			*state_str;
+	static char		*state_str = NULL;
 
 	if (state == EAT)
 		state_str = "is eating";
