@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:49:44 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 01:06:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int	take_leftfirst(t_philo *philo)
 	pthread_mutex_lock(&(philo->left_fork->mutex));
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->s_time), philo->num);
+			diff_time(tv, philo->info->s_time), philo->num);
 	pthread_mutex_lock(&(philo->right_fork->mutex));
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->s_time), philo->num);
+			diff_time(tv, philo->info->s_time), philo->num);
 	return (0);
 }
 
@@ -35,11 +35,11 @@ int	take_rightfirst(t_philo *philo)
 	pthread_mutex_lock(&(philo->right_fork->mutex));
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->s_time), philo->num);
+			diff_time(tv, philo->info->s_time), philo->num);
 	pthread_mutex_lock(&(philo->left_fork->mutex));
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->s_time), philo->num);
+			diff_time(tv, philo->info->s_time), philo->num);
 	return (0);
 }
 

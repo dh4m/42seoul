@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:51:28 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 01:19:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ enum e_state
 
 typedef struct s_info
 {
-	int	n_philoshphers;
-	int	die;
-	int	eat;
-	int	sleep;
-	int	each_must_eat;
+	int				n_philoshphers;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				each_must_eat;
+	struct timeval	s_time;
+	int				all_ready;
 }	t_info;
 
 typedef struct s_fork
@@ -46,7 +48,6 @@ typedef struct s_philo
 	int				num;
 	int				time_eat;
 	int				last_eat;
-	struct timeval	s_time;
 }	t_philo;
 
 typedef struct s_monitorarg
@@ -60,6 +61,7 @@ void	*philo_behavior(void *arg);
 int		argerr_print(void);
 int		valid_arg(t_info *info);
 int		diff_time(struct timeval last, struct timeval start);
+void	delay_time(int msec);
 
 int		ft_atoi(const char *str);
 
@@ -73,8 +75,7 @@ int		free_fork(t_philo *philo);
 
 void	change_state(t_philo *philo, int state);
 
-int		start_monitoring(t_info *info, t_philo *phlio_list);
-void	*monitor(void *arg);
+int		start_monitoring(t_info *info, t_philo *philo);
 int		check_death(struct timeval now, t_philo *philo, int time_to_die);
 int		check_all_eat(int must_eat, t_philo *philo);
 int		print_die(struct timeval now, t_philo *philo);

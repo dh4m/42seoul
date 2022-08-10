@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:21:42 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 01:14:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	*philo_behavior(void *arg)
 {
 	t_philo *const	philo = arg;
 
-	gettimeofday(&(philo->s_time), NULL);
+	while(!philo->info->all_ready)
+		continue;
 	while (1)
 	{
 		if (philo->num % 2)

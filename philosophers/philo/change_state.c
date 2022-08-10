@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:41:40 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 01:20:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,16 @@ void	change_state(t_philo *philo, int state)
 	else if (state == THINKING)
 		state_str = "is thinking";
 	gettimeofday(&tv, NULL);
-	printf("%d %d %s\n", diff_time(tv, philo->s_time), philo->num, state_str);
+	printf("%d %d %s\n", diff_time(tv, philo->info->s_time), \
+			philo->num, state_str);
 	if (state == EAT)
 	{
-		philo->last_eat = diff_time(tv, philo->s_time);
+		philo->last_eat = diff_time(tv, philo->info->s_time);
 		philo->time_eat++;
-		usleep(philo->info->eat * 1000);
+		delay_time(philo->info->eat);
+		//usleep(philo->info->eat * 1000);
 	}
 	else if (state == SLEEP)
-		usleep(philo->info->sleep * 1000);
+		delay_time(philo->info->sleep);
+		//usleep(philo->info->sleep * 1000);
 }
