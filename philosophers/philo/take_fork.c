@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:07:58 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/10 19:23:30 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int	take_leftfirst(t_philo *philo)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	pthread_mutex_lock(&(philo->left_fork->mutex));
 	gettimeofday(&tv, NULL);
@@ -32,7 +32,7 @@ int	take_leftfirst(t_philo *philo)
 
 int	take_rightfirst(t_philo *philo)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	pthread_mutex_lock(&(philo->right_fork->mutex));
 	gettimeofday(&tv, NULL);

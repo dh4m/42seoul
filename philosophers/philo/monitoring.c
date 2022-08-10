@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:07:02 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/10 19:21:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	start_monitoring(t_info *info, t_philo *phlio_list)
 
 void	*monitor(void *arg)
 {
-	t_info * const	info = ((t_monitorarg *)arg)->info;
-	t_philo * const	philo = ((t_monitorarg *)arg)->philo;
+	t_info *const	info = ((t_monitorarg *)arg)->info;
+	t_philo *const	philo = ((t_monitorarg *)arg)->philo;
 	struct timeval	now;
 	int				i;
 
@@ -50,7 +50,7 @@ void	*monitor(void *arg)
 		while (++i < info->n_philoshphers && info->each_must_eat > 0)
 		{
 			if (check_all_eat(info->each_must_eat, &(philo[i])) < 0)
-				break;
+				break ;
 		}
 		if (i == info->n_philoshphers)
 			return (0);
@@ -67,7 +67,7 @@ int	check_death(struct timeval now, t_philo *philo, int time_to_die)
 	return (0);
 }
 
-int		check_all_eat(int must_eat, t_philo *philo)
+int	check_all_eat(int must_eat, t_philo *philo)
 {
 	if (must_eat > philo->time_eat)
 		return (-1);

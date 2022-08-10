@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 18:43:42 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 18:40:30 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/10 19:23:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	info_set(int argc, char *argv[], t_info *info)
 int	fork_set(t_info *info, t_fork *fork)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < info->n_philoshphers)
 	{
