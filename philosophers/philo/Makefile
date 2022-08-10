@@ -6,14 +6,15 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/09 14:24:25 by dham              #+#    #+#              #
-#    Updated: 2022/08/10 14:31:58 by dham             ###   ########.fr        #
+#    Updated: 2022/08/10 19:33:52 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 NAME = philo
-SRCS = $(wildcard *.c)
+SRCS = change_state.c ft_atoi.c monitoring.c philo.c setting.c \
+		take_fork.c utils.c
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
