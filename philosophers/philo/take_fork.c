@@ -6,13 +6,11 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:23:30 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/10 19:49:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include <stdio.h>
-#include <sys/time.h>
 #include "philo.h"
 
 int	take_leftfirst(t_philo *philo)
