@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 01:19:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 16:01:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ typedef struct s_info
 	int				each_must_eat;
 	struct timeval	s_time;
 	int				all_ready;
+	int				anyone_dead;
 }	t_info;
 
 typedef struct s_fork
 {
 	pthread_mutex_t	mutex;
-	int				num;
+	int				state;
 }	t_fork;
 
 typedef struct s_philo

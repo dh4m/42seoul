@@ -6,22 +6,39 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 01:06:44 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 16:24:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "philo.h"
 
+int	take_fork(t_fork *fork)
+{
+	while (1)
+	{
+		pthread_mutex_lock(&(fork->mutex));
+		if (fork->state)
+		{
+			fork->state = 0;
+			pthread_mutex_unlock(&(fork->mutex));
+			return (1);
+		}
+		else
+			pthread_mutex_unlock(&(fork->mutex));
+	}
+	return (0);
+}
+
 int	take_leftfirst(t_philo *philo)
 {
 	struct timeval	tv;
 
-	pthread_mutex_lock(&(philo->left_fork->mutex));
+	take_fork(philo->left_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
 			diff_time(tv, philo->info->s_time), philo->num);
-	pthread_mutex_lock(&(philo->right_fork->mutex));
+	take_fork(philo->right_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
 			diff_time(tv, philo->info->s_time), philo->num);
@@ -32,11 +49,11 @@ int	take_rightfirst(t_philo *philo)
 {
 	struct timeval	tv;
 
-	pthread_mutex_lock(&(philo->right_fork->mutex));
+	take_fork(philo->right_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
 			diff_time(tv, philo->info->s_time), philo->num);
-	pthread_mutex_lock(&(philo->left_fork->mutex));
+	take_fork(philo->left_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
 			diff_time(tv, philo->info->s_time), philo->num);
@@ -45,7 +62,7 @@ int	take_rightfirst(t_philo *philo)
 
 int	free_fork(t_philo *philo)
 {
-	pthread_mutex_unlock(&(philo->left_fork->mutex));
-	pthread_mutex_unlock(&(philo->right_fork->mutex));
+	philo->left_fork->state = 1;
+	philo->right_fork->state = 1;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 01:20:52 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 15:43:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@
 void	change_state(t_philo *philo, int state)
 {
 	struct timeval	tv;
-	static char		*state_str = NULL;
+	int				timestamp;
 
-	if (state == EAT)
-		state_str = "is eating";
-	else if (state == SLEEP)
-		state_str = "is sleeping";
-	else if (state == THINKING)
-		state_str = "is thinking";
 	gettimeofday(&tv, NULL);
-	printf("%d %d %s\n", diff_time(tv, philo->info->s_time), \
-			philo->num, state_str);
+	timestamp = diff_time(tv, philo->info->s_time);
 	if (state == EAT)
 	{
-		philo->last_eat = diff_time(tv, philo->info->s_time);
+		philo->last_eat = timestamp;
+		printf("%d %d is eating\n", timestamp, philo->num);
 		philo->time_eat++;
 		delay_time(philo->info->eat);
-		//usleep(philo->info->eat * 1000);
 	}
 	else if (state == SLEEP)
+	{
+		printf("%d %d is sleeping\n", timestamp, philo->num);
 		delay_time(philo->info->sleep);
-		//usleep(philo->info->sleep * 1000);
+	}
+	else if (state == THINKING)
+	{
+		printf("%d %d is thinking\n", timestamp, philo->num);
+		delay_time(1);
+	}
 }

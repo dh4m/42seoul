@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 01:14:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 15:40:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	start_monitoring(t_info *info, t_philo *philo)
 		while (++i < info->n_philoshphers)
 		{
 			if (check_death(now, &(philo[i]), info->die) < 0 && \
-				print_die(now, philo))
+				print_die(now, &(philo[i])))
 				return (0);
 		}
 		i = -1;
@@ -40,6 +40,7 @@ int	start_monitoring(t_info *info, t_philo *philo)
 		}
 		if (i == info->n_philoshphers)
 			return (0);
+		usleep(200);
 	}
 	return (0);
 }
@@ -63,7 +64,7 @@ int	check_all_eat(int must_eat, t_philo *philo)
 
 int	print_die(struct timeval now, t_philo *philo)
 {
-	printf("%d %d is died\n", diff_time(now, philo->info->s_time), \
+	printf("%d %d died\n", diff_time(now, philo->info->s_time), \
 		philo->num);
 	return (1);
 }

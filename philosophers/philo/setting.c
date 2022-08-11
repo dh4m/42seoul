@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 18:43:42 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 01:13:55 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 16:01:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	info_set(int argc, char *argv[], t_info *info)
 {
 	info->all_ready = 0;
+	info->anyone_dead = 0;
 	info->n_philoshphers = ft_atoi(argv[1]);
 	info->die = ft_atoi(argv[2]);
 	info->eat = ft_atoi(argv[3]);
@@ -41,7 +42,7 @@ int	fork_set(t_info *info, t_fork *fork)
 	while (i < info->n_philoshphers)
 	{
 		pthread_mutex_init(&(fork[i].mutex), NULL);
-		fork[i].num = i + 1;
+		fork[i].state = 1;
 		i++;
 	}
 	return (0);
