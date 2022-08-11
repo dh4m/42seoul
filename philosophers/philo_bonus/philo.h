@@ -6,13 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:52:16 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 19:32:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-# include <pthread.h>
+# include <semaphore.h>
 # include <sys/time.h>
 
 enum e_state
@@ -58,6 +58,7 @@ typedef struct s_monitorarg
 int		argerr_print(void);
 int		valid_arg(t_info *info);
 int		diff_time(struct timeval last, struct timeval start);
+void	delay_time(int msec);
 
 int		info_set(int argc, char *argv[], t_info *info);
 

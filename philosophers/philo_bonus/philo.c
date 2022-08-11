@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/10 19:45:54 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 19:52:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	main(int argc, char *argv[])
 
 	if (argc < 5 || argc > 6 || info_set(argc, argv, &info) < 0)
 		return (argerr_print());
-
+	
 	return (0);
+}
+
+int	make_philo()
+{
+	
 }
