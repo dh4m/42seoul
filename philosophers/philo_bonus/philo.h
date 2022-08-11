@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 19:32:34 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/11 20:48:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,8 @@ typedef struct s_philo
 	struct timeval	s_time;
 }	t_philo;
 
-typedef struct s_monitorarg
-{
-	t_info	*info;
-	t_philo	*philo;
-}	t_monitorarg;
+int		make_philo(t_info *info, sem_t *fork_sem);
+int		philo_behavior(int num, t_info *info, sem_t *fork_sem);
 
 int		argerr_print(void);
 int		valid_arg(t_info *info);
