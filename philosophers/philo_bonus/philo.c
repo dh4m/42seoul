@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 20:48:08 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/12 19:00:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 int	main(int argc, char *argv[])
 {
 	t_info	info;
-	sem_t	*fork;
+	sem_t	*fork_sem;
 
 	if (argc < 5 || argc > 6 || info_set(argc, argv, &info) < 0)
 		return (argerr_print());
-	fork = sem_open("fork_sem", O_CREAT | O_EXCL, 0644, info.n_philoshphers);
+	fork_sem = sem_open("fork_sem", O_CREAT | O_EXCL, 0644, info.n_philoshphers);
 	sem_unlink("fork_sem");
+	make_philo(&info, fork_sem);
+	sem_close(fork_sem);
 	return (0);
 }
 
@@ -33,6 +35,7 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 	pid_t	*philo;
 
 	philo = malloc(sizeof(pid_t) * info->n_philoshphers);
+	gettimeofday(&(info->s_time), NULL);
 	i = 0;
 	while(i < info->n_philoshphers)
 	{
@@ -44,11 +47,23 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 	}
 	while(i < info->n_philoshphers)
 	{
-		
+		/////////?????????????
+		waitpid(philo[i], NULL, WNOHANG);
 	}
+	free(philo);
+	return (0);
 }
 
 int	philo_behavior(int num, t_info *info, sem_t *fork_sem)
 {
-
+	monitoring();
+	while (1)
+	{
+		take_fork(info, fork_sem, num);
+		eat();
+		free_fork(fork_sem);
+		sleep();
+		think();
+	}
+	exit(0);
 }

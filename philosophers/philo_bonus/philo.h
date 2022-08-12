@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 20:48:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/12 18:45:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,16 @@ enum e_state
 
 typedef struct s_info
 {
-	int	n_philoshphers;
-	int	die;
-	int	eat;
-	int	sleep;
-	int	each_must_eat;
+	int				n_philoshphers;
+	int				die;
+	int				eat;
+	int				sleep;
+	int				each_must_eat;
+	struct timeval	s_time;
+	int				time_eat;
+	int				last_eat;
 }	t_info;
-
-typedef struct s_fork
-{
-	pthread_mutex_t	mutex;
-	int				num;
-}	t_fork;
-
+/*
 typedef struct s_philo
 {
 	t_info			*info;
@@ -48,7 +45,7 @@ typedef struct s_philo
 	int				last_eat;
 	struct timeval	s_time;
 }	t_philo;
-
+*/
 int		make_philo(t_info *info, sem_t *fork_sem);
 int		philo_behavior(int num, t_info *info, sem_t *fork_sem);
 
@@ -58,5 +55,11 @@ int		diff_time(struct timeval last, struct timeval start);
 void	delay_time(int msec);
 
 int		info_set(int argc, char *argv[], t_info *info);
+
+int	take_fork(t_info *info, sem_t *fork_sem, int num);
+int	free_fork(sem_t *fork_sem);
+int	eat();
+int	sleep();
+int	think();
 
 #endif
