@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 16:24:58 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/13 16:12:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ int	take_leftfirst(t_philo *philo)
 	take_fork(philo->left_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->info->s_time), philo->num);
+			diff_time(tv, philo->info->s_time) / 1000, philo->num);
 	take_fork(philo->right_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->info->s_time), philo->num);
+			diff_time(tv, philo->info->s_time) / 1000, philo->num);
 	return (0);
 }
 
@@ -52,11 +52,11 @@ int	take_rightfirst(t_philo *philo)
 	take_fork(philo->right_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->info->s_time), philo->num);
+			diff_time(tv, philo->info->s_time) / 1000, philo->num);
 	take_fork(philo->left_fork);
 	gettimeofday(&tv, NULL);
 	printf("%d %d has taken a fork\n", \
-			diff_time(tv, philo->info->s_time), philo->num);
+			diff_time(tv, philo->info->s_time) / 1000, philo->num);
 	return (0);
 }
 

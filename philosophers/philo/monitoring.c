@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 15:40:51 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/13 16:13:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_death(struct timeval now, t_philo *philo, int time_to_die)
 {
 	int	starve;
 
-	starve = diff_time(now, philo->info->s_time) - philo->last_eat;
+	starve = diff_time(now, philo->info->s_time) / 1000 - philo->last_eat;
 	if (starve > time_to_die)
 		return (-1);
 	return (0);
@@ -64,7 +64,7 @@ int	check_all_eat(int must_eat, t_philo *philo)
 
 int	print_die(struct timeval now, t_philo *philo)
 {
-	printf("%d %d died\n", diff_time(now, philo->info->s_time), \
+	printf("%d %d died\n", diff_time(now, philo->info->s_time) / 1000, \
 		philo->num);
 	return (1);
 }
