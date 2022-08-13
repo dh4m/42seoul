@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/13 13:25:03 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/13 15:06:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*philo_behavior(void *arg)
 		if (philo->num % 2)
 		{
 			if (philo->last_eat == 0)
-				usleep(100);
+				usleep(200);
 			take_leftfirst(philo);
 		}
 		else
