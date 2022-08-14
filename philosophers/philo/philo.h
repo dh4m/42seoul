@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/11 16:01:52 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/14 22:49:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	*philo_behavior(void *arg);
 
 int		argerr_print(void);
 int		valid_arg(t_info *info);
-int		diff_time(struct timeval last, struct timeval start);
+int		diff_time(struct timeval start);
 void	delay_time(int msec);
 
 int		ft_atoi(const char *str);
@@ -77,8 +77,8 @@ int		free_fork(t_philo *philo);
 void	change_state(t_philo *philo, int state);
 
 int		start_monitoring(t_info *info, t_philo *philo);
-int		check_death(struct timeval now, t_philo *philo, int time_to_die);
+int		check_death(t_philo *philo, int time_to_die);
 int		check_all_eat(int must_eat, t_philo *philo);
-int		print_die(struct timeval now, t_philo *philo);
+int		print_die(t_philo *philo);
 
 #endif

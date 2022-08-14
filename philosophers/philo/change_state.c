@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/13 16:12:30 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/14 19:53:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	change_state(t_philo *philo, int state)
 	int				timestamp;
 
 	gettimeofday(&tv, NULL);
-	timestamp = diff_time(tv, philo->info->s_time) / 1000;
+	timestamp = diff_time(philo->info->s_time);
 	if (state == EAT)
 	{
 		philo->last_eat = timestamp;

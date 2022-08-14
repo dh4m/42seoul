@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/13 16:13:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/14 19:55:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,17 @@
 
 int	start_monitoring(t_info *info, t_philo *philo)
 {
-	struct timeval	now;
 	int				i;
 
 	gettimeofday(&(info->s_time), NULL);
 	info->all_ready = 1;
 	while (1)
 	{
-		gettimeofday(&now, NULL);
 		i = -1;
 		while (++i < info->n_philoshphers)
 		{
-			if (check_death(now, &(philo[i]), info->die) < 0 && \
-				print_die(now, &(philo[i])))
+			if (check_death(&(philo[i]), info->die) < 0 && \
+				print_die(&(philo[i])))
 				return (0);
 		}
 		i = -1;
@@ -45,11 +43,11 @@ int	start_monitoring(t_info *info, t_philo *philo)
 	return (0);
 }
 
-int	check_death(struct timeval now, t_philo *philo, int time_to_die)
+int	check_death(t_philo *philo, int time_to_die)
 {
 	int	starve;
 
-	starve = diff_time(now, philo->info->s_time) / 1000 - philo->last_eat;
+	starve = diff_time(philo->info->s_time) - philo->last_eat;
 	if (starve > time_to_die)
 		return (-1);
 	return (0);
@@ -62,9 +60,9 @@ int	check_all_eat(int must_eat, t_philo *philo)
 	return (0);
 }
 
-int	print_die(struct timeval now, t_philo *philo)
+int	print_die(t_philo *philo)
 {
-	printf("%d %d died\n", diff_time(now, philo->info->s_time) / 1000, \
+	printf("%d %d died\n", diff_time(philo->info->s_time), \
 		philo->num);
 	return (1);
 }
