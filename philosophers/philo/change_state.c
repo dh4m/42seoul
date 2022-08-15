@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:31:02 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:44:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,6 @@ int	sleep_philo(t_philo *philo)
 	else
 		return (-1);
 	if (philo->info->n_philoshphers % 2)
-		usleep(100);
+		usleep(200);
 	return (0);
 }
