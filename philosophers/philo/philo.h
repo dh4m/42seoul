@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 15:44:29 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:18:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef struct s_info
 	int				each_must_eat;
 	struct timeval	s_time;
 	int				all_ready;
-	int				anyone_dead;
 }	t_info;
 
 typedef struct s_fork
@@ -58,6 +57,7 @@ typedef struct s_monitorarg
 }	t_monitorarg;
 
 void	*philo_behavior(void *arg);
+int		free_mutex(t_fork *fork_list, int fork_num);
 
 int		argerr_print(void);
 int		valid_arg(t_info *info);
@@ -75,8 +75,8 @@ int		take_rightfirst(t_philo *philo);
 int		free_fork(t_philo *philo);
 
 void	change_state(t_philo *philo, int state);
-void	eat(t_philo *philo);
-void	sleep_philo(t_philo *philo);
+int		eat(t_philo *philo);
+int		sleep_philo(t_philo *philo);
 
 int		start_monitoring(t_info *info, t_philo *philo);
 int		check_death(t_philo *philo, int time_to_die);

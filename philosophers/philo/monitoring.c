@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/14 19:55:47 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:09:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	start_monitoring(t_info *info, t_philo *philo)
 		while (++i < info->n_philoshphers)
 		{
 			if (check_death(&(philo[i]), info->die) < 0 && \
-				print_die(&(philo[i])))
+				print_die(&(philo[i])) && !--info->all_ready)
 				return (0);
 		}
 		i = -1;
@@ -36,7 +36,7 @@ int	start_monitoring(t_info *info, t_philo *philo)
 			if (check_all_eat(info->each_must_eat, &(philo[i])) < 0)
 				break ;
 		}
-		if (i == info->n_philoshphers)
+		if (i == info->n_philoshphers && !--info->all_ready)
 			return (0);
 		usleep(200);
 	}

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 16:52:06 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:22:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	take_fork(t_philo *philo, t_fork *fork)
 		if (fork->state)
 		{
 			fork->state = 0;
-			printf("%d %d has taken a fork\n", \
+			if (philo->info->all_ready)
+				printf("%d %d has taken a fork\n", \
 					diff_time(philo->info->s_time), philo->num);
+			else
+				return (-1);
 			pthread_mutex_unlock(&(fork->mutex));
 			return (1);
 		}
