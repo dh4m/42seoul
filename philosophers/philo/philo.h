@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:53:46 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:57:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,6 @@
 # define PHILO_H
 # include <pthread.h>
 # include <sys/time.h>
-
-enum e_state
-{
-	EAT,
-	SLEEP,
-	THINKING
-};
 
 typedef struct s_info
 {
@@ -49,12 +42,6 @@ typedef struct s_philo
 	int				time_eat;
 	int				last_eat;
 }	t_philo;
-
-typedef struct s_monitorarg
-{
-	t_info	*info;
-	t_philo	*philo;
-}	t_monitorarg;
 
 void	*philo_behavior(void *arg);
 int		free_mutex(t_fork *fork_list, int fork_num);
