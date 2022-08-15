@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 15:51:13 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 16:50:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	eat(t_philo *philo)
 	struct timeval	tv;
 
 	philo->last_eat = diff_time(philo->info->s_time);
-	printf("%d %d is eating\n", philo->last_eat, philo->num);
+	printf("%d %d is eating\n", diff_time(philo->info->s_time), philo->num);
 	philo->time_eat++;
 	gettimeofday(&tv, NULL);
 	delay_time(philo->info->eat, tv);

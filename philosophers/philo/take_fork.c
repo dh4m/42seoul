@@ -6,11 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 16:41:29 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 16:52:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <unistd.h>
 #include "philo.h"
 
 int	take_fork(t_philo *philo, t_fork *fork)
@@ -28,6 +29,7 @@ int	take_fork(t_philo *philo, t_fork *fork)
 		}
 		else
 			pthread_mutex_unlock(&(fork->mutex));
+		usleep(300);
 	}
 	return (0);
 }
