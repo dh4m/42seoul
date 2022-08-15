@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:20:47 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:31:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	change_state(t_philo *philo, int state)
 	{
 		printf("%d %d is thinking\n", timestamp, philo->num);
 		if (philo->info->n_philoshphers % 2)
-			usleep(100);
+			usleep(200);
 	}
 }
 
