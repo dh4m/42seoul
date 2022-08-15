@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/13 15:53:43 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 16:10:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,20 @@ void	*philo_behavior(void *arg)
 {
 	t_philo *const	philo = arg;
 
-	while(!philo->info->all_ready)
-		continue;
+	while (!philo->info->all_ready)
+		continue ;
 	while (1)
 	{
 		if (philo->num % 2)
 		{
 			if (philo->last_eat == 0)
-				delay_time(1);
+				usleep(800);
 			take_leftfirst(philo);
 		}
 		else
 			take_rightfirst(philo);
-		change_state(philo, EAT);
-		free_fork(philo);
-		change_state(philo, SLEEP);
-		change_state(philo, THINKING);
+		eat(philo);
+		sleep_philo(philo);
 	}
 	return (0);
 }

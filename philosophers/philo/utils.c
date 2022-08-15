@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:32:35 by dham              #+#    #+#             */
-/*   Updated: 2022/08/14 19:50:39 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 16:09:29 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ int	diff_time(struct timeval start)
 			+ (last.tv_usec - start.tv_usec) / 1000);
 }
 
-void	delay_time(int msec)
+void	delay_time(int msec, struct timeval start)
 {
-	static struct timeval	start;
-
-	gettimeofday(&start, NULL);
 	usleep(msec * 800);
-	while(diff_time(start) < msec)
-		continue;
+	while (diff_time(start) < msec)
+		usleep(200);
 	return ;
 }
