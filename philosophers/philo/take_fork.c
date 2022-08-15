@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:22:40 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:53:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,5 @@ int	take_rightfirst(t_philo *philo)
 {
 	take_fork(philo, philo->right_fork);
 	take_fork(philo, philo->left_fork);
-	return (0);
-}
-
-int	free_fork(t_philo *philo)
-{
-	philo->left_fork->state = 1;
-	philo->right_fork->state = 1;
 	return (0);
 }

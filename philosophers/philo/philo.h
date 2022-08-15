@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:18:23 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/15 19:53:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ int		philo_set(t_info *info, t_fork *fork, t_philo *philo);
 
 int		take_leftfirst(t_philo *philo);
 int		take_rightfirst(t_philo *philo);
-int		free_fork(t_philo *philo);
 
-void	change_state(t_philo *philo, int state);
 int		eat(t_philo *philo);
 int		sleep_philo(t_philo *philo);
 
