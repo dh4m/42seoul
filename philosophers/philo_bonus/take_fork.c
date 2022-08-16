@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setting.c                                          :+:      :+:    :+:   */
+/*   take_fork.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/10 19:46:41 by dham              #+#    #+#             */
-/*   Updated: 2022/08/16 15:06:38 by dham             ###   ########.fr       */
+/*   Created: 2022/08/16 15:42:25 by dham              #+#    #+#             */
+/*   Updated: 2022/08/16 16:06:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <pthread.h>
 #include "philo.h"
 
-int	info_set(int argc, char *argv[], t_info *info)
+int	take_fork(t_info *info, sem_t *fork_sem, int num)
 {
-	info->all_ready = 0;
-	info->n_philoshphers = ft_atoi(argv[1]);
-	info->die = ft_atoi(argv[2]);
-	info->eat = ft_atoi(argv[3]);
-	info->sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-	{
-		info->each_must_eat = ft_atoi(argv[5]);
-		if (info->each_must_eat < 0)
-			return (-1);
-	}
-	else
-		info->each_must_eat = -1;
-	if (valid_arg(info) < 0)
-		return (-1);
+	sem_wait(fork_sem);
+	printf("%d %d has taken a fork\n", \
+			diff_time(info->s_time), num);
+	sem_wait(fork_sem);
+	printf("%d %d has taken a fork\n", \
+			diff_time(info->s_time), num);
 	return (0);
 }
