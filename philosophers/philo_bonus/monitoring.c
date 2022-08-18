@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:37:11 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 16:24:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/18 17:11:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	*monitoring(void *arg)
 		usleep(200);
 	}
 	return (0);
-
 }
 
 int	print_die(t_info *info)

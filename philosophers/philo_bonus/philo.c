@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 16:54:08 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/18 17:12:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 	philo = malloc(sizeof(pid_t) * info->n_philoshphers);
 	gettimeofday(&(info->s_time), NULL);
 	i = 1;
-	while(i < info->n_philoshphers)
+	while (i < info->n_philoshphers)
 	{
 		philo[i] = fork();
 		if (philo[i] == 0)
@@ -46,7 +46,7 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 		i += 2;
 	}
 	i = 0;
-	while(i < info->n_philoshphers)
+	while (i < info->n_philoshphers)
 	{
 		philo[i] = fork();
 		if (philo[i] == 0)
@@ -54,7 +54,7 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 		i += 2;
 	}
 	i = -1;
-	while(++i < info->n_philoshphers)
+	while (++i < info->n_philoshphers)
 		waitpid(philo[i], NULL, 0);
 	free(philo);
 	return (0);
