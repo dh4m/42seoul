@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:37:11 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 17:11:44 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/18 19:11:49 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*monitoring(void *arg)
 		starve = diff_time(info->s_time) - info->last_eat;
 		if (starve > info->die)
 			print_die(info);
-		usleep(200);
+		usleep(1000);
 	}
 	return (0);
 }
