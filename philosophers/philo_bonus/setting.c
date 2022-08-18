@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:46:41 by dham              #+#    #+#             */
-/*   Updated: 2022/08/16 15:06:38 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/18 16:25:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 
 int	info_set(int argc, char *argv[], t_info *info)
 {
-	info->all_ready = 0;
+	info->last_eat = 0;
+	info->time_eat = 0;
 	info->n_philoshphers = ft_atoi(argv[1]);
 	info->die = ft_atoi(argv[2]);
 	info->eat = ft_atoi(argv[3]);

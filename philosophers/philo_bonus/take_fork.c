@@ -6,19 +6,27 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:42:25 by dham              #+#    #+#             */
-/*   Updated: 2022/08/16 16:06:45 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/18 16:59:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdio.h>
 
-int	take_fork(t_info *info, sem_t *fork_sem, int num)
+int	take_fork(t_info *info, sem_t *fork_sem)
 {
+	if (info->num % 2 == 0 && info->time_eat == 0)
+	{
+		printf("%d %d has taken a fork\n%d %d has taken a fork\n", \
+				diff_time(info->s_time), info->num, \
+				diff_time(info->s_time), info->num);
+		return (0);
+	}
 	sem_wait(fork_sem);
 	printf("%d %d has taken a fork\n", \
-			diff_time(info->s_time), num);
+			diff_time(info->s_time), info->num);
 	sem_wait(fork_sem);
 	printf("%d %d has taken a fork\n", \
-			diff_time(info->s_time), num);
+			diff_time(info->s_time), info->num);
 	return (0);
 }
