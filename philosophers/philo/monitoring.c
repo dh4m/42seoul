@@ -6,14 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:09:42 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:06:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philo.h"
 #include <stdio.h>
-#include <stdlib.h>
 
 int	start_monitoring(t_info *info, t_philo *philo)
 {
