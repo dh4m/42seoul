@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:44:55 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 16:01:29 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:12:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philo.h"
+#include <stdlib.h>
 
 int	argerr_print(void)
 {

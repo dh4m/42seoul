@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 16:06:07 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:10:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 			philo_behavior(i + 1, info, fork_sem);
 		i += 2;
 	}
-	i = -1;
-	while (++i < info->n_philoshphers)
-		waitpid(philo[i], NULL, 0);
+	philo_waitpid(info, philo);
 	free(philo);
 	return (0);
 }
@@ -72,4 +70,16 @@ int	philo_behavior(int num, t_info *info, sem_t *fork_sem)
 	}
 	exit(0);
 	return (0);
+}
+
+void	philo_waitpid(t_info *info, pid_t *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < info->n_philoshphers)
+	{
+		waitpid(philo[i], NULL, 0);
+		i++;
+	}
 }
