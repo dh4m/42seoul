@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:44:55 by dham              #+#    #+#             */
-/*   Updated: 2022/08/16 15:06:20 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:01:29 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ void	delay_time(int msec, struct timeval start)
 	while (diff_time(start) < msec)
 		usleep(200);
 	return ;
+}
+
+void	*safealloc(size_t size)
+{
+	void	*ret_ptr;
+
+	ret_ptr = malloc(size);
+	if (!ret_ptr)
+		exit(-1);
+	return (ret_ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 17:12:18 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:06:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	make_philo(t_info *info, sem_t *fork_sem)
 	int		i;
 	pid_t	*philo;
 
-	philo = malloc(sizeof(pid_t) * info->n_philoshphers);
+	philo = safealloc(sizeof(pid_t) * info->n_philoshphers);
 	gettimeofday(&(info->s_time), NULL);
 	i = 1;
 	while (i < info->n_philoshphers)

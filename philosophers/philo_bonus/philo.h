@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 16:30:58 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:01:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		argerr_print(void);
 int		valid_arg(t_info *info);
 int		diff_time(struct timeval start);
 void	delay_time(int msec, struct timeval start);
+void	*safealloc(size_t size);
 
 int		ft_atoi(const char *str);
 
