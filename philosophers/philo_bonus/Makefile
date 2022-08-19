@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -g #-Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = philo_bonus
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
