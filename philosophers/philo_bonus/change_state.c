@@ -6,11 +6,10 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:04:35 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 16:56:13 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:02:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "philo.h"
 #include <stdio.h>
 #include <stdlib.h>

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:37:11 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 19:11:49 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:57:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <pthread.h>
 
 int	start_monitoring(t_info *info)
 {

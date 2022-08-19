@@ -6,13 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 16:10:57 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:01:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philo.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 int	main(int argc, char *argv[])

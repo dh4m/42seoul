@@ -6,13 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 16:10:20 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 16:57:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-# include <pthread.h>
 # include <semaphore.h>
 # include <sys/time.h>
 

@@ -6,12 +6,10 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:46:41 by dham              #+#    #+#             */
-/*   Updated: 2022/08/18 17:12:44 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/19 17:01:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <pthread.h>
 #include "philo.h"
 
 int	info_set(int argc, char *argv[], t_info *info)
