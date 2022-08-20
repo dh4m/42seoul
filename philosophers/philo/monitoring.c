@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 17:06:20 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/20 17:39:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	start_monitoring(t_info *info, t_philo *philo)
 		i = -1;
 		while (++i < info->n_philoshphers)
 		{
-			if (check_death(&(philo[i]), info->die) < 0 && \
+			if (philo[i].last_eat >= 0 && \
+				check_death(&(philo[i]), info->die) < 0 && \
 				print_die(&(philo[i])) && !--info->all_ready)
 				return (0);
 		}
