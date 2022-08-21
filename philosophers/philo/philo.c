@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 17:06:48 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/21 12:24:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ int	main(int argc, char *argv[])
 	if (argc < 5 || argc > 6 || info_set(argc, argv, &info) < 0)
 		return (argerr_print());
 	fork_list = malloc(sizeof(t_fork) * info.n_philoshphers);
-	fork_set(&info, fork_list);
+	if (fork_set(&info, fork_list) < 0)
+		return (0);
 	philo_list = malloc(sizeof(t_philo) * info.n_philoshphers);
-	philo_set(&info, fork_list, philo_list);
+	if (philo_set(&info, fork_list, philo_list) < 0)
+		return (0);
 	i = -1;
 	while (++i < info.n_philoshphers)
 		pthread_create(&(philo_list[i].thread), NULL, \

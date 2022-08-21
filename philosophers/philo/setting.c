@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 18:43:42 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 17:07:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/21 12:23:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	fork_set(t_info *info, t_fork *fork)
 {
 	int	i;
 
+	if (!fork)
+		return (-1);
 	i = 0;
 	while (i < info->n_philoshphers)
 	{
@@ -50,6 +52,8 @@ int	philo_set(t_info *info, t_fork *fork, t_philo *philo)
 {
 	int	i;
 
+	if (!philo)
+		return (-1);
 	i = 0;
 	while (i < info->n_philoshphers)
 	{
