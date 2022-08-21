@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:53:51 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/21 14:12:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	take_fork(t_philo *philo, t_fork *fork)
 {
-	while (1)
+	while (philo->info->all_ready)
 	{
 		pthread_mutex_lock(&(fork->mutex));
 		if (fork->state)
