@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2022/08/15 19:57:03 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:41:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_info
 	int				each_must_eat;
 	struct timeval	s_time;
 	int				all_ready;
+	pthread_mutex_t	print_m;
 }	t_info;
 
 typedef struct s_fork
@@ -44,12 +45,13 @@ typedef struct s_philo
 }	t_philo;
 
 void	*philo_behavior(void *arg);
-int		free_mutex(t_fork *fork_list, int fork_num);
+int		free_mutex(t_fork *fork_list, int fork_num, t_info *info);
 
 int		argerr_print(void);
 int		valid_arg(t_info *info);
 int		diff_time(struct timeval start);
 void	delay_time(int msec, struct timeval start);
+void	mutex_print(char *str, int num, t_info *info);
 
 int		ft_atoi(const char *str);
 

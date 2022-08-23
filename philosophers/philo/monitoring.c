@@ -6,13 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/20 17:39:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:53:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philo.h"
-#include <stdio.h>
 
 int	start_monitoring(t_info *info, t_philo *philo)
 {
@@ -62,7 +61,6 @@ int	check_all_eat(int must_eat, t_philo *philo)
 
 int	print_die(t_philo *philo)
 {
-	printf("%d %d died\n", diff_time(philo->info->s_time), \
-		philo->num);
+	mutex_print("%d %d died\n", philo->num, philo->info);
 	return (1);
 }

@@ -6,11 +6,10 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 13:29:56 by dham              #+#    #+#             */
-/*   Updated: 2022/08/21 14:12:11 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:53:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <unistd.h>
 #include "philo.h"
 
@@ -23,8 +22,8 @@ int	take_fork(t_philo *philo, t_fork *fork)
 		{
 			fork->state = 0;
 			if (philo->info->all_ready)
-				printf("%d %d has taken a fork\n", \
-					diff_time(philo->info->s_time), philo->num);
+				mutex_print("%d %d has taken a fork\n", \
+					philo->num, philo->info);
 			else
 				return (-1);
 			pthread_mutex_unlock(&(fork->mutex));

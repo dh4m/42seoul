@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:34 by dham              #+#    #+#             */
-/*   Updated: 2022/08/21 12:24:31 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:41:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[])
 	i = -1;
 	while (++i < info.n_philoshphers)
 		pthread_join(philo_list[i].thread, NULL);
-	free_mutex(fork_list, info.n_philoshphers);
+	free_mutex(fork_list, info.n_philoshphers, &info);
 	free(fork_list);
 	free(philo_list);
 	return (0);
@@ -67,7 +67,7 @@ void	*philo_behavior(void *arg)
 	return (0);
 }
 
-int	free_mutex(t_fork *fork_list, int fork_num)
+int	free_mutex(t_fork *fork_list, int fork_num, t_info *info)
 {
 	int	i;
 
@@ -77,5 +77,6 @@ int	free_mutex(t_fork *fork_list, int fork_num)
 		pthread_mutex_destroy(&(fork_list[i].mutex));
 		i++;
 	}
+	pthread_mutex_destroy(&(info->print_m));
 	return (0);
 }

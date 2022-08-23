@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:32:35 by dham              #+#    #+#             */
-/*   Updated: 2022/08/23 09:53:52 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:42:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "philo.h"
+#include <stdio.h>
 
 int	argerr_print(void)
 {
@@ -46,4 +47,11 @@ void	delay_time(int msec, struct timeval start)
 	while (diff_time(start) < msec)
 		usleep(200);
 	return ;
+}
+
+void	mutex_print(char *str, int num, t_info *info)
+{
+	pthread_mutex_lock(&info->print_m);
+	printf(str, diff_time(info->s_time), num);
+	pthread_mutex_unlock(&info->print_m);
 }
