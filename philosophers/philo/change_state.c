@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:19:28 by dham              #+#    #+#             */
-/*   Updated: 2022/08/21 14:31:18 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:10:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	eat(t_philo *philo)
 	if (++philo->time_eat >= philo->info->each_must_eat && \
 		philo->info->each_must_eat > 0)
 	{
+		gettimeofday(&tv, NULL);
+		delay_time(philo->info->eat, tv);
 		philo->left_fork->state = 1;
 		philo->right_fork->state = 1;
 		philo->last_eat = -1;
