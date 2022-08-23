@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 19:43:48 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 16:57:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 12:45:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ typedef struct s_info
 	int				time_eat;
 	int				last_eat;
 	int				num;
+	sem_t			*print_sem;
 }	t_info;
 
 int		philo_behavior(int num, t_info *info, sem_t *fork_sem);
 int		make_philo(t_info *info, sem_t *fork_sem);
 void	philo_waitpid(t_info *info, pid_t *philo);
+void	sem_print(char *str, int num, t_info *info);
 
 int		argerr_print(void);
 int		valid_arg(t_info *info);

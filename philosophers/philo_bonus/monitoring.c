@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:37:11 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 16:57:53 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 12:52:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	*monitoring(void *arg)
 
 int	print_die(t_info *info)
 {
+	sem_wait(info->print_sem);
 	printf("%d %d died\n", diff_time(info->s_time), \
 		info->num);
 	kill(0, SIGKILL);
