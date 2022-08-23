@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/12 17:04:35 by dham              #+#    #+#             */
-/*   Updated: 2022/08/19 17:02:47 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 11:26:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ int	eat(t_info *info, sem_t *fork_sem)
 			info->num);
 	if (info->each_must_eat <= ++info->time_eat && \
 		info->each_must_eat > 0)
+	{
+		gettimeofday(&tv, NULL);
+		delay_time(info->eat, tv);
 		finish_eat(fork_sem);
+	}
 	gettimeofday(&tv, NULL);
 	delay_time(info->eat, tv);
 	sem_post(fork_sem);
