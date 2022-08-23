@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 18:43:42 by dham              #+#    #+#             */
-/*   Updated: 2022/08/21 12:23:38 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/23 10:12:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	info_set(int argc, char *argv[], t_info *info)
 	if (argc == 6)
 	{
 		info->each_must_eat = ft_atoi(argv[5]);
-		if (info->each_must_eat < 0)
+		if (info->each_must_eat <= 0)
 			return (-1);
 	}
 	else
