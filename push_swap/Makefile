@@ -6,7 +6,7 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 14:32:15 by dham              #+#    #+#              #
-#    Updated: 2022/07/28 11:18:27 by dham             ###   ########.fr        #
+#    Updated: 2022/08/28 15:09:54 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C$(LIBDIR) all
-	$(CC) $(CFLAGS) -o $@ $^ -I$(LIBDIR) -L$(LIBDIR) -lft
+	$(CC) $(CFLAGS) -o $@ $^ -L$(LIBDIR) -lft
 
 bonus: 
 	make $(NAME)
@@ -39,7 +39,7 @@ bonus:
 
 $(BONUS_NAME): $(BONUS_OBJS)
 	$(MAKE) -C$(LIBDIR) all
-	$(CC) $(CFLAGS) -o $@ $^ -I$(LIBDIR) -L$(LIBDIR) -lft
+	$(CC) $(CFLAGS) -o $@ $^ -L$(LIBDIR) -lft
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ -I$(LIBDIR)
