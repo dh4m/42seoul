@@ -24,7 +24,6 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	sleep 1
 	$(AR) $(ARFLAGS) $@ $^
 
 bonus:
