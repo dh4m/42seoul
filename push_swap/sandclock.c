@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 20:35:52 by dham              #+#    #+#             */
-/*   Updated: 2022/07/27 16:53:27 by dham             ###   ########.fr       */
+/*   Updated: 2022/08/31 13:59:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sandclock(t_stack *a, t_stack *b)
 	int	gap;
 
 	if (a->nnode >= 300)
-		gap = 30;
+		gap = 36;
 	else if (a->nnode >= 100)
 		gap = 15;
 	else
