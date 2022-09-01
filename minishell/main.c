@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/08/31 21:37:18 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/01 20:13:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 void	lineset(int what)
 {
 	what++;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
 	rl_redisplay();
 }
 
