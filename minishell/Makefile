@@ -6,7 +6,7 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/28 13:48:24 by dham              #+#    #+#              #
-#    Updated: 2022/08/28 15:24:47 by dham             ###   ########.fr        #
+#    Updated: 2022/09/03 23:56:13 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
 LIBFT_DIR = ./libft
-RDLN_DIR = ${HOME}/.brew/opt/readline
+#RDLN_DIR = ${HOME}/.brew/opt/readline
+RDLN_DIR = /opt/homebrew/opt/readline
 
 LIBFT_COMPILE = -I$(LIBFT_DIR)
 LIBFT_LINKING = -L$(LIBFT_DIR) -lft
