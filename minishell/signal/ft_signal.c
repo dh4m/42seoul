@@ -1,50 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/09/11 17:50:37 by dham             ###   ########.fr       */
+/*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
+/*   Updated: 2022/09/10 17:07:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "libft.h"
-#include "builtin/ft_builtin.h"
-#include "signal/ft_signal.h"
-#include "minishell.h"
+#include "ft_signal.h"
 
-int main(void)
+static void	signal_proc(int sig)
 {
-	char *str;
-	
-	ft_signal_set();
-	while (1)
+	if (sig == SIGINT)
 	{
-		str = readline("minishell$ ");
-		if (str && *str != '\n' && *str != 0)
-		{
-			printf("%s\n", str);
-			add_history(str);
-		}
-		else if (!str)
-		{
-			exit_prompt();
-			free(str);
-			break;
-		}
-		free(str);
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
 	}
-	return (0);
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
-void	exit_prompt(void)
+void	ft_signal_set(void)
 {
-	;
+	signal(SIGINT, signal_proc);
+	signal(SIGQUIT, signal_proc);
 }

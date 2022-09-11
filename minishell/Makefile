@@ -6,20 +6,20 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/28 13:48:24 by dham              #+#    #+#              #
-#    Updated: 2022/09/03 23:56:13 by dham             ###   ########.fr        #
+#    Updated: 2022/09/10 14:53:39 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -g #-Wall -Wextra -Werror
 NAME = minishell
-SRCS = $(wildcard *.c)
+SRCS = $(wildcard *.c) $(wildcard builtin/*.c) $(wildcard signal/*.c)
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
 LIBFT_DIR = ./libft
-#RDLN_DIR = ${HOME}/.brew/opt/readline
-RDLN_DIR = /opt/homebrew/opt/readline
+RDLN_DIR = ${HOME}/.brew/opt/readline
+# RDLN_DIR = /opt/homebrew/opt/readline
 
 LIBFT_COMPILE = -I$(LIBFT_DIR)
 LIBFT_LINKING = -L$(LIBFT_DIR) -lft

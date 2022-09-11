@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/09/01 21:16:54 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/10 14:55:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	ft_echo(int nl, char *str)
 {
-	printf(str);
+	printf("%s", str);
 	if (nl)
 		printf("\n");
 }
