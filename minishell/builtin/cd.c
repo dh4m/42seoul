@@ -6,18 +6,19 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:54:16 by dham              #+#    #+#             */
-/*   Updated: 2022/09/11 13:59:31 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:50:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtin.h"
 #include <unistd.h>
 
-void	ft_cd(char *path)
+int	ft_cd(char *path)
 {
 	int	ret;
 
 	ret = chdir(path);
 	if (ret != 0)
 		;//error
+	return (0);
 }

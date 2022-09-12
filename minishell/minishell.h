@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/11 20:09:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:12:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,27 @@ typedef struct s_ast
 	struct s_ast	*left;
 }	t_ast;
 
-typedef struct s_node
+typedef struct s_env
 {
 	char			*name;
 	char			*value;
-	struct s_node	*next;
-}	t_node;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_info
 {
-	t_node	*env;
+	t_env	*env;
+	t_env	*env_last;
 	int		ret_val;
 }	t_info;
 
+extern t_info	g_info;
 
 void	exit_prompt(void);
+void	info_init(char **envp);
+void	add_env(char *env_str);
+void	add_only_key_env(char *env_name);
+t_env	*search_env(char *name);
+void	del_env(char *name);
 
 #endif

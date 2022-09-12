@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   info_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/10 15:55:27 by dham              #+#    #+#             */
-/*   Updated: 2022/09/12 21:05:06 by dham             ###   ########.fr       */
+/*   Created: 2022/09/12 13:41:10 by dham              #+#    #+#             */
+/*   Updated: 2022/09/12 16:22:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
-#include "ft_builtin.h"
+#include <stdlib.h>
+#include "minishell.h"
+#include "minishell.h"
+#include "libft.h"
 
-int	ft_unset(char *name)
+void	info_init(char **envp)
 {
-	if (name)
-		del_env(name);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		add_env(envp[i]);
+		i++;
+	}
 }

@@ -6,13 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/09/11 17:50:37 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:41:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "libft.h"
@@ -20,11 +21,14 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-int main(void)
+t_info	g_info;
+
+int main(int argc, char *argv[], char *envp[])
 {
 	char *str;
 	
 	ft_signal_set();
+	info_init(envp);
 	while (1)
 	{
 		str = readline("minishell$ ");
@@ -46,5 +50,5 @@ int main(void)
 
 void	exit_prompt(void)
 {
-	;
+	; // ctrl + D 처리???
 }

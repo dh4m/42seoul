@@ -6,14 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2022/09/01 21:12:57 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/12 22:25:29 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_BUILTIN_H
 # define FT_BUILTIN_H
 
-extern int	exit_code;
 
 
 #endif

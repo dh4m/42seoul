@@ -6,8 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:13 by dham              #+#    #+#             */
-/*   Updated: 2022/09/10 15:55:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:51:21 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtin.h"
+#include <stdlib.h>
+
+int	ft_exit(int code)
+{
+	exit(code);
+}
