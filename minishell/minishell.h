@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/12 20:12:40 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/13 15:08:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_info
 
 extern t_info	g_info;
 
-void	exit_prompt(void);
 void	info_init(char **envp);
 void	add_env(char *env_str);
 void	add_only_key_env(char *env_name);

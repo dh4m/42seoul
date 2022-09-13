@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/09/12 20:41:32 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/13 15:20:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,10 @@ int main(int argc, char *argv[], char *envp[])
 		}
 		else if (!str)
 		{
-			exit_prompt();
-			free(str);
-			break;
+			printf("\033[1A\033[11Cexit\n");
+			exit(g_info.ret_val);
 		}
 		free(str);
 	}
 	return (0);
-}
-
-void	exit_prompt(void)
-{
-	; // ctrl + D 처리???
 }
