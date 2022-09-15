@@ -6,13 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:18 by dham              #+#    #+#             */
-/*   Updated: 2022/09/13 21:00:11 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/15 12:48:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "ft_builtin.h"
 #include "libft.h"
+#include <stdio.h>
 
 int	export_env_list(void)
 {
@@ -34,7 +35,7 @@ int	ft_export_value(char *env_str)
 	t_env	*exist_env;
 
 	name = ft_substr(env_str, 0, ft_strchr(env_str, '=') - env_str);
-	value = ft_substr(ft_strchr(env_str, '=') + 1, 0, strlen(env_str));
+	value = ft_substr(ft_strchr(env_str, '=') + 1, 0, ft_strlen(env_str));
 	exist_env = search_env(name);
 	if (exist_env)
 	{
@@ -42,7 +43,10 @@ int	ft_export_value(char *env_str)
 		exist_env->value = value;
 	}
 	else
+	{
 		add_env(env_str);
+		free(value);
+	}
 	free(name);
 	return (0);
 }
