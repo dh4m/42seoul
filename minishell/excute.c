@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   excute.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/09/17 12:24:41 by dham             ###   ########.fr       */
+/*   Created: 2022/09/17 12:16:27 by dham              #+#    #+#             */
+/*   Updated: 2022/09/17 12:24:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
-#include <stdlib.h>
+#include "libft.h"
+#include <unistd.h>
+#include <fcntl.h>
 
-int	parse_cmd(char *str)
-{
-	
-}
+int	
