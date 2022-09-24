@@ -6,19 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/15 14:49:26 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/24 18:06:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-typedef struct s_ast
-{
-	char			*cmd;
-	struct s_ast	*right;
-	struct s_ast	*left;
-}	t_ast;
 
 typedef struct s_env
 {
