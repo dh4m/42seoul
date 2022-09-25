@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/24 18:06:18 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/25 15:27:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	del_env(char *name);
 int		valid_env_name(char *name);
 int		num_of_env(void);
 char	**env_list_make(void);
-int		parse_cmd(char *str);
+int		parse_cmd(char *str, int len);
+int		parse_pipe(char *str);
 
 #endif
