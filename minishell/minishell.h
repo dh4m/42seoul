@@ -6,12 +6,33 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/25 15:27:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/27 00:47:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+enum e_type
+{
+	PIPE,
+	AND,
+	OR,
+	CMD
+};
+typedef struct s_node
+{
+	int				type;
+	int				breket;
+	char			*cmd;
+	struct s_node	*left;
+	struct s_node	*right;
+}	t_node;
+
+typedef struct s_ast
+{
+	t_node	*root;
+}	t_ast;
 
 typedef struct s_env
 {
