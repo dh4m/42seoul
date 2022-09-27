@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/09/25 22:49:58 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/27 22:02:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,34 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-int	pos_logic_oper(char *str, int len)
+int	proc_cmd(char *cmd)
 {
-	int		ret_pos;
-	int		i;
+	t_cmdlist	cmdlist;
+	t_ast		ast;
+	t_strbuff	buff;
 
-	ret_pos = -1;
-	i = 0;
-	while (i < len)
-	{
-		if (ft_strncmp(&str[i], "&&", 2) == 0 || \
-			ft_strncmp(&str[i], "||", 2) == 0)
-			ret_pos = i;
-		i++;
-	}
-	return (ret_pos);
+	buff.str = cmd;
+	buff.now_read = 0;
+	init_list_ast(&cmdlist, &ast);
+	make_cmdlist(&cmdlist, &buff);
+	make_ast(&cmdlist, &ast);
+	exc_ast(&ast);
+	clear_list(&cmdlist);
+	clear_ast(&ast);
+	return (0);
 }
 
-int	parse_cmd(char *str, int len)
+void	init_list_ast(t_cmdlist *cmdlist, t_ast *ast)
 {
-	const int	last_sep = pos_logic_oper(str, len);
-	int			cmd_ret;
-	char		*subcmd;
-
-	if (last_sep == -1)
-	{
-		subcmd = ft_substr(str, 0, len);
-		parse_pipe(subcmd);
-		free(subcmd);
-		return (g_info.ret_val);
-	}
-	cmd_ret = parse_cmd(str, last_sep);
-	if ((str[last_sep] == '&' && cmd_ret != 0) || )
-	{
-
-	}
-	else
-	{
-
-	}
-
+	cmdlist->head = NULL;
+	cmdlist->current = NULL;
+	cmdlist->node_num = 0;
+	ast->root = NULL;
 }
 
-int	parse_pipe(char *str)
+void	make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff)
 {
 	
 }
+
+void	add_cmdnode()

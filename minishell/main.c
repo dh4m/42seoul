@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/09/25 14:56:26 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/27 21:03:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int argc, char *argv[], char *envp[])
 		str = readline("minishell$ ");
 		if (str && *str != '\n' && *str != 0)
 		{
-			parse_cmd(str, ft_strlen(str));
+			proc_cmd(str);
 			add_history(str);
 		}
 		else if (!str)
