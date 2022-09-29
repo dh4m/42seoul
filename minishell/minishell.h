@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/27 21:51:25 by dham             ###   ########.fr       */
+/*   Updated: 2022/09/29 22:00:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ enum e_type
 typedef struct s_strbuff
 {
 	char	*str;
+	int		len;
 	int		now_read;
 }	t_strbuff;
 
@@ -75,16 +76,26 @@ typedef struct s_info
 
 extern t_info	g_info;
 
-void	info_init(char **envp);
-void	add_env(char *env_str);
-void	add_only_key_env(char *env_name);
-t_env	*search_env(char *name);
-void	del_env(char *name);
-int		valid_env_name(char *name);
-int		num_of_env(void);
-char	**env_list_make(void);
-int		proc_cmd(char *cmd);
-void	make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff);
-void	init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
+int			ft_isblank(int ch);
+int			ft_isoper(char *str);
+int			ft_isquotes(int ch);
+
+void		info_init(char **envp);
+void		add_env(char *env_str);
+void		add_only_key_env(char *env_name);
+t_env		*search_env(char *name);
+void		del_env(char *name);
+int			valid_env_name(char *name);
+int			num_of_env(void);
+char		**env_list_make(void);
+
+int			proc_cmd(char *cmd);
+void		make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff);
+void		init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
+void		add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node);
+
+t_cmdnode	*get_cmd(t_strbuff *buff);
+int			cmd_len(char *str);
+int			bracket_error(char *str);
 
 #endif
