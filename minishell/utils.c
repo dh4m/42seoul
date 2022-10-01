@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:28:32 by dham              #+#    #+#             */
-/*   Updated: 2022/09/29 21:58:41 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/01 22:06:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 int	ft_isblank(int ch)
 {
-	if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\v' || ch == '\n' \
-		|| ch == '\f')
+	if (ch == ' ' || ch == '\t')
 		return (1);
 	return (0);
 }
@@ -30,7 +29,17 @@ int	ft_isoper(char *str)
 	else if (*str == '|')
 		return (PIPE);
 	else if (*str == '(')
-		return (BRACKET);
+		return (BRACKET_OPEN);
+	else if (*str == ')')
+		return (BRACKET_CLOSE);
+	else if (!ft_strncmp(str, "<<", 2))
+		return (RE_HEREDOC);
+	else if (!ft_strncmp(str, ">>", 2))
+		return (RE_APPEND);
+	else if (*str == '<')
+		return (RE_IN);
+	else if (*str == '>')
+		return (RE_OUT);
 	return (-1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/09/29 22:00:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/01 22:06:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ enum e_type
 	PIPE,
 	AND,
 	OR,
-	BRACKET,
+	BRACKET_OPEN,
+	BRACKET_CLOSE,
+	RE_IN,
+	RE_APPEND,
+	RE_OUT,
+	RE_HEREDOC,
 	CMD
 };
 
@@ -95,7 +100,5 @@ void		init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
 void		add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node);
 
 t_cmdnode	*get_cmd(t_strbuff *buff);
-int			cmd_len(char *str);
-int			bracket_error(char *str);
 
 #endif

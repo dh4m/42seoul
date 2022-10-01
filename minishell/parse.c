@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/09/29 22:24:42 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/01 20:48:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int	proc_cmd(char *cmd)
 	buff.len = ft_strlen(cmd);
 	buff.now_read = 0;
 	init_list_ast(&cmdlist, &ast);
-	make_cmdlist(&cmdlist, &buff);
+	if (make_cmdlist(&cmdlist, &buff)) // heredoc을 여기서???????
+		; // syntax error
+	preproc_cmdlist(&cmdlist); //redirection 들 처리 and 확장 등
 	make_ast(&cmdlist, &ast);
 	exc_ast(&ast);
 	clear_list(&cmdlist);
@@ -42,7 +44,7 @@ void	init_list_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 void	make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff)
 {
-	if (bracket_check())
+	
 }
 
 void	add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node)
