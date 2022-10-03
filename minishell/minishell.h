@@ -6,14 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/10/03 20:42:01 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/03 21:04:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-//#include <stdio.h>
+#include <stdio.h>
 
 
 enum e_type

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/10/03 20:41:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/03 21:04:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-//static void	print_list(t_cmdlist *cmdlist);
+static void	print_list(t_cmdlist *cmdlist);
 
 int	proc_cmd(char *cmd)
 {
@@ -26,15 +26,14 @@ int	proc_cmd(char *cmd)
 	buff.len = ft_strlen(cmd);
 	buff.now_read = 0;
 	init_list_ast(&cmdlist, &ast);
-	make_cmdlist(&cmdlist, &buff);
-	//if (make_cmdlist(&cmdlist, &buff)) // heredoc을 여기서???????
-	//	; // syntax error
+	if (make_cmdlist(&cmdlist, &buff)) // heredoc을 여기서???????
+		; // syntax error
 	/*preproc_cmdlist(&cmdlist); //redirection 들 처리 and 확장 등
 	make_ast(&cmdlist, &ast);
-	exc_ast(&ast);
-	clear_list(&cmdlist);
-	clear_ast(&ast);*/
+	exc_ast(&ast);*/
 	print_list(&cmdlist);
+	//clear_list(&cmdlist);
+	//clear_ast(&ast);
 	return (0);
 }
 
@@ -80,7 +79,23 @@ void	add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node)
 	return ;
 }
 
-/*////////
+void	clear_list(t_cmdlist *cmdlist)
+{
+	t_cmdnode	*cur_node;
+	t_cmdnode	*next_node;
+
+	cur_node = cmdlist->head;
+	while (cur_node)
+	{
+		next_node = cur_node->next;
+		if (cur_node->cmd)
+			free(cur_node->cmd);
+		free(cur_node);
+		cur_node = next_node;
+	}
+}
+
+////////
 static void	print_list(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*cur_node;
@@ -113,4 +128,4 @@ static void	print_list(t_cmdlist *cmdlist)
 		printf("#####################################\n\n");
 		cur_node = cur_node->next;
 	}
-}*/
+}
