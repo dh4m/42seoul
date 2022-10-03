@@ -6,12 +6,15 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/10/01 22:06:35 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/03 20:42:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+//#include <stdio.h>
+
 
 enum e_type
 {
@@ -24,6 +27,8 @@ enum e_type
 	RE_APPEND,
 	RE_OUT,
 	RE_HEREDOC,
+	DOUBLE_Q,
+	SINGLE_Q,
 	CMD
 };
 
@@ -84,6 +89,7 @@ extern t_info	g_info;
 int			ft_isblank(int ch);
 int			ft_isoper(char *str);
 int			ft_isquotes(int ch);
+int			ft_ismeta(char *str);
 
 void		info_init(char **envp);
 void		add_env(char *env_str);
@@ -95,10 +101,11 @@ int			num_of_env(void);
 char		**env_list_make(void);
 
 int			proc_cmd(char *cmd);
-void		make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff);
+int			make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff);
 void		init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
 void		add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node);
 
-t_cmdnode	*get_cmd(t_strbuff *buff);
+t_cmdnode	*get_token(t_strbuff *buff);
+int			cmd_len(char *cmd);
 
 #endif

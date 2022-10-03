@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:28:32 by dham              #+#    #+#             */
-/*   Updated: 2022/10/01 22:06:37 by dham             ###   ########.fr       */
+/*   Updated: 2022/10/03 19:14:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,21 @@ int	ft_isoper(char *str)
 		return (RE_IN);
 	else if (*str == '>')
 		return (RE_OUT);
-	return (-1);
+	return (CMD);
 }
 
 int	ft_isquotes(int ch)
 {
-	if (ch == '\"' || ch == '\'')
+	if (ch == '\"')
+		return (DOUBLE_Q);
+	if (ch == '\'')
+		return (SINGLE_Q);
+	return (CMD);
+}
+
+int	ft_ismeta(char *str)
+{
+	if (!*str || ft_isblank(*str) || ft_isoper(str) != CMD)
 		return (1);
 	return (0);
 }
