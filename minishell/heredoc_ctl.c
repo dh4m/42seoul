@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   heredoc_ctl.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/11/01 22:08:49 by dham             ###   ########.fr       */
+/*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
+/*   Updated: 2022/11/01 22:08:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_builtin.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "libft.h"
+#include "builtin/ft_builtin.h"
+#include "signal/ft_signal.h"
+#include "minishell.h"
 
-int	ft_echo(int nl, char *str)
+int	make_heredoc(char *end_flag)
 {
-	printf("%s", str); // 널문자 뒤뒤도  ㅍ출력해야됨 ㅇㅣ제ㄴ아님
-	if (nl)
-		printf("\n");
-	return (0);
+	int	w_fd;
+	int	ret_fd;
+	
+	
 }
