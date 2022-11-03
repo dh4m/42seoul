@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/01 16:36:05 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/03 15:35:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int			proc_cmd(char *cmd);
 int			make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff);
 void		init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
 void		add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node);
+void		clear_list(t_cmdlist *cmdlist);
 
 t_cmdnode	*get_token(t_strbuff *buff);
 int			cmd_len(char *cmd);
