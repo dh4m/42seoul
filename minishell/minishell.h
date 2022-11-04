@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/03 15:35:07 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/04 13:44:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ typedef struct s_astnode
 {
 	int				type;
 	int				breket;
-	int				fd;
+	int				i_fd;
+	int				o_fd;
 	char			*cmd;
 	struct s_node	*left;
 	struct s_node	*right;
