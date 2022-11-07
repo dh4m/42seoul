@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 01:10:33 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/08 01:18:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ typedef struct s_astnode
 {
 	int				type;
 	int				breket;
-	char			**redi_i;
-	char			**redi_o;
-	char			**cmd;
+	t_strlist		redi_i;
+	t_strlist		redi_o;
+	t_strlist		cmd;
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_astnode;
@@ -72,6 +72,18 @@ typedef struct s_ast
 {
 	t_astnode	*root;
 }	t_ast;
+
+typedef struct s_strnode
+{
+	char		*str;
+	t_strnode	*next;
+}	t_strnode;
+
+typedef struct s_strlist
+{
+	t_strnode	prenode;
+	int			node_num;
+}	t_strlist;
 
 typedef struct s_env
 {
