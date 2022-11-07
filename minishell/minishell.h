@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/04 13:44:31 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/08 01:10:33 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ enum e_type
 	RE_HEREDOC,
 	DOUBLE_Q,
 	SINGLE_Q,
-	CMD
+	CMD,
+	ERROR
 };
 
 typedef struct s_strbuff
@@ -60,9 +61,9 @@ typedef struct s_astnode
 {
 	int				type;
 	int				breket;
-	int				i_fd;
-	int				o_fd;
-	char			*cmd;
+	char			**redi_i;
+	char			**redi_o;
+	char			**cmd;
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_astnode;
@@ -110,5 +111,7 @@ void		clear_list(t_cmdlist *cmdlist);
 
 t_cmdnode	*get_token(t_strbuff *buff);
 int			cmd_len(char *cmd);
+
+t_astnode	*init_astnode(void);
 
 #endif

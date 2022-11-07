@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/11/04 14:44:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/08 01:10:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,15 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 
 t_astnode	*make_node(t_cmdlist *cmdlist)
 {
+	t_astnode	*ret_node;
+
+	ret_node = init_astnode();
 	
+	while (avail_node(cmdlist->current))
+	{
+
+		cmdlist->current = cmdlist->current->next;
+	}
+	return (ret_node);
 }
+
