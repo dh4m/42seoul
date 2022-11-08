@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:46:51 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 01:22:13 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/08 18:31:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,28 @@ t_astnode	*init_astnode(void)
 	return (ret_val);
 }
 
+void	clear_strlist(t_strlist *list)
+{
+	t_strnode	*cur_node;
+	t_strnode	*next_node;
+
+	if (list->node_num == 0)
+		return ;
+	cur_node = list->prenode.next;
+	while (cur_node)
+	{
+		next_node = cur_node->next;
+		free(cur_node);
+		cur_node = next_node;
+	}
+}
+
 int avail_node(t_cmdnode *node)
 {
-	
+	return (node->type != PIPE && node->type != AND && node->type != OR);
+}
+
+int	is_redirection(int type)
+{
+	return (type == RE_APPEND || type == RE_IN || type == RE_OUT);
 }

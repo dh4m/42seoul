@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 14:43:32 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/08 15:35:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,11 @@ int			cmd_len(char *cmd);
 int			make_ast(t_cmdlist *cmdlist, t_ast *ast);
 t_astnode	*make_pipeline(t_cmdlist *cmdlist);
 t_astnode	*make_node(t_cmdlist *cmdlist);
+void		clear_ast(t_astnode *root);
 
 t_astnode	*init_astnode(void);
 int 		avail_node(t_cmdnode *node);
+int			is_redirection(int type);
+void		clear_strlist(t_strlist *list);
+
 #endif
