@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 01:18:17 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/08 14:43:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,10 @@ typedef struct s_cmdlist
 	int			node_num;
 }	t_cmdlist;
 
-typedef struct s_astnode
-{
-	int				type;
-	int				breket;
-	t_strlist		redi_i;
-	t_strlist		redi_o;
-	t_strlist		cmd;
-	struct s_node	*left;
-	struct s_node	*right;
-}	t_astnode;
-
-typedef struct s_ast
-{
-	t_astnode	*root;
-}	t_ast;
-
 typedef struct s_strnode
 {
-	char		*str;
-	t_strnode	*next;
+	char				*str;
+	struct s_strnode	*next;
 }	t_strnode;
 
 typedef struct s_strlist
@@ -84,6 +68,22 @@ typedef struct s_strlist
 	t_strnode	prenode;
 	int			node_num;
 }	t_strlist;
+
+typedef struct s_astnode
+{
+	int					type;
+	int					breket;
+	t_strlist			redi_i;
+	t_strlist			redi_o;
+	t_strlist			cmd;
+	struct s_astnode	*left;
+	struct s_astnode	*right;
+}	t_astnode;
+
+typedef struct s_ast
+{
+	t_astnode	*root;
+}	t_ast;
 
 typedef struct s_env
 {
@@ -124,6 +124,10 @@ void		clear_list(t_cmdlist *cmdlist);
 t_cmdnode	*get_token(t_strbuff *buff);
 int			cmd_len(char *cmd);
 
-t_astnode	*init_astnode(void);
+int			make_ast(t_cmdlist *cmdlist, t_ast *ast);
+t_astnode	*make_pipeline(t_cmdlist *cmdlist);
+t_astnode	*make_node(t_cmdlist *cmdlist);
 
+t_astnode	*init_astnode(void);
+int 		avail_node(t_cmdnode *node);
 #endif
