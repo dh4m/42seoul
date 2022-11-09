@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_signal.c                                        :+:      :+:    :+:   */
+/*   ft_handler.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
-/*   Updated: 2022/11/09 15:49:43 by dham             ###   ########.fr       */
+/*   Created: 2022/11/09 15:46:32 by dham              #+#    #+#             */
+/*   Updated: 2022/11/09 15:49:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,18 @@
 #include <readline/history.h>
 #include "ft_signal.h"
 
-void	ft_readline_signal_set(void)
+void	readline_proc(int sig)
 {
-	signal(SIGINT, readline_proc);
-	signal(SIGQUIT, readline_proc);
-}
-
-void	ft_excute_signal_set(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	ft_default_signal_set(void)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 1);
+		rl_redisplay();
+	}
+	else if (sig == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }

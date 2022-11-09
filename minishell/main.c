@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/11/01 22:07:51 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/09 15:50:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main(int argc, char *argv[], char *envp[])
 {
 	char *str;
 	
-	ft_signal_set();
+	ft_readline_signal_set();
 	info_init(envp);
 	while (1)
 	{
