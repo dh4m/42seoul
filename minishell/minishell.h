@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 15:35:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/09 10:53:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,9 @@ t_astnode	*init_astnode(void);
 int 		avail_node(t_cmdnode *node);
 int			is_redirection(int type);
 void		clear_strlist(t_strlist *list);
+
+int			cmd_proc(t_cmdlist *cmdlist, t_astnode *node);
+int			redir_proc(t_cmdlist *cmdlist, t_astnode *node);
+void		add_strnode(char *str, t_strlist *list);
 
 #endif

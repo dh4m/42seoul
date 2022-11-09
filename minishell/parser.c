@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 22:02:05 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/09 13:09:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,19 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 	{
 		;//bracket_proc
 	}
-	while (avail_node(cmdlist->current))
+	while (cmdlist->current && avail_node(cmdlist->current))
 	{
 		if (cmdlist->current->type == BRACKET_OPEN || \
-			cmdlist->current->type == BRACKET_OPEN)
+			cmdlist->current->type == BRACKET_CLOSE)
 			; //error
-		else if (cmdlist->current->type == RE_HEREDOC)
-		{
-			; //heredoc_proc
-		}
 		else if (is_redirection(cmdlist->current->type))
 		{
-			; //redir_proc
+			if (!redir_proc(cmdlist, ret_node))
+				; //error
 		}
 		else
 		{
-			; //cmd_proc
+			cmd_proc(cmdlist, ret_node);
 		}
 		cmdlist->current = cmdlist->current->next;
 	}

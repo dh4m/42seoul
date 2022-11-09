@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:46:51 by dham              #+#    #+#             */
-/*   Updated: 2022/11/08 18:31:20 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/09 10:29:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int avail_node(t_cmdnode *node)
 
 int	is_redirection(int type)
 {
-	return (type == RE_APPEND || type == RE_IN || type == RE_OUT);
+	return (type == RE_APPEND || type == RE_IN || \
+			type == RE_OUT || type == RE_HEREDOC);
 }
