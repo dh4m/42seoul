@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/09 10:53:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/10 21:24:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ typedef struct s_info
 }	t_info;
 
 extern t_info	g_info;
+extern int rl_done;
+extern int (*rl_event_hook)(void);
 
 int			ft_isblank(int ch);
 int			ft_isoper(char *str);

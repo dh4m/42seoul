@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
-/*   Updated: 2022/11/09 15:49:43 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/10 21:39:19 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "ft_signal.h"
+#include "../minishell.h"
 
 void	ft_readline_signal_set(void)
 {
@@ -32,4 +33,17 @@ void	ft_default_signal_set(void)
 {
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+}
+
+void	ft_heredoc_signal_set(void)
+{
+	rl_event_hook = empty_event;
+	signal(SIGINT, heredoc_proc);
+	signal(SIGQUIT, readline_proc);
+}
+
+void	end_heredoc_set(void)
+{
+	rl_event_hook = 0;
+	rl_done = 0;
 }
