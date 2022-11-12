@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/11 12:37:14 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/12 11:01:33 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_cmdlist
 typedef struct s_strnode
 {
 	char				*str;
+	int					type;
 	struct s_strnode	*next;
 }	t_strnode;
 
@@ -136,6 +137,6 @@ void		clear_strlist(t_strlist *list);
 
 int			cmd_proc(t_cmdlist *cmdlist, t_astnode *node);
 int			redir_proc(t_cmdlist *cmdlist, t_astnode *node);
-void		add_strnode(char *str, t_strlist *list);
+void		add_strnode(char *str, int type, t_strlist *list);
 
 #endif
