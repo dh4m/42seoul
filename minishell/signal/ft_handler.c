@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:46:32 by dham              #+#    #+#             */
-/*   Updated: 2022/11/10 21:42:50 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/14 18:39:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	readline_proc(int sig)
 	}
 }
 
-void	heredoc_proc(int sig)
+void	heredoc_sig_proc(int sig)
 {
 	if (sig == SIGINT)
 	{

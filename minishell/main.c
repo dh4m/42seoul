@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/11/09 15:50:07 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/14 18:20:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int main(int argc, char *argv[], char *envp[])
 		{
 			proc_cmd(str);
 			add_history(str);
+			make_heredoc_temp_name(0);
 		}
 		else if (!str)
 		{

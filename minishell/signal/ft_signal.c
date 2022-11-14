@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
-/*   Updated: 2022/11/10 21:39:19 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/14 22:23:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_default_signal_set(void)
 void	ft_heredoc_signal_set(void)
 {
 	rl_event_hook = empty_event;
-	signal(SIGINT, heredoc_proc);
+	signal(SIGINT, heredoc_sig_proc);
 	signal(SIGQUIT, readline_proc);
 }
 

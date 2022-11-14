@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/12 11:01:33 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/14 18:35:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,6 @@ int			cmd_proc(t_cmdlist *cmdlist, t_astnode *node);
 int			redir_proc(t_cmdlist *cmdlist, t_astnode *node);
 void		add_strnode(char *str, int type, t_strlist *list);
 
+int			heredoc_proc(char *end_flag, t_strlist *list);
+char		*make_heredoc_temp_name(int num);
 #endif
