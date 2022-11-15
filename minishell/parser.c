@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/11/09 13:09:03 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/15 21:59:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	make_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 	pipe_set = make_pipeline(cmdlist);
 	if (!pipe_set)
-		; //error
+		return (0); //error
 	ast->root = pipe_set;
 	while (cmdlist->current)
 	{
@@ -30,7 +30,7 @@ int	make_ast(t_cmdlist *cmdlist, t_ast *ast)
 		ast->root = logic_oper;
 		logic_oper->right = make_pipeline(cmdlist);
 		if (!logic_oper->right)
-			; //error
+			return (0);
 	}
 	return (1);
 }
@@ -42,7 +42,7 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 
 	left = make_node(cmdlist);
 	if (!left)
-		; //error
+		return (NULL); //error
 	if (!cmdlist->current || \
 		cmdlist->current->type == AND || cmdlist->current->type == OR)
 		return (left);
@@ -50,7 +50,10 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 	ret_node->left = left;
 	ret_node->right = make_pipeline(cmdlist);
 	if (!ret_node->right)
-		; //error
+	{
+		clear_ast(ret_node);
+		return (NULL); //error
+	}
 	return (ret_node);
 }
 
@@ -83,6 +86,8 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 	}
 	return (ret_node);
 }
+
+
 
 void	clear_ast(t_astnode *root)
 {

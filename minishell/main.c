@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/11/14 18:20:47 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/15 19:55:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int main(int argc, char *argv[], char *envp[])
 		str = readline("minishell$ ");
 		if (str && *str != '\n' && *str != 0)
 		{
+			g_info.ret_val = 0;
 			proc_cmd(str);
 			add_history(str);
-			make_heredoc_temp_name(0);
 		}
 		else if (!str)
 		{

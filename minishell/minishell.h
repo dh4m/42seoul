@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/14 18:35:47 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/15 12:54:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define MINISHELL_H
 
 #include <stdio.h>
+# define RANDSTR_LEN 8
 
 
 enum e_type
@@ -140,5 +141,5 @@ int			redir_proc(t_cmdlist *cmdlist, t_astnode *node);
 void		add_strnode(char *str, int type, t_strlist *list);
 
 int			heredoc_proc(char *end_flag, t_strlist *list);
-char		*make_heredoc_temp_name(int num);
+char		*make_heredoc_temp_name(void);
 #endif
