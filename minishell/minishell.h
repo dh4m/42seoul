@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/15 12:54:02 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 21:31:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_strlist
 typedef struct s_astnode
 {
 	int					type;
-	int					breket;
+//	int					breket;
 	t_strlist			redi_i;
 	t_strlist			redi_o;
 	t_strlist			cmd;
@@ -118,6 +118,7 @@ int			num_of_env(void);
 char		**env_list_make(void);
 
 int			proc_cmd(char *cmd);
+
 int			make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff);
 void		init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
 void		add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node);
@@ -129,6 +130,7 @@ int			cmd_len(char *cmd);
 int			make_ast(t_cmdlist *cmdlist, t_ast *ast);
 t_astnode	*make_pipeline(t_cmdlist *cmdlist);
 t_astnode	*make_node(t_cmdlist *cmdlist);
+t_astnode	*make_oper_node(t_cmdlist *cmdlist);
 void		clear_ast(t_astnode *root);
 
 t_astnode	*init_astnode(void);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2022/11/15 21:55:36 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 21:52:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ static void	make_rand_str(char *buf)
 		read(fd, &temp, 1);
 		temp = (temp % 58) + 65;
 		if (temp > 90 && temp < 97)
-		{
-			temp + 7 + i;
-		}
+			temp = temp + 7 + i;
 		buf[i] = temp;
 		i++;
 	}
@@ -85,6 +83,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 	{
 		close(fd);
 		close(fd_w);
+		free(temp_name);
 		return (0); //error
 	}
 	close(fd_w);

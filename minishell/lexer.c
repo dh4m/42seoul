@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/11/04 13:44:27 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 16:35:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff)
 		add_cmdnode(cmdlist, cur_node);
 		cur_node = get_token(buff);
 	}
+	if (g_info.ret_val == 258)
+		return (-1);
 	return (0);
 }
 

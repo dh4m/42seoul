@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmdlist_utils.c                                    :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2022/10/03 19:42:22 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 16:29:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ t_cmdnode	*get_token(t_strbuff *buff)
 		return (ret_node);
 	}
 	len = cmd_len(&buff->str[buff->now_read]);
+	if (len < 0)
+	{
+		free(ret_node);
+		g_info.ret_val = 258;
+		return (NULL); //error
+	}
 	ret_node->cmd = ft_substr(&buff->str[buff->now_read], 0, len);
 	buff->now_read += len;
 	return (ret_node);
@@ -57,6 +63,8 @@ int	cmd_len(char *cmd)
 				i++;
 			if (ft_isquotes(cmd[i]) == quotes)
 				i++;
+			else
+				return (-1); //error//////
 		}
 		else
 			i++;

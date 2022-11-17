@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/11/15 21:59:17 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 22:05:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ int	make_ast(t_cmdlist *cmdlist, t_ast *ast)
 	t_astnode	*pipe_set;
 	t_astnode	*logic_oper;
 
+	printf("make_ast\n");
 	pipe_set = make_pipeline(cmdlist);
 	if (!pipe_set)
 		return (0); //error
 	ast->root = pipe_set;
 	while (cmdlist->current)
 	{
-		logic_oper = make_node(cmdlist);
+		logic_oper = make_oper_node(cmdlist);
 		logic_oper->left = ast->root;
 		ast->root = logic_oper;
 		logic_oper->right = make_pipeline(cmdlist);
@@ -40,13 +41,14 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 	t_astnode *ret_node;
 	t_astnode *left;
 
+	printf("make_pipe\n");
 	left = make_node(cmdlist);
 	if (!left)
 		return (NULL); //error
 	if (!cmdlist->current || \
 		cmdlist->current->type == AND || cmdlist->current->type == OR)
 		return (left);
-	ret_node = make_node(cmdlist);
+	ret_node = make_oper_node(cmdlist);
 	ret_node->left = left;
 	ret_node->right = make_pipeline(cmdlist);
 	if (!ret_node->right)
@@ -61,13 +63,12 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 {
 	t_astnode	*ret_node;
 
-	ret_node = init_astnode();
+	printf("make_node\n");
+	if (cmdlist->current->type == BRACKET_OPEN)
+		; //bracket_tree_return///
 	if (!avail_node(cmdlist->current))
 		; //error
-	if (cmdlist->current->type == BRACKET_OPEN)
-	{
-		;//bracket_proc
-	}
+	ret_node = init_astnode();
 	while (cmdlist->current && avail_node(cmdlist->current))
 	{
 		if (cmdlist->current->type == BRACKET_OPEN || \
@@ -87,7 +88,18 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 	return (ret_node);
 }
 
+t_astnode	*make_oper_node(t_cmdlist *cmdlist)
+{
+	t_astnode	*ret_node;
 
+	printf("make_oper_node\n");
+	if ((cmdlist->current && avail_node(cmdlist->current)) || !cmdlist->current)
+		; // debug_error
+	ret_node = init_astnode();
+	ret_node->type = cmdlist->current->type;
+	cmdlist->current = cmdlist->current->next;
+	return (ret_node);
+}
 
 void	clear_ast(t_astnode *root)
 {

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
-/*   Updated: 2022/11/15 21:56:21 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 21:55:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ void	end_heredoc_set(void)
 {
 	rl_event_hook = 0;
 	rl_done = 0;
-	// signal undo;;;;;;;;
+	ft_readline_signal_set(); // signal undo;;;;;;;;
 }

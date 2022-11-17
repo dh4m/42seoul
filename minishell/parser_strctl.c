@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:29:38 by dham              #+#    #+#             */
-/*   Updated: 2022/11/15 14:13:50 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/17 21:21:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	add_strnode(char *str, int type, t_strlist *list)
 	while (last->next)
 		last = last->next;
 	last->next = node;
+	list->node_num++;
 }
