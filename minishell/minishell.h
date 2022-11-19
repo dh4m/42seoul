@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 21:31:41 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/19 20:09:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,14 @@ void		add_strnode(char *str, int type, t_strlist *list);
 
 int			heredoc_proc(char *end_flag, t_strlist *list);
 char		*make_heredoc_temp_name(void);
+
+t_astnode	*bracket_tree(t_cmdlist *list);
+int			make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast);
+t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist);
+t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
+
+int			syntax_error(int ret_val);
+int			node_syntax_error(int ret_val, t_astnode *need_free);
+int			node_return(int ret_val, t_astnode *need_free);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:16:27 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 21:56:34 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/19 19:10:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ int	proc_cmd(char *cmd)
 	buff.len = ft_strlen(cmd);
 	buff.now_read = 0;
 	init_list_ast(&cmdlist, &ast);
-	if (make_cmdlist(&cmdlist, &buff) < 0)
-		; //syntax error
-	if (!make_ast(&cmdlist, &ast))
+	if (make_cmdlist(&cmdlist, &buff) < 0 || !make_ast(&cmdlist, &ast))
 		; //syntax error
 	/*
-	exc_ast(&ast);
+	else
+		exc_ast(&ast);
 	*/
 	print_list(&cmdlist);
 	clear_list(&cmdlist);

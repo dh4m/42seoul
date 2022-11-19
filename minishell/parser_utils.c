@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:46:51 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 21:31:46 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/19 20:07:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	clear_strlist(t_strlist *list)
 	t_strnode	*cur_node;
 	t_strnode	*next_node;
 
+	if (!list)
+		return ;
 	if (list->node_num == 0)
 		return ;
 	cur_node = list->prenode.next;
@@ -53,7 +55,8 @@ void	clear_strlist(t_strlist *list)
 
 int avail_node(t_cmdnode *node)
 {
-	return (node->type != PIPE && node->type != AND && node->type != OR);
+	return (node && node->type != PIPE \
+			&& node->type != AND && node->type != OR);
 }
 
 int	is_redirection(int type)

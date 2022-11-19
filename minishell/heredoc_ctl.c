@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 21:52:50 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/19 17:02:19 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,22 @@
 
 static void	make_rand_str(char *buf)
 {
-	char	temp;
-	int		fd;
-	int		i;
+	unsigned char		temp;
+	int					fd;
+	int					i;
+	const static char	*char_set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	fd = open("/dev/urandom", O_RDONLY);
 	i = 0;
 	while (i < RANDSTR_LEN)
 	{
 		read(fd, &temp, 1);
-		temp = (temp % 58) + 65;
-		if (temp > 90 && temp < 97)
-			temp = temp + 7 + i;
-		buf[i] = temp;
+		temp %= 62;
+		buf[i] = char_set[temp];
 		i++;
 	}
 	buf[RANDSTR_LEN] = 0;
+	close(fd);
 }
 
 int	heredoc_write(char *end_flag, int fd)
@@ -50,14 +50,14 @@ int	heredoc_write(char *end_flag, int fd)
 	while (1)
 	{
 		str = readline("> ");
-		if (!str || ft_strncmp(str, end_flag, ft_strlen(str)) == 0)
-			break;
-		else if (*str == 0 && g_info.ret_val == 130)
+		if (*str == 0 && g_info.ret_val == 130)
 		{
 			free(str);
 			end_heredoc_set();
 			return (0);
 		}
+		else if (!str || ft_strncmp(str, end_flag, ft_strlen(str)) == 0)
+			break;
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);
@@ -76,6 +76,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 	char	*str;
 
 	temp_name = make_heredoc_temp_name();
+	printf("%s\n", temp_name);
 	fd_w = open(temp_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	fd = open(temp_name, O_RDONLY);
 	unlink(temp_name);
@@ -87,7 +88,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 		return (0); //error
 	}
 	close(fd_w);
-	add_strnode((char *)fd, RE_HEREDOC, list);
+	add_strnode((char *)(long)fd, RE_HEREDOC, list);
 	free(temp_name);
 	return (1);
 }

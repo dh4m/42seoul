@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 16:29:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/11/19 18:36:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ t_cmdnode	*get_token(t_strbuff *buff)
 	if (len < 0)
 	{
 		free(ret_node);
-		g_info.ret_val = 258;
-		return (NULL); //error
+		return ((void *)(long)node_syntax_error(0, NULL));
 	}
 	ret_node->cmd = ft_substr(&buff->str[buff->now_read], 0, len);
 	buff->now_read += len;
