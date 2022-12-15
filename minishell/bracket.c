@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:34:41 by dham              #+#    #+#             */
-/*   Updated: 2022/11/19 20:54:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/15 17:23:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_astnode	*bracket_tree(t_cmdlist *cmdlist)
 	t_astnode	*ret_node;
 
 	tree_ast.root = NULL;
+	cmdlist->current = cmdlist->current->next;
 	if (!make_bracket_ast(cmdlist, &tree_ast))
 	{
 		clear_ast(tree_ast.root);
@@ -45,7 +46,7 @@ t_astnode	*bracket_tree(t_cmdlist *cmdlist)
 				return ((void *)(long)node_return(0, ret_node)); //error
 		}
 		else //////////////////
-			return ((void *)(long)node_return(0, ret_node)); //error
+			return ((void *)(long)node_syntax_error(0, ret_node)); //error
 		cmdlist->current = cmdlist->current->next;
 	}
 	return (ret_node);
