@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/11/19 20:09:32 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/15 16:09:29 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_info
 	t_env	*env;
 	t_env	*env_last;
 	int		ret_val;
+	int		past_ret_val;
 }	t_info;
 
 extern t_info	g_info;
