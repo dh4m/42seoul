@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/15 16:09:29 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/17 22:25:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 #include <stdio.h>
 # define RANDSTR_LEN 8
-
 
 enum e_type
 {
@@ -102,6 +101,7 @@ typedef struct s_info
 	int		past_ret_val;
 }	t_info;
 
+
 extern t_info	g_info;
 
 int			ft_isblank(int ch);
@@ -154,5 +154,14 @@ t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
 int			syntax_error(int ret_val);
 int			node_syntax_error(int ret_val, t_astnode *need_free);
 int			node_return(int ret_val, t_astnode *need_free);
+
+void		exe_ast(t_astnode *node, int input, int output);
+
+void		exe_ast_and(t_astnode *left_node, t_astnode *right_node);
+void		exe_ast_or(t_astnode *left_node, t_astnode *right_node);
+void		exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input);
+int			exe_ast_cmd(t_astnode *node, int input, int output);
+int			exe_ast_bracket(t_astnode *node, int input, int output);
+
 
 #endif

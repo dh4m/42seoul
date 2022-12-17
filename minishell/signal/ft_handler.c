@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:46:32 by dham              #+#    #+#             */
-/*   Updated: 2022/11/14 18:39:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/17 16:29:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	readline_proc(int sig)
 	}
 	else if (sig == SIGQUIT)
 	{
-		g_info.ret_val = 131;
 		rl_on_new_line();
 		rl_redisplay();
 	}

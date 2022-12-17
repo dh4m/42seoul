@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:16:27 by dham              #+#    #+#             */
-/*   Updated: 2022/12/15 17:16:25 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/17 18:30:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
+debug_asdf;
 static void	print_list(t_cmdlist *cmdlist);
 
 int	proc_cmd(char *cmd)
@@ -29,11 +30,9 @@ int	proc_cmd(char *cmd)
 	buff.now_read = 0;
 	init_list_ast(&cmdlist, &ast);
 	if (make_cmdlist(&cmdlist, &buff) < 0 || !make_ast(&cmdlist, &ast))
-		; //syntax error
-	/*
+		printf("\n######debug########\n"); //syntax error
 	else
-		exc_ast(&ast);
-	*/
+		exc_ast(ast.root);
 	print_list(&cmdlist);
 	clear_list(&cmdlist);
 	clear_ast(ast.root);
