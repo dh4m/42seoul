@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2022/12/18 21:36:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 00:39:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	dollor_len(char *str)
 	{
 		len++;
 	}
-	return (len);
+	return (len - 1);
 }
 
 char	*expansion(char *str)
@@ -40,12 +40,19 @@ char	*expansion(char *str)
 
 	temp = ft_strdup(str);
 	pos = ft_strchr(temp, '$');
+	while (pos && dollor_len(pos) == 0)
+		pos = ft_strchr(pos + 1, '$');
 	while (pos)
 	{
-		name = 
-		rep = search_env(name)->value;
-		temp = strreplace(temp, pos - temp, pos - temp + dollor_len(pos) - 1, rep);
+		name = ft_substr(pos, 1, dollor_len(pos));
+		if (search_env(name))
+			rep = search_env(name)->value;
+		else
+			rep = "";
+		temp = strreplace(temp, pos - temp, pos - temp + dollor_len(pos), rep);
 		pos = ft_strchr(temp, '$');
+		while (pos && dollor_len(pos) == 0)
+			pos = ft_strchr(pos + 1, '$');
 	}
 	return (temp);
 }
