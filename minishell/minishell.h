@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/17 22:25:45 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/18 18:25:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,25 @@ void		exe_ast(t_astnode *node, int input, int output);
 void		exe_ast_and(t_astnode *left_node, t_astnode *right_node);
 void		exe_ast_or(t_astnode *left_node, t_astnode *right_node);
 void		exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input);
-int			exe_ast_cmd(t_astnode *node, int input, int output);
+int			exe_ast_cmd(t_astnode *node, int input, int output, int remain);
 int			exe_ast_bracket(t_astnode *node, int input, int output);
 
+void		input_set(int input);
+void		output_set(int output);
+void		re_in_set(t_astnode *node);
+void		re_out_set(t_astnode *node);
+
+int			exe_cmd(t_astnode *node);
+int			exe_cmd_fork(t_astnode *node);
+
+char		*search_cmd(char *cmd, char *envp[]);
+char		*path_join(char *path, char *cmd);
+char		**path_list(char *envp[]);
+void		free_path_list(char **path);
+
+size_t		list_strlen(t_strlist *list);
+char		*list_to_str(t_strlist *list);
+char		*strreplace(char *str, size_t start, size_t end, char *rep);
+char		**get_argv(t_astnode *node);
 
 #endif

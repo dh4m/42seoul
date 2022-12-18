@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2022/12/17 18:19:32 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/18 21:36:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,15 @@ char	*strreplace(char *str, size_t start, size_t end, char *rep)
 	free(back);
 	free(str);
 	return (ret_str);
+}
+
+char	**get_argv(t_astnode *node)
+{
+	char	*temp_str;
+	char	**ret_val;
+
+	temp_str = list_to_str(node->cmd.prenode.next);
+	temp_str = expansion(temp_str);
+	
+
 }
