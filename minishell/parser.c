@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/11/19 19:36:32 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 17:14:19 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 		else if (is_redirection(cmdlist->current->type))
 		{
 			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_return(0, ret_node)); //error
+				return ((void *)(long)node_syntax_error(0, ret_node)); //error
 		}
 		else
 			cmd_proc(cmdlist, ret_node);
