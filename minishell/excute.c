@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:16:27 by dham              #+#    #+#             */
-/*   Updated: 2022/12/17 18:30:10 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 15:49:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	proc_cmd(char *cmd)
 	if (make_cmdlist(&cmdlist, &buff) < 0 || !make_ast(&cmdlist, &ast))
 		printf("\n######debug########\n"); //syntax error
 	else
-		exc_ast(ast.root);
-	print_list(&cmdlist);
+		exe_ast(ast.root, 0, 1);
+	//print_list(&cmdlist);
 	clear_list(&cmdlist);
 	clear_ast(ast.root);
 	return (0);

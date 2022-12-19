@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2022/12/18 16:23:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 16:12:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
+
+static void	redi_error(char *name)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd("No such file or directory: ", 2);
+	ft_putstr_fd((char *)name, 2);
+	ft_putstr_fd("\n", 2);
+	exit (1);
+}
 
 void	input_set(int input)
 {
@@ -46,7 +55,7 @@ void	re_in_set(t_astnode *node)
 		{
 			fd = open(red_node->str, O_RDONLY);
 			if (fd < 0)
-				;//error
+				redi_error(red_node->str);//error
 			input_set(fd);
 		}
 		else if (red_node->type == RE_HEREDOC)
@@ -69,14 +78,14 @@ void	re_out_set(t_astnode *node)
 		{
 			fd = open(red_node->str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 			if (fd < 0)
-				;//error
+				redi_error(red_node->str);//error
 			output_set(fd);
 		}
 		else if (red_node->type == RE_APPEND)
 		{
 			fd = open(red_node->str, O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (fd < 0)
-				;//error
+				redi_error(red_node->str);//error
 			output_set(fd);
 		}
 		red_node = red_node->next;

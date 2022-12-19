@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:29:39 by dham              #+#    #+#             */
-/*   Updated: 2022/12/18 16:33:50 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 15:46:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ char	*path_join(char *path, char *cmd)
 	path_len = ft_strlen(path);
 	cmd_len = ft_strlen(cmd);
 	ret_str = malloc(path_len + cmd_len + 2);
-	if (!ret_str)
-		error_exit();
 	ft_strlcpy(ret_str, path, path_len + 1);
 	ft_strlcat(ret_str, "/", path_len + 2);
 	ft_strlcat(ret_str, cmd, path_len + cmd_len + 2);

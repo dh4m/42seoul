@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/18 18:25:46 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 15:37:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,5 +180,11 @@ size_t		list_strlen(t_strlist *list);
 char		*list_to_str(t_strlist *list);
 char		*strreplace(char *str, size_t start, size_t end, char *rep);
 char		**get_argv(t_astnode *node);
+
+char		**shell_split(char const *s, char c);
+
+char		*remove_quote(char *str);
+void		quote_proc(char **argv);
+char		*expansion(char *str);
 
 #endif

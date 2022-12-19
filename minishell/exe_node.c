@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2022/12/18 15:40:43 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 15:45:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	exe_ast_cmd(t_astnode *node, int input, int output, int remain)
 	}
 	return (pid);
 }
-
+/*
 int	exe_ast_bracket(t_astnode *node, int input, int output)
 {
 	int	pid;
@@ -86,3 +86,4 @@ int	exe_ast_bracket(t_astnode *node, int input, int output)
 		exe_ast()
 	}
 }
+*/

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 00:39:20 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/19 15:55:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	dollor_len(char *str)
 	int	len;
 
 	len = 1;
+	if (str[len] == '?')
+		return (1);
 	while (ft_isalpha(str[len]) || str[len] == '_')
 	{
 		len++;
@@ -31,17 +33,31 @@ int	dollor_len(char *str)
 	return (len - 1);
 }
 
+char	*dollor_search(char *str)
+{
+	int	bracket;
+
+	bracket = 0;
+	while (*str)
+	{
+		if (*str == '"')
+			bracket = (bracket == 0);
+		if (*str == '$' && dollor_len(str))
+			return (str);
+		if (!bracket && *str == '\'')
+			str = ft_strchr(str + 1, '\'');
+		str++;
+	}
+	return (0);
+}
+
 char	*expansion(char *str)
 {
 	char	*pos;
-	char	*temp;
 	char	*rep;
 	char	*name;
 
-	temp = ft_strdup(str);
-	pos = ft_strchr(temp, '$');
-	while (pos && dollor_len(pos) == 0)
-		pos = ft_strchr(pos + 1, '$');
+	pos = dollor_search(str);
 	while (pos)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
@@ -49,10 +65,41 @@ char	*expansion(char *str)
 			rep = search_env(name)->value;
 		else
 			rep = "";
-		temp = strreplace(temp, pos - temp, pos - temp + dollor_len(pos), rep);
-		pos = ft_strchr(temp, '$');
-		while (pos && dollor_len(pos) == 0)
-			pos = ft_strchr(pos + 1, '$');
+		free(name);
+		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
+		pos = dollor_search(str);
 	}
-	return (temp);
+	return (str);
+}
+
+char	*remove_quote(char *str)
+{
+	int		i;
+	char	quote;
+
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			quote = str[i];
+			str = strreplace(str, i, i, "");
+			while (str[i] != quote)
+				i++;
+			str = strreplace(str, i, i, "");
+			continue;
+		}
+		i++;
+	}
+	return (str);
+}
+
+void	quote_proc(char **argv)
+{
+	int	i;
+
+	while (argv[i])
+	{
+		argv[i] = remove_quote(argv[i]);
+		i++;
+	}
 }
