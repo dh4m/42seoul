@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 15:46:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:43:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,24 @@ static int	is_builtin(char *str)
 			ft_strncmp("unset", str, 6) == 0);
 }
 
+static int	is_parents(char *str)
+{
+	return (ft_strncmp("cd", str, 3) == 0 || \
+			ft_strncmp("echo", str, 5) == 0 || \
+			ft_strncmp("env", str, 4) == 0 || \
+			ft_strncmp("exit", str, 5) == 0 || \
+			ft_strncmp("export", str, 7) == 0 || \
+			ft_strncmp("pwd", str, 4) == 0 || \
+			ft_strncmp("unset", str, 6) == 0);
+}
+
 int	exe_cmd_fork(t_astnode *node)
 {
 	char	**argv;
 	char	*cmd_str;
 	char	**envp;
 
-	re_in_set(node);
-	re_out_set(node);
+	redirect_set(node);
 	argv = get_argv(node);
 	envp = env_list_make();
 	if (ft_strchr(argv[0], '/'))
@@ -66,10 +76,21 @@ int	exe_cmd_fork(t_astnode *node)
 	free_path_list(argv);
 	exit(127);
 }
-
 /*
-int	exe_cmd(t_astnode *node)
+int	exe_pure_cmd(t_astnode *node)
 {
-	
+	char	**argv;
+	char	*cmd_str;
+	char	**envp;
+	int		fd_backup[2];
+
+	fd_backup[0] = dup(STDIN_FILENO);
+	fd_backup[1] = dup(STDOUT_FILENO);
+	re_in_set(node);
+	re_out_set(node);
+	argv = get_argv(node);
+	envp = env_list_make();
+	if (is_parents(argv[0]))
+		; // builtin
 }
 */

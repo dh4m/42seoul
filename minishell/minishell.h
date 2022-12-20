@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 15:37:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:41:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ typedef struct s_astnode
 {
 	int					type;
 //	int					breket;
-	t_strlist			redi_i;
-	t_strlist			redi_o;
+	t_strlist			redi;
 	t_strlist			cmd;
 	struct s_astnode	*left;
 	struct s_astnode	*right;
@@ -165,8 +164,9 @@ int			exe_ast_bracket(t_astnode *node, int input, int output);
 
 void		input_set(int input);
 void		output_set(int output);
-void		re_in_set(t_astnode *node);
-void		re_out_set(t_astnode *node);
+void		re_in_set(t_strnode *red_node);
+void		re_out_set(t_strnode *red_node);
+void		redirect_set(t_astnode *node);
 
 int			exe_cmd(t_astnode *node);
 int			exe_cmd_fork(t_astnode *node);

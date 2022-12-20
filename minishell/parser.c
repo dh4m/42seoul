@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 17:14:19 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:26:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ void	clear_ast(t_astnode *root)
 		return ;
 	clear_ast(root->left);
 	clear_ast(root->right);
-	clear_strlist(&(root->redi_i));
-	clear_strlist(&(root->redi_o));
+	clear_strlist(&(root->redi));
 	clear_strlist(&(root->cmd));
 	free(root);
 }

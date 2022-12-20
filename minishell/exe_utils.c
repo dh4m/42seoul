@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 13:48:59 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:41:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,50 +44,58 @@ void	output_set(int output)
 		close(output);
 }
 
-void	re_in_set(t_astnode *node)
+void	re_in_set(t_strnode *red_node)
 {
-	t_strnode	*red_node;
-	int			fd;
+	int	fd;
 
-	red_node = node->redi_i.prenode.next;
-	while (red_node)
+	if (red_node->type == RE_IN)
 	{
-		if (red_node->type == RE_IN)
-		{
-			fd = open(red_node->str, O_RDONLY);
-			if (fd < 0)
-				redi_error(red_node->str);//error
-			input_set(fd);
-		}
-		else if (red_node->type == RE_HEREDOC)
-		{
-			input_set((int)red_node->str);
-		}
-		red_node = red_node->next;
+		fd = open(red_node->str, O_RDONLY);
+		if (fd < 0)
+			redi_error(red_node->str);//error
+		input_set(fd);
+	}
+	else if (red_node->type == RE_HEREDOC)
+	{
+		input_set((int)red_node->str);
 	}
 }
 
-void	re_out_set(t_astnode *node)
+void	re_out_set(t_strnode *red_node)
+{
+	int	fd;
+
+	if (red_node->type == RE_OUT)
+	{
+		fd = open(red_node->str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (fd < 0)
+			redi_error(red_node->str);//error
+		output_set(fd);
+	}
+	else if (red_node->type == RE_APPEND)
+	{
+		fd = open(red_node->str, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		if (fd < 0)
+			redi_error(red_node->str);//error
+		output_set(fd);
+	}
+}
+
+void	redirect_set(t_astnode *node)
 {
 	t_strnode	*red_node;
 	int			fd;
 
-	red_node = node->redi_o.prenode.next;
+	red_node = node->redi.prenode.next;
 	while (red_node)
 	{
-		if (red_node->type == RE_OUT)
+		if (red_node->type == RE_OUT || red_node->type == RE_APPEND)
 		{
-			fd = open(red_node->str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-			if (fd < 0)
-				redi_error(red_node->str);//error
-			output_set(fd);
+			re_out_set(red_node);
 		}
-		else if (red_node->type == RE_APPEND)
+		else if (red_node->type == RE_IN || red_node->type == RE_HEREDOC)
 		{
-			fd = open(red_node->str, O_WRONLY | O_CREAT | O_APPEND, 0666);
-			if (fd < 0)
-				redi_error(red_node->str);//error
-			output_set(fd);
+			re_in_set(red_node);
 		}
 		red_node = red_node->next;
 	}

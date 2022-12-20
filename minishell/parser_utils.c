@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:46:51 by dham              #+#    #+#             */
-/*   Updated: 2022/11/19 20:07:05 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:42:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ t_astnode	*init_astnode(void)
 
 	ret_val = malloc(sizeof(t_astnode));
 	ret_val->type = CMD;
-	ret_val->redi_i.prenode.str = NULL;
-	ret_val->redi_i.prenode.next = NULL;
-	ret_val->redi_i.node_num = 0;
-	ret_val->redi_o.prenode.str = NULL;
-	ret_val->redi_o.prenode.next = NULL;
-	ret_val->redi_o.node_num = 0;
+	ret_val->redi.prenode.str = NULL;
+	ret_val->redi.prenode.next = NULL;
+	ret_val->redi.node_num = 0;
 	ret_val->cmd.prenode.str = NULL;
 	ret_val->cmd.prenode.next = NULL;
 	ret_val->cmd.node_num = 0;
