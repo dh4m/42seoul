@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 16:12:51 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 13:48:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@
 
 static void	redi_error(char *name)
 {
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd("No such file or directory: ", 2);
-	ft_putstr_fd((char *)name, 2);
-	ft_putstr_fd("\n", 2);
+	char	*err_str;
+
+	err_str = ft_strjoin("minishell: ", name);
+	perror(err_str);
+	free(err_str);
 	exit (1);
 }
 
