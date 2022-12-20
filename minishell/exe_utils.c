@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 14:41:38 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:46:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,10 @@ void	redirect_set(t_astnode *node)
 		}
 		red_node = red_node->next;
 	}
+}
+
+void	redirect_reset(int backup[2])
+{
+	dup2(backup[0], 0);
+	dup2(backup[1], 1);
 }

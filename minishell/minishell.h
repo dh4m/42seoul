@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 14:41:01 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/20 14:46:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void		output_set(int output);
 void		re_in_set(t_strnode *red_node);
 void		re_out_set(t_strnode *red_node);
 void		redirect_set(t_astnode *node);
+void		redirect_reset(int backup[2]);
 
 int			exe_cmd(t_astnode *node);
 int			exe_cmd_fork(t_astnode *node);
