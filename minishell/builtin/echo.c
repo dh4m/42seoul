@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 16:16:55 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:08:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,9 @@ int	ft_echo(int nl, char *str)
 	if (nl)
 		printf("\n");
 	return (0);
+}
+
+int	exe_echo(char **argv)
+{
+	
 }

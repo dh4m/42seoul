@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:54:16 by dham              #+#    #+#             */
-/*   Updated: 2022/09/13 14:55:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:08:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,9 @@ int	ft_cd(char *path)
 		pwd_env->value = getcwd(NULL, PATH_MAX);
 	}
 	return (0);
+}
+
+int exe_cd(char **argv)
+{
+	
 }

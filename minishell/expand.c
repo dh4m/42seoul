@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 15:55:14 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:32:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,14 @@ char	*expansion(char *str)
 		name = ft_substr(pos, 1, dollor_len(pos));
 		if (search_env(name))
 			rep = search_env(name)->value;
+		else if (*name == '?')
+			rep = ft_itoa(g_info.past_ret_val);
 		else
 			rep = "";
-		free(name);
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
+		if (*name == '?')
+			free(rep);
+		free(name);
 		pos = dollor_search(str);
 	}
 	return (str);

@@ -6,13 +6,39 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2022/09/12 22:25:29 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:21:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_BUILTIN_H
 # define FT_BUILTIN_H
 
+# define NUM_BUILTIN 7
 
+void	exe_builtin(char **argv);
+
+int exe_cd(char **argv);
+int	ft_cd(char *path);
+
+int	exe_echo(char **argv);
+int	ft_echo(int nl, char *str);
+
+int	exe_env(char **argv);
+int	ft_env(void);
+
+int	exe_exit(char **argv);
+int	ft_exit(int code);
+
+int	exe_export(char **argv);
+int	export_env_list(void);
+int	ft_export_value(char *env_str);
+int	ft_export_name(char *env_str);
+int	ft_export(char *env_str);
+
+int	exe_pwd(char **argv);
+int	ft_pwd(void);
+
+int	exe_unset(char **argv);
+int	ft_unset(char *name);
 
 #endif

@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/21 20:02:32 by dham              #+#    #+#             */
+/*   Updated: 2022/12/21 20:25:09 by dham             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../minishell.h"
+#include "ft_builtin.h"
+#include "libft.h"
+#include <stdio.h>
+
+void	exe_builtin(char **argv)
+{
+	const int	(*func[7])(char **) = {exe_cd, exe_echo, exe_env, exe_exit, \
+										exe_export, exe_pwd, exe_unset};
+	const char	*func_name[7] = {"cd", "echo", "env", "exit", \
+								"export", "pwd", "unset"};
+	const int	cmd_len = ft_strlen(argv[0]);
+	int			i;
+
+	i = 0;
+	while (i < NUM_BUILTIN)
+	{
+		if (ft_strncmp(argv[0], func_name[i], cmd_len) == 0)
+		{
+			func[i](argv);
+			return ;
+		}
+		i++;
+	}
+	ft_putstr_fd("Unknown Error in Builtin!!!!\n", 2);
+	exit (127);
+}

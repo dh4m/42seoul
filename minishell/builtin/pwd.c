@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:22 by dham              #+#    #+#             */
-/*   Updated: 2022/09/13 15:15:35 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:11:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,9 @@ int	ft_pwd(void)
 	getcwd(path_buf, PATH_MAX);
 	printf("%s\n", path_buf);
 	return (0);
+}
+
+int	exe_pwd(char **argv)
+{
+	
 }

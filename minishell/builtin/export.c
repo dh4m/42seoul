@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:18 by dham              #+#    #+#             */
-/*   Updated: 2022/09/17 12:04:12 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:10:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,9 @@ int	ft_export(char *env_str)
 	else
 		ft_export_value(env_str);
 	return (0);
+}
+
+int	exe_export(char **argv)
+{
+	
 }

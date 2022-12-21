@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 15:05:29 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/21 20:27:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,11 @@ int	exe_cmd_fork(t_astnode *node)
 		free_path_list(argv);
 		exit(127);
 	}
-	/*
 	else if (is_builtin(argv[0]))
 	{
-		exe_builtin(argv, envp);
+		exe_builtin(argv);
 		exit(g_info.ret_val);
 	}
-	*/
 	cmd_str = search_cmd(argv[0], envp);
 	execve(cmd_str, argv, envp);
 	free(cmd_str);
@@ -72,7 +70,6 @@ int	exe_cmd_fork(t_astnode *node)
 int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성
 {
 	char	**argv;
-	char	**envp;
 	int		fd_backup[2];
 	int		pid;
 	int		ret_val;
@@ -81,9 +78,8 @@ int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성
 	fd_backup[1] = dup(STDOUT_FILENO);
 	redirect_set(node);
 	argv = get_argv(node);
-	envp = env_list_make();
 	if (is_builtin(argv[0]))
-		exe_builtin(argv, envp);
+		exe_builtin(argv);
 	else
 	{
 		pid = exe_ast_cmd(node, 0, 1, -1);
@@ -93,7 +89,8 @@ int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성
 		else
 			g_info.ret_val = WTERMSIG(ret_val);
 	}
+	free_path_list(argv);
 	redirect_reset(fd_backup);
-	return (0);
+	return (g_info.ret_val);
 }
 
