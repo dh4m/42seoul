@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2022/12/21 20:21:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/22 19:38:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 
 # define NUM_BUILTIN 7
 
-void	exe_builtin(char **argv);
+void	exe_builtin(char **argv, int parents);
 
 int exe_cd(char **argv);
+void	cd_env_set(char *pwd, char *oldpwd);
 int	ft_cd(char *path);
 
 int	exe_echo(char **argv);
-int	ft_echo(int nl, char *str);
+int	ft_echo(char *str);
 
 int	exe_env(char **argv);
 int	ft_env(void);
 
 int	exe_exit(char **argv);
-int	ft_exit(int code);
+int	exe_exit(char **argv, int parents);
 
 int	exe_export(char **argv);
 int	export_env_list(void);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:02:32 by dham              #+#    #+#             */
-/*   Updated: 2022/12/21 20:25:09 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/22 19:38:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,21 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	exe_builtin(char **argv)
+void	exe_builtin(char **argv, int parents)
 {
-	const int	(*func[7])(char **) = {exe_cd, exe_echo, exe_env, exe_exit, \
+	const int	(*func[6])(char **) = {exe_cd, exe_echo, exe_env, \
 										exe_export, exe_pwd, exe_unset};
-	const char	*func_name[7] = {"cd", "echo", "env", "exit", \
+	const char	*func_name[6] = {"cd", "echo", "env", \
 								"export", "pwd", "unset"};
 	const int	cmd_len = ft_strlen(argv[0]);
 	int			i;
 
 	i = 0;
+	if (ft_strncmp(argv[0], "exit", cmd_len) == 0)
+	{
+		exe_exit(argv, parents);
+		return ;
+	}
 	while (i < NUM_BUILTIN)
 	{
 		if (ft_strncmp(argv[0], func_name[i], cmd_len) == 0)

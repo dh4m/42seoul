@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 14:46:32 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/22 15:26:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
 int			syntax_error(int ret_val);
 int			node_syntax_error(int ret_val, t_astnode *need_free);
 int			node_return(int ret_val, t_astnode *need_free);
+void		redi_error(char *name);
 
 void		exe_ast(t_astnode *node, int input, int output);
 

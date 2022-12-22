@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 14:46:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/22 15:26:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
-
-static void	redi_error(char *name)
-{
-	char	*err_str;
-
-	err_str = ft_strjoin("minishell: ", name);
-	perror(err_str);
-	free(err_str);
-	exit (1);
-}
 
 void	input_set(int input)
 {

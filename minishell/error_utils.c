@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:32:09 by dham              #+#    #+#             */
-/*   Updated: 2022/11/19 18:37:57 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/22 15:26:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,14 @@ int	node_return(int ret_val, t_astnode *need_free)
 	if (need_free)
 		clear_ast(need_free);
 	return (ret_val);
+}
+
+void	redi_error(char *name)
+{
+	char	*err_str;
+
+	err_str = ft_strjoin("minishell: ", name);
+	perror(err_str);
+	free(err_str);
+	exit (1);
 }
