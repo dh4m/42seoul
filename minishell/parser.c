@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/12/20 14:26:31 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:51:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 {
 	t_astnode	*ret_node;
 
+	if (!cmdlist->current)
+		return ((void *)(long)node_syntax_error(0, ret_node));
 	if (cmdlist->current->type == BRACKET_OPEN)
 		return (bracket_tree(cmdlist)); //bracket_tree_return///
 	if (!avail_node(cmdlist->current))

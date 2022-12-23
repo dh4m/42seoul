@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:18:02 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:38:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,19 @@
 #include "libft.h"
 #include "../minishell.h"
 #include <stdio.h>
+
+static int	is_n_op(char *str)
+{
+	if (*str != '-')
+		return (0);
+	while (*str)
+	{
+		if (*str != 'n')
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 int	ft_echo(char *str)
 {
@@ -27,7 +40,7 @@ int	exe_echo(char **argv)
 	int	i;
 
 	n_op = 0;
-	if (ft_strncmp(argv[1], "-n", 3) == 0)
+	if (argv[1] && is_n_op(argv[1]))
 		n_op = 1;
 	i = n_op + 1;
 	while (argv[i])

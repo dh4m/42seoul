@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:32:37 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:59:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 
 t_info	g_info;
 
+static int	is_space_str(char *str);
+
 int main(int argc, char *argv[], char *envp[])
 {
 	char *str;
@@ -32,7 +34,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		str = readline("minishell$ ");
-		if (str && *str != '\n' && *str != 0)
+		if (str && !is_space_str(str) && *str != 0)
 		{
 			proc_cmd(str);
 			add_history(str);
@@ -46,4 +48,16 @@ int main(int argc, char *argv[], char *envp[])
 		free(str);
 	}
 	return (0);
+}
+
+static int	is_space_str(char *str)
+{
+	while (*str)
+	{
+		if (*str != '\t' && *str != '\n' && *str != '\r' && *str != ' ' \
+			&& *str != '\v' && *str != '\f' )
+			return (0);
+		str++;
+	}
+	return (1);
 }
