@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:59:41 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 17:01:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	is_space_str(char *str)
 	while (*str)
 	{
 		if (*str != '\t' && *str != '\n' && *str != '\r' && *str != ' ' \
-			&& *str != '\v' && *str != '\f' )
+			&& *str != '\v' && *str != '\f')
 			return (0);
 		str++;
 	}
