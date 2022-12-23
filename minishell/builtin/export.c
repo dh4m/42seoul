@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 13:57:50 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 14:57:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ int	ft_export_value(char *env_str)
 int	ft_export_name(char *env_str)
 {
 	if (!search_env(env_str))
+	{
 		add_only_key_env(env_str);
+	}
 	return (0);
 }
 
@@ -88,9 +90,9 @@ int	exe_export(char **argv)
 	{
 		if (!valid_name(argv[i]))
 		{
-			ft_putnbr_fd("minishell: export: '", 2);
-			ft_putnbr_fd(argv[i], 2);
-			ft_putnbr_fd("': not a valid identifier\n", 2);
+			ft_putstr_fd("minishell: export: '", 2);
+			ft_putstr_fd(argv[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
 			err = 1;
 			continue;
 		}

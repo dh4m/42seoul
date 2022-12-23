@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:27 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 13:56:23 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 14:10:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "ft_builtin.h"
+#include "libft.h"
 
 int	ft_unset(char *name)
 {
@@ -31,9 +32,9 @@ int	exe_unset(char **argv)
 	{
 		if (!valid_name(argv[i]) || ft_strchr(argv[i], '='))
 		{
-			ft_putnbr_fd("minishell: unset: '", 2);
-			ft_putnbr_fd(argv[i], 2);
-			ft_putnbr_fd("': not a valid identifier\n", 2);
+			ft_putstr_fd("minishell: unset: '", 2);
+			ft_putstr_fd(argv[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
 			err = 1;
 			continue;
 		}

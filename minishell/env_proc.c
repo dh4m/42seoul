@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 15:14:47 by dham              #+#    #+#             */
-/*   Updated: 2022/09/13 20:07:24 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 14:59:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,18 @@ t_env	*search_env(char *name)
 	ret_node = g_info.env;
 	while (ret_node)
 	{
-		if (ft_strncmp(name, ret_node->name, ft_strlen(name)) == 0)
+		if (ft_strncmp(name, ret_node->name, ft_strlen(name) + 1) == 0)
 			break;
 		ret_node = ret_node->next;
 	}
 	return (ret_node);
+}
+
+static void	del_env_node(t_env *node)
+{
+	free(node->name);
+	free(node->value);
+	free(node);
 }
 
 void	del_env(char *name)
@@ -82,24 +89,24 @@ void	del_env(char *name)
 	t_env	*del_node;
 	
 	del_node = g_info.env;
-	if (del_node && ft_strncmp(name, del_node->name, ft_strlen(name)) == 0)
+	if (del_node && ft_strncmp(name, del_node->name, ft_strlen(name) + 1) == 0)
 	{
 		g_info.env = g_info.env->next;
-		free(del_node->name);
-		free(del_node->value);
-		free(del_node);
+		if (del_node == g_info.env_last)
+			g_info.env_last = NULL;
+		del_env_node(del_node);
 		return ;
 	}
 	while (del_node && del_node->next)
 	{
 		pre_node = del_node;
 		del_node = del_node->next;
-		if (ft_strncmp(name, del_node->name, ft_strlen(name)) == 0)
+		if (ft_strncmp(name, del_node->name, ft_strlen(name) + 1) == 0)
 		{
 			pre_node->next = pre_node->next->next;
-			free(del_node->name);
-			free(del_node->value);
-			free(del_node);
+			if (del_node == g_info.env_last)
+				g_info.env_last = pre_node;
+			del_env_node(del_node);
 			break;
 		}
 	}

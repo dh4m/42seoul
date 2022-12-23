@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:24:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 15:43:47 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 14:23:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exe_ast(t_astnode *node, int input, int output)
 		return ;
 	if (node->type == CMD || node->type == BRACKET_OPEN)
 	{
-		;
+		exe_pure_cmd(node);
 	}
 	else if (node->type == PIPE)
 	{

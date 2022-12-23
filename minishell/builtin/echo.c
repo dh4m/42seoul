@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 12:03:41 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 14:18:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int	exe_echo(char **argv)
 	while (argv[i])
 	{
 		ft_echo(argv[i]);
+		i++;
 	}
-	if (n_op)
+	if (!n_op)
 		printf("\n");
 	g_info.ret_val = 0;
 	return (0);

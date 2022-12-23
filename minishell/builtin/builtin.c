@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:02:32 by dham              #+#    #+#             */
-/*   Updated: 2022/12/22 19:38:17 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 15:06:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 void	exe_builtin(char **argv, int parents)
 {
-	const int	(*func[6])(char **) = {exe_cd, exe_echo, exe_env, \
+	int	(*const func[6])(char **) = {exe_cd, exe_echo, exe_env, \
 										exe_export, exe_pwd, exe_unset};
 	const char	*func_name[6] = {"cd", "echo", "env", \
 								"export", "pwd", "unset"};
@@ -25,14 +25,14 @@ void	exe_builtin(char **argv, int parents)
 	int			i;
 
 	i = 0;
-	if (ft_strncmp(argv[0], "exit", cmd_len) == 0)
+	if (ft_strncmp(argv[0], "exit", cmd_len + 1) == 0)
 	{
 		exe_exit(argv, parents);
 		return ;
 	}
 	while (i < NUM_BUILTIN)
 	{
-		if (ft_strncmp(argv[0], func_name[i], cmd_len) == 0)
+		if (ft_strncmp(argv[0], func_name[i], cmd_len + 1) == 0)
 		{
 			func[i](argv);
 			return ;
