@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2022/12/22 19:38:50 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 13:38:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	ft_echo(char *str);
 int	exe_env(char **argv);
 int	ft_env(void);
 
-int	exe_exit(char **argv);
 int	exe_exit(char **argv, int parents);
+int	ft_exit(int code);
 
 int	exe_export(char **argv);
 int	export_env_list(void);
@@ -41,5 +41,7 @@ int	ft_pwd(void);
 
 int	exe_unset(char **argv);
 int	ft_unset(char *name);
+
+int	valid_name(char *str);
 
 #endif

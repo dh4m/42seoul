@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/22 19:26:36 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 12:03:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtin.h"
 #include "libft.h"
+#include "../minishell.h"
 #include <stdio.h>
 
 int	ft_echo(char *str)
@@ -35,5 +36,6 @@ int	exe_echo(char **argv)
 	}
 	if (n_op)
 		printf("\n");
+	g_info.ret_val = 0;
 	return (0);
 }

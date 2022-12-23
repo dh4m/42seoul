@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:27 by dham              #+#    #+#             */
-/*   Updated: 2022/12/21 20:12:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 13:56:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,26 @@ int	ft_unset(char *name)
 
 int	exe_unset(char **argv)
 {
-	
+	int	i;
+	int	err;
+
+	i = 0;
+	err = 0;
+	while (argv[++i])
+	{
+		if (!valid_name(argv[i]) || ft_strchr(argv[i], '='))
+		{
+			ft_putnbr_fd("minishell: unset: '", 2);
+			ft_putnbr_fd(argv[i], 2);
+			ft_putnbr_fd("': not a valid identifier\n", 2);
+			err = 1;
+			continue;
+		}
+		ft_unset(argv[i]);
+	}
+	if (err)
+		g_info.ret_val = 1;
+	else
+		g_info.ret_val = 0;
+	return (0);
 }

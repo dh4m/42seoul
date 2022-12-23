@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/21 20:10:57 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 13:57:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	export_env_list(void)
 	env = g_info.env;
 	while (env)
 	{
-		printf("declare -x %s=\"%s\"\n", env->name, env->value);
+		if (env->value)
+			printf("declare -x %s=\"%s\"\n", env->name, env->value);
+		else
+			printf("declare -x %s\n", env->name);
 		env = env->next;
 	}
 	return (0);
@@ -74,5 +77,28 @@ int	ft_export(char *env_str)
 
 int	exe_export(char **argv)
 {
-	
+	int	i;
+	int	err;
+
+	if (!argv[1])
+		ft_export(NULL);
+	i = 0;
+	err = 0;
+	while (argv[++i])
+	{
+		if (!valid_name(argv[i]))
+		{
+			ft_putnbr_fd("minishell: export: '", 2);
+			ft_putnbr_fd(argv[i], 2);
+			ft_putnbr_fd("': not a valid identifier\n", 2);
+			err = 1;
+			continue;
+		}
+		ft_export(argv[i]);
+	}
+	if (err)
+		g_info.ret_val = 1;
+	else
+		g_info.ret_val = 0;
+	return (0);
 }

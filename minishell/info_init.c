@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 13:41:10 by dham              #+#    #+#             */
-/*   Updated: 2022/12/15 16:54:38 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 12:05:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	info_init(char **envp)
 
 	i = 0;
 	g_info.ret_val = 0;
-	g_info.past_ret_val = 0;
 	while (envp[i])
 	{
 		add_env(envp[i]);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:54:16 by dham              #+#    #+#             */
-/*   Updated: 2022/12/22 15:50:34 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 12:02:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ int exe_cd(char **argv)
 		ft_cd(argv[1]);
 	else
 		fd_cd(search_env("HOME")->value);
+	g_info.ret_val = 0;
 	return (0);
 }

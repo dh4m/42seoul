@@ -6,11 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:22 by dham              #+#    #+#             */
-/*   Updated: 2022/12/21 20:11:59 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 13:57:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtin.h"
+#include "../minishell.h"
 #include <unistd.h>
 #include <limits.h>
 #include <stdio.h>
@@ -26,5 +27,7 @@ int	ft_pwd(void)
 
 int	exe_pwd(char **argv)
 {
-	
+	ft_pwd();
+	g_info.ret_val = 0;
+	return (0);
 }

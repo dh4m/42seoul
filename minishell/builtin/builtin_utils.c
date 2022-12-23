@@ -1,36 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/10 15:55:07 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 12:03:22 by dham             ###   ########.fr       */
+/*   Created: 2022/12/23 13:32:26 by dham              #+#    #+#             */
+/*   Updated: 2022/12/23 13:45:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 #include "ft_builtin.h"
+#include "libft.h"
 #include <stdio.h>
 
-int	ft_env(void)
-{
-	t_env	*env;
 
-	env = g_info.env;
-	while (env)
+int	valid_name(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isalpha(str[i]) && str[i] != '_')
+		return (0);
+	i++;
+	while (str[i] && str[i] != '=')
 	{
-		if (env->value)
-			printf("%s=%s\n", env->name, env->value);
-		env = env->next;
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
 	}
-	return (0);
-}
-
-int	exe_env(char **argv)
-{
-	ft_env();
-	g_info.ret_val = 0;
-	return (0);
+	return (1);
 }

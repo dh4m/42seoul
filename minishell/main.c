@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2022/12/15 16:58:01 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 12:04:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int main(int argc, char *argv[], char *envp[])
 	info_init(envp);
 	while (1)
 	{
-		g_info.past_ret_val = g_info.ret_val;
-		g_info.ret_val = 0;
 		str = readline("minishell$ ");
 		if (str && *str != '\n' && *str != 0)
 		{
