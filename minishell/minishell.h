@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:15:18 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:23:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void		init_list_ast(t_cmdlist *cmdlist, t_ast *ast);
 void		add_cmdnode(t_cmdlist *cmdlist, t_cmdnode *node);
 void		clear_list(t_cmdlist *cmdlist);
 
-t_cmdnode	*get_token(t_strbuff *buff);
+int			get_token(t_strbuff *buff, t_cmdnode **cur_node);
 int			cmd_len(char *cmd);
 
 int			make_ast(t_cmdlist *cmdlist, t_ast *ast);
@@ -160,7 +160,7 @@ void		exe_ast_and(t_astnode *left_node, t_astnode *right_node);
 void		exe_ast_or(t_astnode *left_node, t_astnode *right_node);
 void		exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input);
 int			exe_ast_cmd(t_astnode *node, int input, int output, int remain);
-int			exe_ast_bracket(t_astnode *node, int input, int output);
+int			exe_ast_bracket(t_astnode *node, int input, int output, int remain);
 
 void		input_set(int input);
 void		output_set(int output);

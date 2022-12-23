@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 16:35:08 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:21:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ void	init_list_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 int	make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff)
 {
-	t_cmdnode *cur_node;
+	t_cmdnode	*cur_node;
+	int			err;
 
-	cur_node = get_token(buff);
-	while (cur_node != NULL)
+	err = 0;
+	err = get_token(buff, &cur_node);
+	while (cur_node != NULL && !err)
 	{
 		add_cmdnode(cmdlist, cur_node);
-		cur_node = get_token(buff);
+		err = get_token(buff, &cur_node);
 	}
-	if (g_info.ret_val == 258)
+	if (err)
 		return (-1);
 	return (0);
 }

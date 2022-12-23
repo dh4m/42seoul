@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 12:07:37 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:08:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	*remove_quote(char *str)
 	int		i;
 	char	quote;
 
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '"' || str[i] == '\'')
@@ -101,6 +102,7 @@ void	quote_proc(char **argv)
 {
 	int	i;
 
+	i = 0;
 	while (argv[i])
 	{
 		argv[i] = remove_quote(argv[i]);

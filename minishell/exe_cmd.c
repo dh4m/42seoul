@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:32:55 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 15:21:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성
 	fd_backup[1] = dup(STDOUT_FILENO);
 	redirect_set(node);
 	argv = get_argv(node);
-	if (is_builtin(argv[0]))
+	if (argv && is_builtin(argv[0]))
 		exe_builtin(argv, 1);
 	else
 	{

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:29:26 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 15:56:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ char	**get_argv(t_astnode *node)
 {
 	char	*temp_str;
 	char	**ret_val;
-
+	
+	if (node->type != CMD)
+		return (NULL);
 	temp_str = list_to_str(&node->cmd);
 	temp_str = expansion(temp_str);
 	/*

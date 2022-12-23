@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 13:05:34 by dham              #+#    #+#             */
-/*   Updated: 2022/12/19 14:17:12 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/23 16:00:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ char	**shell_split(char const *s, char c)
 	int		flag;
 	int		idx;
 
-	if (!s)
-		return (0);
 	idx = 0;
 	flag = 0;
 	if (!malloc_guard((void **)&re_loc, sizeof(char *) * (word_cnt(s, c) + 1)))
@@ -42,9 +40,10 @@ char	**shell_split(char const *s, char c)
 		}
 		else if (flag && *s == c)
 			flag = 0;
+		if (*s == '"' || *s == '\'')
+			s = ft_strchr(s + 1, *s);
 		s++;
 	}
-	re_loc[idx] = 0;
 	return (re_loc);
 }
 
@@ -93,7 +92,7 @@ static int	word_cnt(const char *str, char c)
 
 static int	malloc_guard(void **target, unsigned int size)
 {
-	*target = malloc(size);
+	*target = ft_calloc(size, 1);
 	if (!*target)
 	{
 		return (0);
