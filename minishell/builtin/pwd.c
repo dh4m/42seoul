@@ -6,22 +6,34 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:22 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 13:57:42 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/24 21:31:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_builtin.h"
 #include "../minishell.h"
+#include "libft.h"
 #include <unistd.h>
 #include <limits.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 int	ft_pwd(void)
 {
-	char	path_buf[PATH_MAX];
+	char	*path;
+	t_env	*tmp;
 
-	getcwd(path_buf, PATH_MAX);
-	printf("%s\n", path_buf);
+	path = getcwd(NULL, PATH_MAX);
+	if (!path)
+	{
+		tmp = search_env("PWD");
+		if (tmp)
+			path = ft_strdup(tmp->value);
+		else
+			path = ft_strdup("Invalid path");
+	}
+	printf("%s\n", path);
+	free(path);
 	return (0);
 }
 
