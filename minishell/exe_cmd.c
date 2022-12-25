@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 15:21:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/25 18:57:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	exe_cmd_fork(t_astnode *node)
 	exit(127);
 }
 
-int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성
+int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성 명령어 하나도 없을 때  처리 전부
 {
 	char	**argv;
 	int		fd_backup[2];
