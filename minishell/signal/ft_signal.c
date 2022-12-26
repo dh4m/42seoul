@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
-/*   Updated: 2022/11/17 21:55:37 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 17:54:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_readline_signal_set(void)
 
 void	ft_excute_signal_set(void)
 {
-	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, newline_proc);
 	signal(SIGQUIT, SIG_IGN);
 }
 

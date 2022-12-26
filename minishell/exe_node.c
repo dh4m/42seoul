@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 15:18:56 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 17:33:22 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	exe_ast_cmd(t_astnode *node, int input, int output, int remain)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_default_signal_set();
 		if (remain >= 0)
 			close(remain);
 		input_set(input);
@@ -88,6 +89,7 @@ int	exe_ast_bracket(t_astnode *node, int input, int output, int remain)
 	pid = fork();
 	if (pid == 0)
 	{
+		ft_default_signal_set();
 		if (remain >= 0)
 			close(remain);
 		input_set(input);

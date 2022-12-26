@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:46:32 by dham              #+#    #+#             */
-/*   Updated: 2022/12/17 16:29:51 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 17:53:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@
 int	empty_event(void)
 {
 	return (0);
+}
+
+void	newline_proc(int sig)
+{
+	if (sig == SIGINT)
+		printf("\n");
 }
 
 void	readline_proc(int sig)
