@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:45:22 by dham              #+#    #+#             */
-/*   Updated: 2022/12/15 17:12:28 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 16:49:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast)
 			return (0);
 	}
 	if (!cmdlist->current)
-		return (0); //error
+		return (node_syntax_error(0, NULL)); //error
 	cmdlist->current = cmdlist->current->next;
 	return (1);
 }

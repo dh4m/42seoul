@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 15:56:40 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 13:07:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char	*list_to_str(t_strlist *list)
 		cnt++;
 		node = node->next;
 	}
+	if (cnt == 0)
+		return (ft_calloc(1, sizeof(char)));
 	ret_val = ft_calloc(len + cnt, sizeof(char));
 	node = list->prenode.next;
 	while (node)

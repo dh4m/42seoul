@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/25 18:57:41 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 17:17:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ int	exe_cmd_fork(t_astnode *node)
 	redirect_set(node);
 	argv = get_argv(node);
 	envp = env_list_make();
+	if (!argv || !argv[0])
+		exit(0);
 	if (ft_strchr(argv[0], '/'))
 	{
 		execve(argv[0], argv, envp);
 		command_err(argv[0]);
-		free_path_list(argv);
 		exit(127);
 	}
 	else if (is_builtin(argv[0]))
@@ -61,9 +62,7 @@ int	exe_cmd_fork(t_astnode *node)
 	}
 	cmd_str = search_cmd(argv[0], envp);
 	execve(cmd_str, argv, envp);
-	free(cmd_str);
 	command_err(argv[0]);
-	free_path_list(argv);
 	exit(127);
 }
 
@@ -78,9 +77,9 @@ int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성 명령어 하나도 없을 �
 	fd_backup[1] = dup(STDOUT_FILENO);
 	redirect_set(node);
 	argv = get_argv(node);
-	if (argv && is_builtin(argv[0]))
+	if (argv && argv[0] && is_builtin(argv[0]))
 		exe_builtin(argv, 1);
-	else
+	else if (node->type == BRACKET_OPEN || (argv && argv[0])) // 여기 다시 고려
 	{
 		pid = exe_ast_cmd(node, 0, 1, -1);
 		waitpid(pid, &ret_val, 0);
