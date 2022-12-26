@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:23:34 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 20:54:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,5 +188,8 @@ char		**shell_split(char const *s, char c);
 char		*remove_quote(char *str);
 void		quote_proc(char **argv);
 char		*expansion(char *str);
+
+void		turn_off_show_signal(void);
+void		turn_on_show_signal(void);
 
 #endif

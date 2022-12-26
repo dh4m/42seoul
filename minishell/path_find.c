@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:29:39 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:29:35 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 20:37:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	**path_list(char *envp[])
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+	if (envp[i] && ft_strncmp(envp[i], "PATH=", 5) == 0)
 		return (ft_split(&envp[i][5], ':'));
 	else
 		return (NULL);

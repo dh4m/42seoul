@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 17:33:22 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 19:18:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void	exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input)
 		waitpid(last_pid, &ret_val, 0);
 		if (WIFEXITED(ret_val))
 			g_info.ret_val = WEXITSTATUS(ret_val);
+		else if (WTERMSIG(ret_val) == SIGINT)
+			g_info.ret_val = 130;
 		else
-			g_info.ret_val = WTERMSIG(ret_val);
+			g_info.ret_val = 131;
 	}
 	waitpid(pid, &ret_val, 0);
 }

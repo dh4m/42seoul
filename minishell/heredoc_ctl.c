@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2022/12/25 18:55:15 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 19:20:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	heredoc_write(char *end_flag, int fd)
 		str = readline("> ");
 		if (!str || ft_strncmp(str, end_flag, ft_strlen(str) + 1) == 0)
 			break;
-		else if (*str == 0 && g_info.ret_val == 130) // g_info로 판단하는 로직 수정할것
+		else if (*str == 0 && g_info.ret_val == 1) // g_info로 판단하는 로직 수정할것
 		{
 			free(str);
 			end_heredoc_set();

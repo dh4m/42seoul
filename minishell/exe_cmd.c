@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 17:17:54 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/26 20:56:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성 명령어 하나도 없을 �
 		waitpid(pid, &ret_val, 0);
 		if (WIFEXITED(ret_val))
 			g_info.ret_val = WEXITSTATUS(ret_val);
+		else if (WTERMSIG(ret_val) == SIGINT)
+			g_info.ret_val = 130;
 		else
-			g_info.ret_val = WTERMSIG(ret_val);
+			g_info.ret_val = 131;
 	}
 	free_path_list(argv);
 	redirect_reset(fd_backup);
 	return (g_info.ret_val);
 }
-

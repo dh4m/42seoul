@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_ast.c                                          :+:      :+:    :+:   */
+/*   terminal_ctl.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 18:24:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 20:55:45 by dham             ###   ########.fr       */
+/*   Created: 2022/12/26 20:40:27 by dham              #+#    #+#             */
+/*   Updated: 2022/12/26 20:54:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,26 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
+#include <termios.h>
 #include "libft.h"
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-void	exe_ast(t_astnode *node, int input, int output)
+void	turn_off_show_signal(void)
 {
-	if (!node)
-		return ;
-	ft_excute_signal_set();
-	turn_on_show_signal();
-	if (node->type == CMD || node->type == BRACKET_OPEN) // bracket 들어온 것 처리
-	{
-		exe_pure_cmd(node);
-	}
-	else if (node->type == PIPE)
-	{
-		exe_ast_pipe(node->left, node->right, 0);
-	}
-	else if (node->type == AND)
-	{
-		exe_ast_and(node->left, node->right);
-	}
-	else if (node->type == OR)
-	{
-		exe_ast_or(node->left, node->right);;
-	}
-	ft_readline_signal_set();
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	turn_on_show_signal(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
