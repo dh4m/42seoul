@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:59:23 by dham              #+#    #+#             */
-/*   Updated: 2022/12/27 19:19:38 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/28 16:22:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include "minishell.h"
 #include <dirent.h>
 
-char	*wildcard(char *str)
+void	wildcard(char **str)
 {
 	DIR				*dp;
 	struct dirent	*entry;
@@ -28,9 +28,4 @@ char	*wildcard(char *str)
 	
 	dp = opendir(".");
 
-}
-
-int	is_match(char *str, char *path)
-{
-	
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 13:07:58 by dham             ###   ########.fr       */
+/*   Updated: 2022/12/28 17:41:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,28 @@ char	*list_to_str(t_strlist *list)
 	return (ret_val);
 }
 
+char	*table_to_str(char **table)
+{
+	size_t	len;
+	int		i;
+	int		cnt;
+	char	*ret_str;
+
+	len = 0;
+	i = -1;
+	while (table[++i])
+		len += ft_strlen(table[i]);
+	ret_str = ft_calloc(len + i, sizeof(char));
+	cnt = i;
+	i = -1;
+	while (table[++i])
+	{
+		ft_strlcat(ret_str, table[i], len + cnt);
+		ft_strlcat(ret_str, " ", len + cnt);
+	} // 뒤에 널문자 이슈
+	return (ret_str);
+}
+
 char	*strreplace(char *str, size_t start, size_t end, char *rep)
 {
 	char	*ret_str;
@@ -91,10 +113,14 @@ char	**get_argv(t_astnode *node)
 		return (NULL);
 	temp_str = list_to_str(&node->cmd);
 	temp_str = expansion(temp_str);
-	/*
-	temp_str = wildcard(temp_str);
-	*/
 	ret_val = shell_split(temp_str, ' ');
+	/*
+	free(temp_str);
+	wildcard(ret_val);
+	temp_str = table_to_str(ret_val);
+	free_path_list(ret_val);
+	ret_val = shell_split(temp_str, ' ');
+	*/
 	quote_proc(ret_val);
 	free(temp_str);
 	return (ret_val);
