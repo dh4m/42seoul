@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:10:11 by dham              #+#    #+#             */
-/*   Updated: 2023/01/05 23:08:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/06 01:08:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	PhoneBook::search(void)
 		std::cout << std::setw(10) << contact[i].field_value(NICKNAME, FIXED) << '|' << '\n';
 	}
 	std::cout << "Please input index of the entry to display : ";
-	std::cin >> choice;
+	std::getline(std::cin, choice);
 	index = str_to_index(choice);
 	while (!index || index > num)
 	{
 		std::cout << "invalid input! Please try again : ";
-		std::cin >> choice;
+		std::getline(std::cin, choice);
 		index = str_to_index(choice);
 	}
 	std::cout << "first name : " << contact[index - 1].field_value(FIRST_NAME, UNFIXED) << '\n';

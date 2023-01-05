@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:08:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/05 23:30:24 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/06 01:07:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ void	Contact::field_input(int field)
 	else if (field == PHONE_NUMBER) filed_name = "phone number";
 	else if (field == DARKEST_SECRET) filed_name = "darkest secret";
 	std::cout << filed_name << " : ";
-	std::cin >> str;
+	std::getline(std::cin, str);
 	while (str.empty())
 	{
 		std::cout << "contact can't have empty space!" << '\n';
 		std::cout << filed_name << " : ";
 		std::cin.clear();
+		std::cin.ignore();
 		std::clearerr(stdin);
-		std::cin >> str;
+		std::getline(std::cin, str);
 	}
 	field_string[field] = str;
 }
