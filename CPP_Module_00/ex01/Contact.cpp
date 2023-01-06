@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:08:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/06 01:07:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/06 16:15:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,21 @@ void	Contact::field_input(int field)
 		std::clearerr(stdin);
 		std::getline(std::cin, str);
 	}
-	field_string[field] = str;
+	_field_string[field] = str;
 }
 
 std::string	Contact::field_value(int field, int fixed)
 {
 	std::string	ret_str;
 
-	if (fixed && field_string[field].length() > 10)
-		ret_str = field_string[field].substr(0, 9) + ".";
+	if (fixed && _field_string[field].length() > 10)
+		ret_str = _field_string[field].substr(0, 9) + ".";
 	else
-		ret_str = field_string[field];
+		ret_str = _field_string[field];
 	return (ret_str);
 }
 
 bool	Contact::empty(void)
 {
-	return (field_string[FIRST_NAME].empty());
+	return (_field_string[FIRST_NAME].empty());
 }

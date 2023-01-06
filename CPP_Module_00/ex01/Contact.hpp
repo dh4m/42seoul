@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 22:42:54 by dham              #+#    #+#             */
-/*   Updated: 2023/01/05 20:19:31 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/06 16:19:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ public:
 	void		field_input(int field);
 	bool		empty(void);
 private:
-	std::string	field_string[5];
+	std::string	_field_string[5];
 };
 
 #endif

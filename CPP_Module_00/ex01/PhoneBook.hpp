@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 22:36:13 by dham              #+#    #+#             */
-/*   Updated: 2023/01/05 23:06:22 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/06 16:16:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ public:
 	void	add(void);
 	void	search(void);
 private:
-	Contact	contact[8];
-	int		num;
+	Contact	_contact[8];
+	int		_num;
 };
 
 #endif
