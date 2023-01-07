@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 17:15:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 19:11:49 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,14 @@ static void	command_err(const char *cmd)
 
 static int	is_builtin(char *str)
 {
-	return (ft_strncmp("cd", str, 3) == 0 || \
+	return (str && \
+			(ft_strncmp("cd", str, 3) == 0 || \
 			ft_strncmp("echo", str, 5) == 0 || \
 			ft_strncmp("env", str, 4) == 0 || \
 			ft_strncmp("exit", str, 5) == 0 || \
 			ft_strncmp("export", str, 7) == 0 || \
 			ft_strncmp("pwd", str, 4) == 0 || \
-			ft_strncmp("unset", str, 6) == 0);
+			ft_strncmp("unset", str, 6) == 0));
 }
 
 int	exe_cmd_fork(t_astnode *node)
@@ -44,21 +45,21 @@ int	exe_cmd_fork(t_astnode *node)
 	char	*cmd_str;
 	char	**envp;
 
-	redirect_set(node);
 	argv = get_argv(node);
 	envp = env_list_make();
-	if (!argv || !argv[0])
+	if (is_builtin(argv[0]))
+	{
+		exe_builtin(argv, node, 0);
+		exit(g_info.ret_val);
+	}
+	redirect_set(node, 1);
+	if (!argv[0])
 		exit(0);
 	if (ft_strchr(argv[0], '/'))
 	{
 		execve(argv[0], argv, envp);
 		command_err(argv[0]);
 		exit(127);
-	}
-	else if (is_builtin(argv[0]))
-	{
-		exe_builtin(argv, 0);
-		exit(g_info.ret_val);
 	}
 	cmd_str = search_cmd(argv[0], envp);
 	execve(cmd_str, argv, envp);
@@ -75,11 +76,10 @@ int	exe_pure_cmd(t_astnode *node, int parent)//////ㅣ미완성 명령어 하나
 
 	fd_backup[0] = dup(STDIN_FILENO);
 	fd_backup[1] = dup(STDOUT_FILENO);
-	redirect_set(node);
 	argv = get_argv(node);
-	if (argv && argv[0] && is_builtin(argv[0]))
-		exe_builtin(argv, parent);
-	else if (node->type == BRACKET_OPEN || (argv && argv[0])) // 여기 다시 고려
+	if (argv && is_builtin(argv[0]))
+		exe_builtin(argv, node, parent);
+	else
 	{
 		pid = exe_ast_cmd(node, 0, 1, -1);
 		waitpid(pid, &ret_val, 0);

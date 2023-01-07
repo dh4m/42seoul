@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:02:32 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 15:06:15 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 19:11:33 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-void	exe_builtin(char **argv, int parents)
+void	exe_builtin(char **argv, t_astnode *node, int parents)
 {
 	int	(*const func[6])(char **) = {exe_cd, exe_echo, exe_env, \
 										exe_export, exe_pwd, exe_unset};
@@ -24,6 +24,8 @@ void	exe_builtin(char **argv, int parents)
 	const int	cmd_len = ft_strlen(argv[0]);
 	int			i;
 
+	if (!redirect_set(node, 0))
+		return ;
 	i = 0;
 	if (ft_strncmp(argv[0], "exit", cmd_len + 1) == 0)
 	{

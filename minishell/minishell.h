@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 17:14:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 19:49:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,8 @@ t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
 int			syntax_error(int ret_val);
 int			node_syntax_error(int ret_val, t_astnode *need_free);
 int			node_return(int ret_val, t_astnode *need_free);
-void		redi_error(char *name);
+int			redi_error(char *name, int fork);
+int			ambiguous_error(char *name, int fork);
 
 void		exe_ast(t_astnode *node, int input, int output, int parent);
 
@@ -164,9 +165,9 @@ int			exe_ast_bracket(t_astnode *node, int input, int output, int remain);
 
 void		input_set(int input);
 void		output_set(int output);
-void		re_in_set(t_strnode *red_node);
-void		re_out_set(t_strnode *red_node);
-void		redirect_set(t_astnode *node);
+int			re_in_set(t_strnode *red_node, int fork);
+int			re_out_set(t_strnode *red_node, int fork);
+int			redirect_set(t_astnode *node, int fork);
 void		redirect_reset(int backup[2]);
 
 int			exe_cmd(t_astnode *node);
@@ -182,6 +183,7 @@ size_t		list_strlen(t_strlist *list);
 char		*list_to_str(t_strlist *list);
 char		*strreplace(char *str, size_t start, size_t end, char *rep);
 char		**get_argv(t_astnode *node);
+char		*filename_expansion(char *str);
 
 char		**shell_split(char const *s, char c);
 

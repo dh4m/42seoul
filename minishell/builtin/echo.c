@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 20:38:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:38:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 19:18:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	is_n_op(char *str)
 {
 	if (*str != '-')
 		return (0);
+	str++;
 	while (*str)
 	{
 		if (*str != 'n')
@@ -30,7 +31,7 @@ static int	is_n_op(char *str)
 
 int	ft_echo(char *str)
 {
-	printf("%s ", str);
+	printf("%s", str);
 	return (0);
 }
 
@@ -46,6 +47,8 @@ int	exe_echo(char **argv)
 	while (argv[i])
 	{
 		ft_echo(argv[i]);
+		if (argv[i + 1])
+			printf(" ");
 		i++;
 	}
 	if (!n_op)

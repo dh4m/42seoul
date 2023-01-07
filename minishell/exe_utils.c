@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2022/12/22 15:26:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 19:30:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,44 +34,56 @@ void	output_set(int output)
 		close(output);
 }
 
-void	re_in_set(t_strnode *red_node)
+int	re_in_set(t_strnode *red_node, int fork)
 {
 	int	fd;
+	char	*filename;
 
+	filename = filename_expansion(red_node->str);
+	if (!filename)
+		return (ambiguous_error(red_node->str, fork));
 	if (red_node->type == RE_IN)
 	{
 		fd = open(red_node->str, O_RDONLY);
 		if (fd < 0)
-			redi_error(red_node->str);//error
+			return (redi_error(red_node->str, fork));
 		input_set(fd);
 	}
 	else if (red_node->type == RE_HEREDOC)
 	{
 		input_set((int)red_node->str);
 	}
+	free(filename);
+	return (1);
 }
 
-void	re_out_set(t_strnode *red_node)
+int	re_out_set(t_strnode *red_node, int fork)
 {
-	int	fd;
+	int		fd;
+	char	*filename;
 
+	filename = filename_expansion(red_node->str);
+	if (!filename)
+		return (ambiguous_error(red_node->str, fork));
 	if (red_node->type == RE_OUT)
 	{
-		fd = open(red_node->str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd < 0)
-			redi_error(red_node->str);//error
+			return (redi_error(filename, fork));
 		output_set(fd);
 	}
 	else if (red_node->type == RE_APPEND)
 	{
-		fd = open(red_node->str, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (fd < 0)
-			redi_error(red_node->str);//error
+			return (redi_error(filename, fork));
 		output_set(fd);
 	}
+	free(filename);
+	return (1);
 }
 
-void	redirect_set(t_astnode *node)
+int	redirect_set(t_astnode *node, int fork)
 {
 	t_strnode	*red_node;
 	int			fd;
@@ -81,18 +93,23 @@ void	redirect_set(t_astnode *node)
 	{
 		if (red_node->type == RE_OUT || red_node->type == RE_APPEND)
 		{
-			re_out_set(red_node);
+			if (!re_out_set(red_node, fork))
+				return (0);
 		}
 		else if (red_node->type == RE_IN || red_node->type == RE_HEREDOC)
 		{
-			re_in_set(red_node);
+			if (!re_in_set(red_node, fork))
+				return (0);
 		}
 		red_node = red_node->next;
 	}
+	return (1);
 }
 
 void	redirect_reset(int backup[2])
 {
 	dup2(backup[0], 0);
+	close(backup[0]);
 	dup2(backup[1], 1);
+	close(backup[1]);
 }

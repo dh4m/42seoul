@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 13:38:44 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 19:14:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define FT_BUILTIN_H
 
 # define NUM_BUILTIN 7
+# include "../minishell.h"
 
-void	exe_builtin(char **argv, int parents);
+void	exe_builtin(char **argv, t_astnode *node, int parents);
 
-int exe_cd(char **argv);
+int	exe_cd(char **argv);
 void	cd_env_set(char *pwd, char *oldpwd);
 int	ft_cd(char *path);
 
