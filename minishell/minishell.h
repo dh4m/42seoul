@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2022/12/28 16:19:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 13:02:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,5 +193,8 @@ void		turn_off_show_signal(void);
 void		turn_on_show_signal(void);
 
 void		wildcard(char **str);
+
+char		*filelist_join(char *str, char *file);
+char		**cur_dir_list(void);
 
 #endif
