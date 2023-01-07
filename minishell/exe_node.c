@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 19:18:57 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 17:15:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-void	exe_ast_and(t_astnode *left_node, t_astnode *right_node)
+void	exe_ast_and(t_astnode *left_node, t_astnode *right_node, int parent)
 {
-	exe_ast(left_node, 0, 1);
+	exe_ast(left_node, 0, 1, parent);
 	if (g_info.ret_val == 0)
-		exe_ast(right_node, 0, 1);
+		exe_ast(right_node, 0, 1, parent);
 }
 
-void	exe_ast_or(t_astnode *left_node, t_astnode *right_node)
+void	exe_ast_or(t_astnode *left_node, t_astnode *right_node, int parent)
 {
-	exe_ast(left_node, 0, 1);
+	exe_ast(left_node, 0, 1, parent);
 	if (g_info.ret_val != 0)
-		exe_ast(right_node, 0, 1);
+		exe_ast(right_node, 0, 1, parent);
 }
 
 void	exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input)
@@ -97,7 +97,7 @@ int	exe_ast_bracket(t_astnode *node, int input, int output, int remain)
 		input_set(input);
 		output_set(output);
 		redirect_set(node);
-		exe_ast(node->left, 0, 1);
+		exe_ast(node->left, 0, 1, 0);
 		exit(g_info.ret_val);
 	}
 	return (pid);

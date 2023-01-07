@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:16:27 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 20:56:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 17:14:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	proc_cmd(char *cmd)
 	buff.now_read = 0;
 	init_list_ast(&cmdlist, &ast);
 	if (!(make_cmdlist(&cmdlist, &buff) < 0 || !make_ast(&cmdlist, &ast)))
-		exe_ast(ast.root, 0, 1);
+		exe_ast(ast.root, 0, 1, 1);
 	turn_off_show_signal();
 	//print_list(&cmdlist);
 	clear_list(&cmdlist);

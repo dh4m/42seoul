@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 20:56:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 17:15:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	exe_cmd_fork(t_astnode *node)
 	exit(127);
 }
 
-int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성 명령어 하나도 없을 때  처리 전부
+int	exe_pure_cmd(t_astnode *node, int parent)//////ㅣ미완성 명령어 하나도 없을 때  처리 전부
 {
 	char	**argv;
 	int		fd_backup[2];
@@ -78,7 +78,7 @@ int	exe_pure_cmd(t_astnode *node)//////ㅣ미완성 명령어 하나도 없을 �
 	redirect_set(node);
 	argv = get_argv(node);
 	if (argv && argv[0] && is_builtin(argv[0]))
-		exe_builtin(argv, 1);
+		exe_builtin(argv, parent);
 	else if (node->type == BRACKET_OPEN || (argv && argv[0])) // 여기 다시 고려
 	{
 		pid = exe_ast_cmd(node, 0, 1, -1);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 13:02:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 17:14:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,10 +154,10 @@ int			node_syntax_error(int ret_val, t_astnode *need_free);
 int			node_return(int ret_val, t_astnode *need_free);
 void		redi_error(char *name);
 
-void		exe_ast(t_astnode *node, int input, int output);
+void		exe_ast(t_astnode *node, int input, int output, int parent);
 
-void		exe_ast_and(t_astnode *left_node, t_astnode *right_node);
-void		exe_ast_or(t_astnode *left_node, t_astnode *right_node);
+void		exe_ast_and(t_astnode *left_node, t_astnode *right_node, int parent);
+void		exe_ast_or(t_astnode *left_node, t_astnode *right_node, int parent);
 void		exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input);
 int			exe_ast_cmd(t_astnode *node, int input, int output, int remain);
 int			exe_ast_bracket(t_astnode *node, int input, int output, int remain);
@@ -171,7 +171,7 @@ void		redirect_reset(int backup[2]);
 
 int			exe_cmd(t_astnode *node);
 int			exe_cmd_fork(t_astnode *node);
-int			exe_pure_cmd(t_astnode *node);
+int			exe_pure_cmd(t_astnode *node, int parent);
 
 char		*search_cmd(char *cmd, char *envp[]);
 char		*path_join(char *path, char *cmd);

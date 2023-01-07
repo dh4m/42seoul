@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:24:59 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 20:55:45 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/07 17:14:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-void	exe_ast(t_astnode *node, int input, int output)
+void	exe_ast(t_astnode *node, int input, int output, int parent)
 {
 	if (!node)
 		return ;
@@ -27,7 +27,7 @@ void	exe_ast(t_astnode *node, int input, int output)
 	turn_on_show_signal();
 	if (node->type == CMD || node->type == BRACKET_OPEN) // bracket 들어온 것 처리
 	{
-		exe_pure_cmd(node);
+		exe_pure_cmd(node, parent);
 	}
 	else if (node->type == PIPE)
 	{
@@ -35,11 +35,11 @@ void	exe_ast(t_astnode *node, int input, int output)
 	}
 	else if (node->type == AND)
 	{
-		exe_ast_and(node->left, node->right);
+		exe_ast_and(node->left, node->right, parent);
 	}
 	else if (node->type == OR)
 	{
-		exe_ast_or(node->left, node->right);;
+		exe_ast_or(node->left, node->right, parent);
 	}
 	ft_readline_signal_set();
 }
