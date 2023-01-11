@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 13:32:26 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 13:45:07 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:26:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_builtin.h"
 #include "libft.h"
 #include <stdio.h>
-
 
 int	valid_name(char *str)
 {

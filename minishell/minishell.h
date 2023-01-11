@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 19:49:08 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:34:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_strlist
 typedef struct s_astnode
 {
 	int					type;
-//	int					breket;
 	t_strlist			redi;
 	t_strlist			cmd;
 	struct s_astnode	*left;
@@ -98,7 +97,6 @@ typedef struct s_info
 	t_env	*env_last;
 	int		ret_val;
 }	t_info;
-
 
 extern t_info	g_info;
 

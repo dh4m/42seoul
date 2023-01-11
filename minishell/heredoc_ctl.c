@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 15:08:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:31:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	heredoc_write(char *end_flag, int fd)
 		str = readline("> ");
 		if (!str || ft_strncmp(str, end_flag, ft_strlen(str) + 1) == 0)
 			break;
-		else if (*str == 0 && g_info.ret_val == SIGINT_CATCH) // g_info로 판단하는 로직 수정할것
+		else if (*str == 0 && g_info.ret_val == SIGINT_CATCH)
 		{
 			free(str);
 			g_info.ret_val = 1;
@@ -85,7 +85,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 		close(fd);
 		close(fd_w);
 		free(temp_name);
-		return (0); //error
+		return (0);
 	}
 	close(fd_w);
 	add_strnode((char *)(long)fd, RE_HEREDOC, list);

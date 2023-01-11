@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:29:38 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 18:40:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:35:49 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	cmd_proc(t_cmdlist *cmdlist, t_astnode *node)
 int	redir_proc(t_cmdlist *cmdlist, t_astnode *node)
 {
 	if (!cmdlist->current->next || cmdlist->current->next->type != CMD)
-		return (node_syntax_error(0, NULL)); //error
-	if (cmdlist->current->type == RE_HEREDOC) // heredoc
+		return (node_syntax_error(0, NULL));
+	if (cmdlist->current->type == RE_HEREDOC)
 	{
-		if (!heredoc_proc(cmdlist->current->next->cmd, &node->redi))////////
-			return (0); //error
+		if (!heredoc_proc(cmdlist->current->next->cmd, &node->redi))
+			return (0);
 	}
-	else if (cmdlist->current->type == RE_IN) // redirection input
+	else if (cmdlist->current->type == RE_IN)
 		add_strnode(cmdlist->current->next->cmd, RE_IN, &node->redi);
-	else // redirection output
+	else 
 		add_strnode(cmdlist->current->next->cmd, cmdlist->current->type, &node->redi);
 	cmdlist->current = cmdlist->current->next;
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:18 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:08:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:25:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	exe_export(char **argv)
 			ft_putstr_fd(argv[i], 2);
 			ft_putstr_fd("': not a valid identifier\n", 2);
 			err = 1;
-			continue;
+			continue ;
 		}
 		ft_export(argv[i]);
 	}

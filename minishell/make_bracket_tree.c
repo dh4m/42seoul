@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:45:22 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 16:49:53 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:33:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 	pipe_set = make_bracket_pipeline(cmdlist);
 	if (!pipe_set)
-		return (0); //error
+		return (0);
 	ast->root = pipe_set;
 	while (cmdlist->current && cmdlist->current->type != BRACKET_CLOSE)
 	{
@@ -33,7 +33,7 @@ int	make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast)
 			return (0);
 	}
 	if (!cmdlist->current)
-		return (node_syntax_error(0, NULL)); //error
+		return (node_syntax_error(0, NULL));
 	cmdlist->current = cmdlist->current->next;
 	return (1);
 }
@@ -45,7 +45,7 @@ t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist)
 
 	left = make_bracket_node(cmdlist);
 	if (!left)
-		return (NULL); //error
+		return (NULL);
 	if (!cmdlist->current \
 		|| cmdlist->current->type == AND || cmdlist->current->type == OR \
 		|| cmdlist->current->type == BRACKET_CLOSE)
@@ -56,7 +56,7 @@ t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist)
 	if (!ret_node->right)
 	{
 		clear_ast(ret_node);
-		return (NULL); //error
+		return (NULL);
 	}
 	return (ret_node);
 }
@@ -66,19 +66,19 @@ t_astnode	*make_bracket_node(t_cmdlist *cmdlist)
 	t_astnode	*ret_node;
 
 	if (cmdlist->current->type == BRACKET_OPEN)
-		return (bracket_tree(cmdlist)); //bracket_tree_return///
+		return (bracket_tree(cmdlist));
 	if (!avail_node(cmdlist->current) || cmdlist->current->type == BRACKET_CLOSE)
-		return ((void *)(long)node_syntax_error(0, NULL)); //error
+		return ((void *)(long)node_syntax_error(0, NULL));
 	ret_node = init_astnode();
 	while (cmdlist->current && avail_node(cmdlist->current) \
 			&& cmdlist->current->type != BRACKET_CLOSE)
 	{
 		if (cmdlist->current->type == BRACKET_OPEN)
-			return ((void *)(long)node_syntax_error(0, ret_node)); //error
+			return ((void *)(long)node_syntax_error(0, ret_node));
 		else if (is_redirection(cmdlist->current->type))
 		{
 			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_return(0, ret_node)); //error
+				return ((void *)(long)node_return(0, ret_node));
 		}
 		else
 			cmd_proc(cmdlist, ret_node);

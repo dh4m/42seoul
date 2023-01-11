@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:29:54 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:32:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	cmd_len(char *cmd)
 			if (ft_isquotes(cmd[i]) == quotes)
 				i++;
 			else
-				return (-1); //error//////
+				return (-1);
 		}
 		else
 			i++;

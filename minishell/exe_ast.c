@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:24:59 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 17:14:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:31:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exe_ast(t_astnode *node, int input, int output, int parent)
 		return ;
 	ft_excute_signal_set();
 	turn_on_show_signal();
-	if (node->type == CMD || node->type == BRACKET_OPEN) // bracket 들어온 것 처리
+	if (node->type == CMD || node->type == BRACKET_OPEN)
 	{
 		exe_pure_cmd(node, parent);
 	}

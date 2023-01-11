@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 19:02:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:35:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	make_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 	pipe_set = make_pipeline(cmdlist);
 	if (!pipe_set)
-		return (0); //error
+		return (0);
 	ast->root = pipe_set;
 	while (cmdlist->current)
 	{
@@ -42,7 +42,7 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 
 	left = make_node(cmdlist);
 	if (!left)
-		return (NULL); //error
+		return (NULL);
 	if (!cmdlist->current || \
 		cmdlist->current->type == AND || cmdlist->current->type == OR)
 		return (left);
@@ -52,7 +52,7 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 	if (!ret_node->right)
 	{
 		clear_ast(ret_node);
-		return (NULL); //error
+		return (NULL);
 	}
 	return (ret_node);
 }
@@ -64,19 +64,19 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 	if (!cmdlist->current)
 		return ((void *)(long)node_syntax_error(0, ret_node));
 	if (cmdlist->current->type == BRACKET_OPEN)
-		return (bracket_tree(cmdlist)); //bracket_tree_return///
+		return (bracket_tree(cmdlist));
 	if (!avail_node(cmdlist->current))
-		return ((void *)(long)node_syntax_error(0, NULL)); //error
+		return ((void *)(long)node_syntax_error(0, NULL));
 	ret_node = init_astnode();
 	while (cmdlist->current && avail_node(cmdlist->current))
 	{
 		if (cmdlist->current->type == BRACKET_OPEN || \
 			cmdlist->current->type == BRACKET_CLOSE)
-			return ((void *)(long)node_syntax_error(0, ret_node)); //error
+			return ((void *)(long)node_syntax_error(0, ret_node));
 		else if (is_redirection(cmdlist->current->type))
 		{
 			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_return(0, ret_node)); //error
+				return ((void *)(long)node_return(0, ret_node));
 		}
 		else
 			cmd_proc(cmdlist, ret_node);
