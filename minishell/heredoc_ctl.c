@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:31:51 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:42:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static void	make_rand_str(char *buf)
 	unsigned char		temp;
 	int					fd;
 	int					i;
-	const static char	*char_set = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	const static char	*char_set = \
+			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 	fd = open("/dev/urandom", O_RDONLY);
 	i = 0;
@@ -51,7 +52,7 @@ int	heredoc_write(char *end_flag, int fd)
 	{
 		str = readline("> ");
 		if (!str || ft_strncmp(str, end_flag, ft_strlen(str) + 1) == 0)
-			break;
+			break ;
 		else if (*str == 0 && g_info.ret_val == SIGINT_CATCH)
 		{
 			free(str);

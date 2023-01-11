@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:20:01 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:41:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	output_set(int output)
 
 int	re_in_set(t_strnode *red_node, int fork)
 {
-	int	fd;
+	int		fd;
 	char	*filename;
 
 	if (red_node->type == RE_HEREDOC)

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:08:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:41:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*remove_quote(char *str)
 			while (str[i] != quote)
 				i++;
 			str = strreplace(str, i, i, "");
-			continue;
+			continue ;
 		}
 		i++;
 	}

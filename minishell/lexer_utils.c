@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:32:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 19:56:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-int get_token(t_strbuff *buff, t_cmdnode **cur_node)
+int	get_token(t_strbuff *buff, t_cmdnode **cur_node)
 {
 	int			len;
 
@@ -30,7 +30,7 @@ int get_token(t_strbuff *buff, t_cmdnode **cur_node)
 	if ((*cur_node)->type != CMD)
 	{
 		(*cur_node)->cmd = NULL;
-		if ((*cur_node)->type == AND || (*cur_node)->type == OR ||\
+		if ((*cur_node)->type == AND || (*cur_node)->type == OR || \
 			(*cur_node)->type == RE_APPEND || (*cur_node)->type == RE_HEREDOC)
 			buff->now_read += 2;
 		else

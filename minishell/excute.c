@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 12:16:27 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 17:14:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:40:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-debug_asdf;
-static void	print_list(t_cmdlist *cmdlist);
+//static void	print_list(t_cmdlist *cmdlist);
 
 int	proc_cmd(char *cmd)
 {
@@ -32,14 +31,13 @@ int	proc_cmd(char *cmd)
 	if (!(make_cmdlist(&cmdlist, &buff) < 0 || !make_ast(&cmdlist, &ast)))
 		exe_ast(ast.root, 0, 1, 1);
 	turn_off_show_signal();
-	//print_list(&cmdlist);
 	clear_list(&cmdlist);
 	clear_ast(ast.root);
 	return (0);
 }
 
+/* // for debug
 
-/////////////////
 static void	print_list(t_cmdlist *cmdlist)
 {
 	t_cmdnode	*cur_node;
@@ -73,3 +71,4 @@ static void	print_list(t_cmdlist *cmdlist)
 		cur_node = cur_node->next;
 	}
 }
+*/

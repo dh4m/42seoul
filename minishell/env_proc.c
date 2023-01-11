@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 15:14:47 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 14:59:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:38:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void	add_only_key_env(char *env_name)
 t_env	*search_env(char *name)
 {
 	t_env	*ret_node;
-	
+
 	ret_node = g_info.env;
 	while (ret_node)
 	{
 		if (ft_strncmp(name, ret_node->name, ft_strlen(name) + 1) == 0)
-			break;
+			break ;
 		ret_node = ret_node->next;
 	}
 	return (ret_node);
@@ -87,7 +87,7 @@ void	del_env(char *name)
 {
 	t_env	*pre_node;
 	t_env	*del_node;
-	
+
 	del_node = g_info.env;
 	if (del_node && ft_strncmp(name, del_node->name, ft_strlen(name) + 1) == 0)
 	{
@@ -107,7 +107,7 @@ void	del_env(char *name)
 			if (del_node == g_info.env_last)
 				g_info.env_last = pre_node;
 			del_env_node(del_node);
-			break;
+			break ;
 		}
 	}
 }

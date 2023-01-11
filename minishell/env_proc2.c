@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 20:06:48 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 15:32:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:38:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	num_of_env(void)
 
 	ret_num = 0;
 	env = g_info.env;
-	while(env)
+	while (env)
 	{
 		if (env->value)
 			ret_num++;
