@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 20:06:48 by dham              #+#    #+#             */
-/*   Updated: 2022/09/15 13:02:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 15:32:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	num_of_env(void)
 	env = g_info.env;
 	while(env)
 	{
-		ret_num++;
+		if (env->value)
+			ret_num++;
 		env = env->next;
 	}
 	return (ret_num);
@@ -56,13 +57,16 @@ char	**env_list_make(void)
 	i = 0;
 	while (env)
 	{
-		len_env_str = ft_strlen(env->name) + ft_strlen(env->value) + 2;
-		ret_list[i] = malloc(len_env_str);
-		ft_strlcpy(ret_list[i], env->name, len_env_str);
-		ft_strlcat(ret_list[i], "=", len_env_str);
-		ft_strlcat(ret_list[i], env->value, len_env_str);
+		if (env->value)
+		{
+			len_env_str = ft_strlen(env->name) + ft_strlen(env->value) + 2;
+			ret_list[i] = malloc(len_env_str);
+			ft_strlcpy(ret_list[i], env->name, len_env_str);
+			ft_strlcat(ret_list[i], "=", len_env_str);
+			ft_strlcat(ret_list[i], env->value, len_env_str);
+			i++;
+		}
 		env = env->next;
-		i++;
 	}
 	ret_list[i] = NULL;
 	return (ret_list);

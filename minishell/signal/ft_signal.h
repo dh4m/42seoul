@@ -6,12 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:47:04 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 17:54:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 15:10:22 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_SIGNAL_H
 # define FT_SIGNAL_H
+
+# define SIGINT_CATCH -256
 
 void	ft_readline_signal_set(void);
 void	ft_excute_signal_set(void);
