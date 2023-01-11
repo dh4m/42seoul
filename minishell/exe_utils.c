@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 19:30:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/11 16:20:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int	re_in_set(t_strnode *red_node, int fork)
 	int	fd;
 	char	*filename;
 
+	if (red_node->type == RE_HEREDOC)
+	{
+		input_set((long)red_node->str);
+		return (1);
+	}
 	filename = filename_expansion(red_node->str);
 	if (!filename)
 		return (ambiguous_error(red_node->str, fork));
@@ -48,10 +53,6 @@ int	re_in_set(t_strnode *red_node, int fork)
 		if (fd < 0)
 			return (redi_error(red_node->str, fork));
 		input_set(fd);
-	}
-	else if (red_node->type == RE_HEREDOC)
-	{
-		input_set((int)red_node->str);
 	}
 	free(filename);
 	return (1);
