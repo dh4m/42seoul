@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:54:16 by dham              #+#    #+#             */
-/*   Updated: 2022/12/26 19:23:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/12 21:59:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
 void	getcwd_error(void)
 {
 	ft_putstr_fd("cd: error retrieving current directory: ", 2);
-	ft_putstr_fd("getcwd: cannot access parent directories: ", 2);
-	ft_putstr_fd("No such file or directory\n", 2);
+	perror("getcwd: cannot access parent directories");
 }
 
 char	*get_oldpwd(void)
@@ -115,7 +114,7 @@ void	cd_env_set(char *pwd, char *oldpwd)
 		free(pwd);
 }
 
-int exe_cd(char **argv)
+int	exe_cd(char **argv)
 {
 	if (argv[1])
 		ft_cd(argv[1]);

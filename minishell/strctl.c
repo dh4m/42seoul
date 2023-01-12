@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 19:47:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/12 15:51:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	list_strlen(t_strlist *list)
 
 	node = list->prenode.next;
 	ret_val = 0;
-	while(node)
+	while (node)
 	{
 		if (node->str)
 			ret_val += ft_strlen(node->str);
@@ -73,14 +73,14 @@ char	*table_to_str(char **table)
 	i = -1;
 	while (table[++i])
 		len += ft_strlen(table[i]);
-	ret_str = ft_calloc(len + i, sizeof(char));
+	ret_str = ft_calloc(len + i + 1, sizeof(char));
 	cnt = i;
 	i = -1;
 	while (table[++i])
 	{
-		ft_strlcat(ret_str, table[i], len + cnt);
-		ft_strlcat(ret_str, " ", len + cnt);
-	} // 뒤에 널문자 이슈
+		ft_strlcat(ret_str, table[i], len + cnt + 1);
+		ft_strlcat(ret_str, " ", len + cnt + 1);
+	}
 	return (ret_str);
 }
 
@@ -108,7 +108,7 @@ char	**get_argv(t_astnode *node)
 {
 	char	*temp_str;
 	char	**ret_val;
-	
+
 	if (node->type != CMD)
 		return (NULL);
 	temp_str = list_to_str(&node->cmd);
@@ -140,7 +140,7 @@ char	*filename_expansion(char *str)
 	name_list = shell_split(temp_str, ' ');
 	quote_proc(name_list);
 	free(temp_str);
-	if(name_list[1])
+	if (name_list[1])
 	{
 		free_path_list(name_list);
 		return (0);

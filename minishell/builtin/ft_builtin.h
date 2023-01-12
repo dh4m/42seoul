@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:24:49 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/12 20:44:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define NUM_BUILTIN 7
 # include "../minishell.h"
+
+typedef int (*builtin_func)(char **);
 
 void	exe_builtin(char **argv, t_astnode *node, int parents);
 
