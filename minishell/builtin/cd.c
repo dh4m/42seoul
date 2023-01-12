@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:54:16 by dham              #+#    #+#             */
-/*   Updated: 2023/01/12 21:59:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 01:09:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*get_oldpwd(void)
 		tmp = search_env("PWD");
 		if (tmp)
 			ret_str = ft_strdup(tmp->value);
+		else
+			ret_str = ft_calloc(1, sizeof(char));
 	}
 	return (ret_str);
 }
@@ -55,6 +57,8 @@ char	*get_pwd(char *path)
 			ret_str = ft_strjoin(tmp_str, path);
 			free(tmp_str);
 		}
+		else
+			ret_str = ft_calloc(1, sizeof(char));
 	}
 	return (ret_str);
 }

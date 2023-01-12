@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:13 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:26:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 00:33:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,22 @@ int	exe_exit(char **argv, int parents)
 {
 	if (argv[1] && !ft_isnum(argv[1]))
 	{
-		if (parents && isatty(1))
-			printf("exit\n");
+		if (parents)
+			ft_putstr_fd("exit\n", 2);
 		exit_error(argv[1]);
 		g_info.ret_val = 255;
 		ft_exit(g_info.ret_val);
 	}
 	else if (argv[1] && argv[2])
 	{
-		if (parents && isatty(1))
-			printf("exit\n");
+		if (parents)
+			ft_putstr_fd("exit\n", 2);
 		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 		g_info.ret_val = 1;
 		return (0);
 	}
-	if (parents && isatty(1))
-			printf("exit\n");
+	if (parents)
+			ft_putstr_fd("exit\n", 2);
 	if (argv[1])
 		ft_exit(ft_atoi(argv[1]));
 	else
