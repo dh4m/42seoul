@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:41:31 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 22:57:25 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,51 @@
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
+
+char	*insert_escape(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (i == '\"')
+		{
+			str = strreplace(str, i, i, "\030\"");
+			i++;
+		}
+		else if (i == '\'')
+		{
+			str = strreplace(str, i, i, "\030\'");
+			i++;
+		}
+		i++;
+	}
+	return (str);
+}
+
+char	*remove_escape(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		\\\\\\\\
+	}
+}
+
+void	escape_proc(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		argv[i] = remove_escape(argv[i]);
+		i++;
+	}
+}
 
 int	dollor_len(char *str)
 {
@@ -62,7 +107,10 @@ char	*expansion(char *str)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
 		if (search_env(name))
+		{
 			rep = search_env(name)->value;
+			rep = insert_escape(rep);
+		}
 		else if (*name == '?')
 			rep = ft_itoa(g_info.ret_val);
 		else
@@ -84,6 +132,8 @@ char	*remove_quote(char *str)
 	i = 0;
 	while (str[i])
 	{
+		if (str[i] == '\030')
+			i++;
 		if (str[i] == '"' || str[i] == '\'')
 		{
 			quote = str[i];
