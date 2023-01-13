@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:42:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:09:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	heredoc_write(char *end_flag, int fd)
 			end_heredoc_set();
 			return (0);
 		}
+		str = expansion_heredoc(str);
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);

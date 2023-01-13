@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:34:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:09:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,9 +185,12 @@ char		*filename_expansion(char *str);
 
 char		**shell_split(char const *s, char c);
 
+int			dollor_len(char *str);
 char		*remove_quote(char *str);
 void		quote_proc(char **argv);
 char		*expansion(char *str);
+
+char		*expansion_heredoc(char *str);
 
 void		turn_off_show_signal(void);
 void		turn_on_show_signal(void);
