@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:35:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 20:06:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 		cmdlist->current->type == AND || cmdlist->current->type == OR)
 		return (left);
 	ret_node = make_oper_node(cmdlist);
+	if (!ret_node)
+		return ((void *)(long)node_syntax_error(0, left, cmdlist->current));
 	ret_node->left = left;
 	ret_node->right = make_pipeline(cmdlist);
 	if (!ret_node->right)
@@ -61,22 +63,23 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 {
 	t_astnode	*ret_node;
 
+	ret_node = NULL;
 	if (!cmdlist->current)
-		return ((void *)(long)node_syntax_error(0, ret_node));
+		return ((void *)(long)node_syntax_error(0, ret_node, cmdlist->current));
 	if (cmdlist->current->type == BRACKET_OPEN)
 		return (bracket_tree(cmdlist));
 	if (!avail_node(cmdlist->current))
-		return ((void *)(long)node_syntax_error(0, NULL));
+		return ((void *)(long)node_syntax_error(0, NULL, cmdlist->current));
 	ret_node = init_astnode();
 	while (cmdlist->current && avail_node(cmdlist->current))
 	{
 		if (cmdlist->current->type == BRACKET_OPEN || \
 			cmdlist->current->type == BRACKET_CLOSE)
-			return ((void *)(long)node_syntax_error(0, ret_node));
+			return ((void *)(long)node_syntax_error(0, ret_node, cmdlist->current));
 		else if (is_redirection(cmdlist->current->type))
 		{
 			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_return(0, ret_node));
+				return ((void *)(long)node_free_return(0, ret_node));
 		}
 		else
 			cmd_proc(cmdlist, ret_node);
@@ -89,6 +92,9 @@ t_astnode	*make_oper_node(t_cmdlist *cmdlist)
 {
 	t_astnode	*ret_node;
 
+	if (cmdlist->current->type != AND && cmdlist->current->type != OR \
+		&& cmdlist->current->type != PIPE)
+		return (0);
 	ret_node = init_astnode();
 	ret_node->type = cmdlist->current->type;
 	cmdlist->current = cmdlist->current->next;

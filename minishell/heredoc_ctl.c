@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 16:09:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:32:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 		return (0);
 	}
 	close(fd_w);
-	add_strnode((char *)(long)fd, RE_HEREDOC, list);
+	add_strnode(NULL, fd, RE_HEREDOC, list);
 	free(temp_name);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:34:41 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:37:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 19:49:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,10 @@ t_astnode	*bracket_tree(t_cmdlist *cmdlist)
 	ret_node->left = tree_ast.root;
 	ret_node->right = init_astnode();
 	ret_node->right->type = BRACKET_CLOSE;
-	while (cmdlist->current && avail_node(cmdlist->current) \
-			&& cmdlist->current->type != BRACKET_CLOSE)
+	while (cmdlist->current && is_redirection(cmdlist->current->type))
 	{
-		if (is_redirection(cmdlist->current->type))
-		{
-			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_syntax_error(0, ret_node));
-		}
-		else
-			return ((void *)(long)node_syntax_error(0, ret_node));
+		if (!redir_proc(cmdlist, ret_node))
+			return ((void *)(long)node_free_return (0, ret_node));
 		cmdlist->current = cmdlist->current->next;
 	}
 	return (ret_node);

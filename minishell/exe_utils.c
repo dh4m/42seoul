@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:41:17 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:39:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ int	re_in_set(t_strnode *red_node, int fork)
 
 	if (red_node->type == RE_HEREDOC)
 	{
-		input_set((long)red_node->str);
+		input_set(red_node->content.fd);
 		return (1);
 	}
-	filename = filename_expansion(red_node->str);
+	filename = filename_expansion(red_node->content.str);
 	if (!filename)
-		return (ambiguous_error(red_node->str, fork));
+		return (ambiguous_error(red_node->content.str, fork));
 	if (red_node->type == RE_IN)
 	{
-		fd = open(red_node->str, O_RDONLY);
+		fd = open(red_node->content.str, O_RDONLY);
 		if (fd < 0)
-			return (redi_error(red_node->str, fork));
+			return (redi_error(red_node->content.str, fork));
 		input_set(fd);
 	}
 	free(filename);
@@ -63,9 +63,9 @@ int	re_out_set(t_strnode *red_node, int fork)
 	int		fd;
 	char	*filename;
 
-	filename = filename_expansion(red_node->str);
+	filename = filename_expansion(red_node->content.str);
 	if (!filename)
-		return (ambiguous_error(red_node->str, fork));
+		return (ambiguous_error(red_node->content.str, fork));
 	if (red_node->type == RE_OUT)
 	{
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);

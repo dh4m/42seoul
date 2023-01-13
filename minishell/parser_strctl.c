@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 10:29:38 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:35:49 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 17:45:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,27 @@
 
 int	cmd_proc(t_cmdlist *cmdlist, t_astnode *node)
 {
-	add_strnode(cmdlist->current->cmd, CMD, &node->cmd);
+	add_strnode(cmdlist->current->cmd, 0, CMD, &node->cmd);
 	return (1);
 }
 
 int	redir_proc(t_cmdlist *cmdlist, t_astnode *node)
 {
 	if (!cmdlist->current->next || cmdlist->current->next->type != CMD)
-		return (node_syntax_error(0, NULL));
+		return (node_syntax_error(0, NULL, cmdlist->current->next));
 	if (cmdlist->current->type == RE_HEREDOC)
 	{
 		if (!heredoc_proc(cmdlist->current->next->cmd, &node->redi))
 			return (0);
 	}
-	else if (cmdlist->current->type == RE_IN)
-		add_strnode(cmdlist->current->next->cmd, RE_IN, &node->redi);
 	else 
-		add_strnode(cmdlist->current->next->cmd, cmdlist->current->type, &node->redi);
+		add_strnode(cmdlist->current->next->cmd, 0, \
+					cmdlist->current->type, &node->redi);
 	cmdlist->current = cmdlist->current->next;
 	return (1);
 }
 
-void	add_strnode(char *str, int type, t_strlist *list)
+void	add_strnode(char *str, int heredoc_fd, int type, t_strlist *list)
 {
 	t_strnode	*last;
 	t_strnode	*node;
@@ -45,7 +44,10 @@ void	add_strnode(char *str, int type, t_strlist *list)
 	node = malloc(sizeof(t_strnode));
 	node->type = type;
 	node->next = NULL;
-	node->str = str;
+	if (str)
+		node->content.str = str;
+	else
+		node->content.fd = heredoc_fd;
 	last = &list->prenode;
 	while (last->next)
 		last = last->next;

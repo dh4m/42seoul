@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 19:56:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 17:49:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	get_token(t_strbuff *buff, t_cmdnode **cur_node)
 	if (len < 0)
 	{
 		free(*cur_node);
-		node_syntax_error(0, NULL);
+		node_syntax_error(0, NULL, NULL);
 		return (-1);
 	}
 	(*cur_node)->cmd = ft_substr(&buff->str[buff->now_read], 0, len);

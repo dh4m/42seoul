@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 16:09:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 19:51:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,15 @@ typedef struct s_cmdlist
 	int			node_num;
 }	t_cmdlist;
 
+typedef union u_content
+{
+	char	*str;
+	int		fd;
+}	t_content;
+
 typedef struct s_strnode
 {
-	char				*str;
+	t_content			content;
 	int					type;
 	struct s_strnode	*next;
 }	t_strnode;
@@ -137,7 +143,7 @@ void		clear_strlist(t_strlist *list);
 
 int			cmd_proc(t_cmdlist *cmdlist, t_astnode *node);
 int			redir_proc(t_cmdlist *cmdlist, t_astnode *node);
-void		add_strnode(char *str, int type, t_strlist *list);
+void		add_strnode(char *str, int heredoc_fd, int type, t_strlist *list);
 
 int			heredoc_proc(char *end_flag, t_strlist *list);
 char		*make_heredoc_temp_name(void);
@@ -147,9 +153,8 @@ int			make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast);
 t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist);
 t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
 
-int			syntax_error(int ret_val);
-int			node_syntax_error(int ret_val, t_astnode *need_free);
-int			node_return(int ret_val, t_astnode *need_free);
+int			node_syntax_error(int ret_val, t_astnode *need_free, t_cmdnode *node);
+int			node_free_return(int ret_val, t_astnode *need_free);
 int			redi_error(char *name, int fork);
 int			ambiguous_error(char *name, int fork);
 

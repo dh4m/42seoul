@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2023/01/12 15:51:03 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/13 16:35:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ size_t	list_strlen(t_strlist *list)
 	ret_val = 0;
 	while (node)
 	{
-		if (node->str)
-			ret_val += ft_strlen(node->str);
+		if (node->content.str)
+			ret_val += ft_strlen(node->content.str);
 		node = node->next;
 	}
 	return (ret_val);
@@ -55,7 +55,7 @@ char	*list_to_str(t_strlist *list)
 	node = list->prenode.next;
 	while (node)
 	{
-		ft_strlcat(ret_val, node->str, len + cnt);
+		ft_strlcat(ret_val, node->content.str, len + cnt);
 		ft_strlcat(ret_val, " ", len + cnt);
 		node = node->next;
 	}
