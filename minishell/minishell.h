@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 19:51:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 01:44:29 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 #include <stdio.h>
 # define RANDSTR_LEN 8
+
+# define BACKSLASH_E 1
+# define QUOTES_E 2
+# define SPACE_E 4
 
 enum e_type
 {
@@ -190,6 +194,8 @@ char		*filename_expansion(char *str);
 
 char		**shell_split(char const *s, char c);
 
+char		*insert_escape(char *str, unsigned char flag);
+void		escape_proc(char **argv);
 int			dollor_len(char *str);
 char		*remove_quote(char *str);
 void		quote_proc(char **argv);

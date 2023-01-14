@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 13:05:34 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:00:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 01:40:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 static int	word_len(const char *str, char c);
 static int	word_cnt(const char *str, char c);
 static int	malloc_guard(void **target, unsigned int size);
-static int	free_strlist(char **list, unsigned int idx);
 
 char	**shell_split(char const *s, char c)
 {
@@ -27,20 +26,19 @@ char	**shell_split(char const *s, char c)
 
 	idx = 0;
 	flag = 0;
-	if (!malloc_guard((void **)&re_loc, sizeof(char *) * (word_cnt(s, c) + 1)))
-		return (0);
+	malloc_guard((void **)&re_loc, sizeof(char *) * (word_cnt(s, c) + 1));
 	while (*s)
 	{
 		if (!flag && *s != c && ++flag)
 		{
-			if (!malloc_guard((void **)&re_loc[idx], word_len(s, c) + 1) && \
-				free_strlist(re_loc, idx))
-				return (0);
+			malloc_guard((void **)&re_loc[idx], word_len(s, c) + 1);
 			ft_strlcpy(re_loc[idx++], s, word_len(s, c) + 1);
 		}
 		else if (flag && *s == c)
 			flag = 0;
-		if (*s == '"' || *s == '\'')
+		if (*s == '\\')
+			s++;
+		else if (*s == '"' || *s == '\'')
 			s = ft_strchr(s + 1, *s);
 		s++;
 	}
@@ -54,7 +52,12 @@ static int	word_len(const char *str, char c)
 	count = 0;
 	while (*str && *str != c)
 	{
-		if (*str == '"' || *str == '\'')
+		if (*str == '\\')
+		{
+			count++;
+			str++;
+		}
+		else if (*str == '"' || *str == '\'')
 		{
 			count += ft_strchr(str + 1, *str) - str;
 			str = ft_strchr(str + 1, *str);
@@ -83,7 +86,9 @@ static int	word_cnt(const char *str, char c)
 		}
 		else if (flag && *str == c)
 			flag = 0;
-		if (*str == '"' || *str == '\'')
+		if (*str == '\\')
+			str++;
+		else if (*str == '"' || *str == '\'')
 			str = ft_strchr(str + 1, *str);
 		str++;
 	}
@@ -95,15 +100,8 @@ static int	malloc_guard(void **target, unsigned int size)
 	*target = ft_calloc(size, 1);
 	if (!*target)
 	{
-		return (0);
+		ft_putstr_fd("malloc error\n", 2);
+		exit(1);
 	}
-	return (1);
-}
-
-static int	free_strlist(char **list, unsigned int idx)
-{
-	while (idx--)
-		free(list[idx]);
-	free(list);
 	return (1);
 }

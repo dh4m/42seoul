@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/14 22:52:57 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 01:43:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,19 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-char	*insert_escape(char *str)
+char	*make_escape_character(char *str, int idx, char ch)
+{
+	char	*ret_str;
+	char	escape_char[3];
+
+	escape_char[0] = '\\';
+	escape_char[1] = ch;
+	escape_char[2] = 0;
+	ret_str = strreplace(str, idx, idx, escape_char);
+	return (ret_str);
+}
+
+char	*insert_escape(char *str, unsigned char flag)
 {
 	int		i;
 	char	*ret_str;
@@ -28,14 +40,11 @@ char	*insert_escape(char *str)
 	ret_str = ft_strdup(str);
 	while (ret_str[i])
 	{
-		if (ret_str[i] == '\"')
+		if (((ret_str[i] == '\"' || ret_str[i] == '\'') && (flag & QUOTES_E)) \
+			|| (ret_str[i] == ' ' && (flag & SPACE_E)) \
+			|| (ret_str[i] == '\\' && (flag & BACKSLASH_E)))
 		{
-			ret_str = strreplace(ret_str, i, i, "\\\"");
-			i++;
-		}
-		else if (ret_str[i] == '\'')
-		{
-			ret_str = strreplace(ret_str, i, i, "\\\'");
+			ret_str = make_escape_character(ret_str, i, ret_str[i]);
 			i++;
 		}
 		i++;
@@ -50,8 +59,11 @@ char	*remove_escape(char *str)
 	i = 0;
 	while (str[i])
 	{
-		//
+		if (str[i] == '\\')
+			str = strreplace(str, i, i, "");
+		i++;
 	}
+	return (str);
 }
 
 void	escape_proc(char **argv)
@@ -87,11 +99,13 @@ char	*dollor_search(char *str)
 	bracket = 0;
 	while (*str)
 	{
-		if (*str == '"')
+		if (*str == '\\')
+			str++;
+		else if (*str == '"')
 			bracket = (bracket == 0);
-		if (*str == '$' && dollor_len(str))
+		else if (*str == '$' && dollor_len(str))
 			return (str);
-		if (!bracket && *str == '\'')
+		else if (!bracket && *str == '\'')
 			str = ft_strchr(str + 1, '\'');
 		str++;
 	}
@@ -109,10 +123,7 @@ char	*expansion(char *str)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
 		if (search_env(name))
-		{
-			rep = search_env(name)->value;
-			rep = insert_escape(rep);
-		}
+			rep = insert_escape(search_env(name)->value, BACKSLASH_E | QUOTES_E);
 		else if (*name == '?')
 			rep = ft_itoa(g_info.ret_val);
 		else
@@ -120,7 +131,7 @@ char	*expansion(char *str)
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
 		free(rep);
 		free(name);
-		pos = dollor_search(str);
+		pos = dollor_search(pos + dollor_len(pos));
 	}
 	return (str);
 }
@@ -133,9 +144,9 @@ char	*remove_quote(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '\030')
+		if (str[i] == '\\')
 			i++;
-		if (str[i] == '"' || str[i] == '\'')
+		else if (str[i] == '"' || str[i] == '\'')
 		{
 			quote = str[i];
 			str = strreplace(str, i, i, "");
