@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 22:58:11 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/14 22:52:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,26 @@
 
 char	*insert_escape(char *str)
 {
-	int	i;
+	int		i;
+	char	*ret_str;
 
 	i = 0;
-	while (str[i])
+	ret_str = ft_strdup(str);
+	while (ret_str[i])
 	{
-		if (i == '\"')
+		if (ret_str[i] == '\"')
 		{
-			str = strreplace(str, i, i, "\030\"");
+			ret_str = strreplace(ret_str, i, i, "\\\"");
 			i++;
 		}
-		else if (i == '\'')
+		else if (ret_str[i] == '\'')
 		{
-			str = strreplace(str, i, i, "\030\'");
+			ret_str = strreplace(ret_str, i, i, "\\\'");
 			i++;
 		}
 		i++;
 	}
-	return (str);
+	return (ret_str);
 }
 
 char	*remove_escape(char *str)
@@ -114,10 +116,9 @@ char	*expansion(char *str)
 		else if (*name == '?')
 			rep = ft_itoa(g_info.ret_val);
 		else
-			rep = "";
+			rep = ft_calloc(1, sizeof(char));
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
-		if (*name == '?')
-			free(rep);
+		free(rep);
 		free(name);
 		pos = dollor_search(str);
 	}
