@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_utils.c                                        :+:      :+:    :+:   */
+/*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 16:39:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 19:31:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ int	re_in_set(t_strnode *red_node, int fork)
 	if (red_node->type == RE_HEREDOC)
 	{
 		input_set(red_node->content.fd);
+		return (1);
+	}
+	else if (red_node->type == RE_HEREDOC_EXPAND)
+	{
+		input_set(expansion_heredoc_file(red_node->content.fd));
 		return (1);
 	}
 	filename = filename_expansion(red_node->content.str);
@@ -97,7 +102,8 @@ int	redirect_set(t_astnode *node, int fork)
 			if (!re_out_set(red_node, fork))
 				return (0);
 		}
-		else if (red_node->type == RE_IN || red_node->type == RE_HEREDOC)
+		else if (red_node->type == RE_IN || red_node->type == RE_HEREDOC \
+				|| red_node->type == RE_HEREDOC_EXPAND)
 		{
 			if (!re_in_set(red_node, fork))
 				return (0);

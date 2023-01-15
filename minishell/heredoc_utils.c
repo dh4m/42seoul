@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:21:11 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 15:45:25 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 19:01:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
+#include "get_next_line/get_next_line.h"
 #include <fcntl.h>
 
 char	*dollor_search_heredoc(char *str)
@@ -33,6 +34,7 @@ char	*dollor_search_heredoc(char *str)
 	return (0);
 }
 
+
 char	*expansion_heredoc(char *str)
 {
 	char	*pos;
@@ -44,16 +46,48 @@ char	*expansion_heredoc(char *str)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
 		if (search_env(name))
-			rep = search_env(name)->value;
+			rep = ft_strdup(search_env(name)->value);
 		else if (*name == '?')
 			rep = ft_itoa(g_info.ret_val);
 		else
-			rep = "";
+			rep = ft_calloc(1, sizeof(char));
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
-		if (*name == '?')
-			free(rep);
+		free(rep);
 		free(name);
-		pos = dollor_search_heredoc(str);
+		pos = dollor_search_heredoc(pos + dollor_len(pos));
 	}
 	return (str);
+}
+
+int	heredoc_expansion_write(int fd, int fd_original)
+{
+	char		*str;
+
+	while (1)
+	{
+		str = get_next_line(fd_original);
+		if (!str)
+			break ;
+		str = expansion_heredoc(str);
+		write(fd, str, ft_strlen(str));
+		free(str);
+	}
+	return (1);
+}
+
+int	expansion_heredoc_file(int fd_original)
+{
+	char	*temp_name;
+	int		fd_w;
+	int		fd;
+
+	temp_name = make_heredoc_temp_name();
+	fd_w = open(temp_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	fd = open(temp_name, O_RDONLY);
+	unlink(temp_name);
+	heredoc_expansion_write(fd_w, fd_original);
+	free(temp_name);
+	close(fd_w);
+	close(fd_original);
+	return (fd);
 }

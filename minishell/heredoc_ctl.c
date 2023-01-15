@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 16:32:44 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 18:48:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,14 @@ static void	make_rand_str(char *buf)
 
 int	heredoc_write(char *end_flag, int fd)
 {
-	char	*str;
+	char		*str;
+	const char	*quotes_end = remove_escape(remove_quote(ft_strdup(end_flag)));
 
 	ft_heredoc_signal_set();
 	while (1)
 	{
 		str = readline("> ");
-		if (!str || ft_strncmp(str, end_flag, ft_strlen(str) + 1) == 0)
+		if (!str || ft_strncmp(str, quotes_end, ft_strlen(str) + 1) == 0)
 			break ;
 		else if (*str == 0 && g_info.ret_val == SIGINT_CATCH)
 		{
@@ -60,14 +61,28 @@ int	heredoc_write(char *end_flag, int fd)
 			end_heredoc_set();
 			return (0);
 		}
-		str = expansion_heredoc(str);
 		write(fd, str, ft_strlen(str));
 		write(fd, "\n", 1);
 		free(str);
 	}
 	if (str)
 		free(str);
+	free((void *)quotes_end);
 	end_heredoc_set();
+	return (1);
+}
+
+int	heredoc_quotes(char *end_flag)
+{
+	int	i;
+
+	i = 0;
+	while (end_flag[i])
+	{
+		if (end_flag[i] == '\"' || end_flag[i] == '\'')
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -90,7 +105,10 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 		return (0);
 	}
 	close(fd_w);
-	add_strnode(NULL, fd, RE_HEREDOC, list);
+	if (heredoc_quotes(end_flag))
+		add_strnode(NULL, fd, RE_HEREDOC_EXPAND, list);
+	else 
+		add_strnode(NULL, fd, RE_HEREDOC, list);
 	free(temp_name);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/15 01:44:29 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/15 20:02:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ enum e_type
 	RE_APPEND,
 	RE_OUT,
 	RE_HEREDOC,
+	RE_HEREDOC_EXPAND,
 	DOUBLE_Q,
 	SINGLE_Q,
 	CMD,
@@ -196,12 +197,14 @@ char		**shell_split(char const *s, char c);
 
 char		*insert_escape(char *str, unsigned char flag);
 void		escape_proc(char **argv);
+char		*remove_escape(char *str);
 int			dollor_len(char *str);
 char		*remove_quote(char *str);
 void		quote_proc(char **argv);
 char		*expansion(char *str);
 
 char		*expansion_heredoc(char *str);
+int			expansion_heredoc_file(int fd_original);
 
 void		turn_off_show_signal(void);
 void		turn_on_show_signal(void);
