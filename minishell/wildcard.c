@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:59:23 by dham              #+#    #+#             */
-/*   Updated: 2023/01/12 20:32:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 20:35:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	pattern_matching(char *str, char **pattern, int front, int back)
 	int		i;
 	char	*ptr;
 
-	if (*pattern == NULL)
-		return (1);
+	if (*pattern == NULL && *str == '.')
+		return (0);
 	if (front && (ft_strnstr(str, pattern[0], ft_strlen(str)) != str))
 		return (0);
 	i = 0;
@@ -47,7 +47,9 @@ int	check_star(char *str)
 {
 	while (*str)
 	{
-		if (*str == '"' || *str == '\'')
+		if (*str == '\\')
+			str++;
+		else if (*str == '"' || *str == '\'')
 			str = ft_strchr(str + 1, *str);
 		if (*str == '*')
 			return (1);
@@ -66,6 +68,7 @@ char	*wild_filelist(char *p_str)
 	ret_str = ft_calloc(1, 1);
 	pattern = shell_split(p_str, '*');
 	quote_proc(pattern);
+	escape_proc(pattern);
 	dir_list = cur_dir_list();
 	i = 0;
 	while (dir_list[i])

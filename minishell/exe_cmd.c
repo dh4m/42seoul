@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:31:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 17:26:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,11 @@ int	exe_cmd_fork(t_astnode *node)
 	envp = env_list_make();
 	if (is_builtin(argv[0]))
 	{
-		exe_builtin(argv, node, 0);
+		exe_builtin(argv, node, 0, 1);
 		exit(g_info.ret_val);
 	}
-	redirect_set(node, 1);
+	if (!io_fd_set(node))
+		exit(1);
 	if (!argv[0])
 		exit(0);
 	if (ft_strchr(argv[0], '/'))
@@ -78,7 +79,7 @@ int	exe_pure_cmd(t_astnode *node, int parent)
 	fd_backup[1] = dup(STDOUT_FILENO);
 	argv = get_argv(node);
 	if (argv && is_builtin(argv[0]))
-		exe_builtin(argv, node, parent);
+		exe_builtin(argv, node, parent, 0);
 	else
 	{
 		pid = exe_ast_cmd(node, 0, 1, -1);

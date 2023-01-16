@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/15 20:02:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 15:55:49 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,8 @@ t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
 
 int			node_syntax_error(int ret_val, t_astnode *need_free, t_cmdnode *node);
 int			node_free_return(int ret_val, t_astnode *need_free);
-int			redi_error(char *name, int fork);
-int			ambiguous_error(char *name, int fork);
+int			redi_error(char *name);
+int			ambiguous_error(char *name);
 
 void		exe_ast(t_astnode *node, int input, int output, int parent);
 
@@ -171,11 +171,9 @@ void		exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input);
 int			exe_ast_cmd(t_astnode *node, int input, int output, int remain);
 int			exe_ast_bracket(t_astnode *node, int input, int output, int remain);
 
-void		input_set(int input);
-void		output_set(int output);
-int			re_in_set(t_strnode *red_node, int fork);
-int			re_out_set(t_strnode *red_node, int fork);
-int			redirect_set(t_astnode *node, int fork);
+int			re_in_set(t_strnode *red_node);
+int			re_out_set(t_strnode *red_node);
+int			redirect_set(t_astnode *node);
 void		redirect_reset(int backup[2]);
 
 int			exe_cmd(t_astnode *node);
@@ -213,5 +211,11 @@ void		wildcard(char **str);
 
 char		*filelist_join(char *str, char *file);
 char		**cur_dir_list(void);
+
+void		input_set(int input);
+void		output_set(int output);
+int			io_fd_set(t_astnode *node);
+int			re_in_set_fd(t_strnode *red_node);
+int			re_out_set_fd(t_strnode *red_node);
 
 #endif

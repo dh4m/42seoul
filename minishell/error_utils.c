@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:32:09 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 20:11:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 16:10:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,20 @@ int	node_free_return(int ret_val, t_astnode *need_free)
 	return (ret_val);
 }
 
-int	redi_error(char *name, int fork)
+int	redi_error(char *name)
 {
 	char	*err_str;
 
 	err_str = ft_strjoin("minishell: ", name);
 	perror(err_str);
 	free(err_str);
-	if (fork)
-		exit (1);
-	g_info.ret_val = 1;
 	return (0);
 }
 
-int	ambiguous_error(char *name, int fork)
+int	ambiguous_error(char *name)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(name, 2);
 	ft_putstr_fd(": ambiguous redirect\n", 2);
-	if (fork)
-		exit (1);
-	g_info.ret_val = 1;
 	return (0);
 }

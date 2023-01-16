@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:52:31 by dham              #+#    #+#             */
-/*   Updated: 2023/01/12 20:32:54 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 19:59:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,10 @@ char	**cur_dir_list(void)
 	entry = readdir(dp);
 	while (entry)
 	{
-		if (ft_strncmp(entry->d_name, "..", ft_strlen(entry->d_name)))
-		{
-			ret_list[i] = malloc(ft_strlen(entry->d_name) + 1);
-			ft_strlcpy(ret_list[i], entry->d_name, \
-						ft_strlen(entry->d_name) + 1);
-			i++;
-		}
+		ret_list[i] = malloc(ft_strlen(entry->d_name) + 1);
+		ft_strlcpy(ret_list[i], entry->d_name, \
+					ft_strlen(entry->d_name) + 1);
+		i++;
 		entry = readdir(dp);
 	}
 	ret_list[i] = NULL;

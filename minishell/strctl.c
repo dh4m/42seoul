@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 13:07:03 by dham              #+#    #+#             */
-/*   Updated: 2023/01/15 01:47:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 19:53:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	**get_argv(t_astnode *node)
 	temp_str = list_to_str(&node->cmd);
 	temp_str = expansion(temp_str);
 	ret_val = shell_split(temp_str, ' ');
-	//wildcard(ret_val); // escape 관련 수정 필요 
+	wildcard(ret_val);
 	free(temp_str);
 	temp_str = table_to_str(ret_val);
 	free_path_list(ret_val);

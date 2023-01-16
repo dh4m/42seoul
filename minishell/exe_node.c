@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2023/01/07 19:14:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/16 16:09:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	exe_ast_cmd(t_astnode *node, int input, int output, int remain)
 {
 	int	pid;
 
+	redirect_set(node);
 	if (node->type == BRACKET_OPEN)
 	{
 		pid = exe_ast_bracket(node, input, output, remain);
@@ -96,7 +97,8 @@ int	exe_ast_bracket(t_astnode *node, int input, int output, int remain)
 			close(remain);
 		input_set(input);
 		output_set(output);
-		redirect_set(node, 1);
+		if (!io_fd_set(node))
+			exit(1);
 		exe_ast(node->left, 0, 1, 0);
 		exit(g_info.ret_val);
 	}
