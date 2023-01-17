@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 20:06:48 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:38:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/17 18:47:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**env_list_make(void)
 	char		**ret_list;
 	int			len_env_str;
 
-	ret_list = malloc(sizeof(char *) * num_of_env() + 1);
+	ret_list = malloc(sizeof(char *) * (num_of_env() + 1));
 	env = g_info.env;
 	i = 0;
 	while (env)

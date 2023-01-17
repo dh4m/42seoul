@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/15 01:43:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/17 19:37:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	dollor_len(char *str)
 	len = 1;
 	if (str[len] == '?')
 		return (1);
-	while (ft_isalpha(str[len]) || str[len] == '_')
+	while (str[len] && ft_isalpha(str[len]) || str[len] == '_')
 	{
 		len++;
 	}
@@ -115,6 +115,7 @@ char	*dollor_search(char *str)
 char	*expansion(char *str)
 {
 	char	*pos;
+	int		idx;
 	char	*rep;
 	char	*name;
 
@@ -128,7 +129,9 @@ char	*expansion(char *str)
 			rep = ft_itoa(g_info.ret_val);
 		else
 			rep = ft_calloc(1, sizeof(char));
+		idx = pos - str;
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
+		pos = &str[idx];
 		free(rep);
 		free(name);
 		pos = dollor_search(pos + dollor_len(pos));

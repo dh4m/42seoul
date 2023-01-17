@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:21:11 by dham              #+#    #+#             */
-/*   Updated: 2023/01/15 19:01:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/17 19:44:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*dollor_search_heredoc(char *str)
 
 char	*expansion_heredoc(char *str)
 {
+	int		idx;
 	char	*pos;
 	char	*rep;
 	char	*name;
@@ -51,7 +52,9 @@ char	*expansion_heredoc(char *str)
 			rep = ft_itoa(g_info.ret_val);
 		else
 			rep = ft_calloc(1, sizeof(char));
+		idx = pos - str;
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
+		pos = &str[idx];
 		free(rep);
 		free(name);
 		pos = dollor_search_heredoc(pos + dollor_len(pos));
