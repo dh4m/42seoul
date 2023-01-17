@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 15:53:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/17 12:52:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,12 @@ int	re_in_set(t_strnode *red_node)
 	{
 		fd = open(red_node->content.str, O_RDONLY);
 		red_node->content.fd = fd;
-		if (fd < 0)
-			return (redi_error(red_node->content.str));
+	}
+	if (fd < 0)
+	{
+		redi_error(filename);
+		free(filename);
+		return (0);
 	}
 	free(filename);
 	return (1);
@@ -51,15 +55,17 @@ int	re_out_set(t_strnode *red_node)
 	{
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		red_node->content.fd = fd;
-		if (fd < 0)
-			return (redi_error(filename));
 	}
 	else if (red_node->type == RE_APPEND)
 	{
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		red_node->content.fd = fd;
-		if (fd < 0)
-			return (redi_error(filename));
+	}
+	if (fd < 0)
+	{
+		redi_error(filename);
+		free(filename);
+		return (0);
 	}
 	free(filename);
 	return (1);

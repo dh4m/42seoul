@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 15:55:49 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/17 18:33:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,11 @@ void		turn_on_show_signal(void);
 void		wildcard(char **str);
 
 char		*filelist_join(char *str, char *file);
+int			front_matching(char *str, char *pattern);
+int			back_matching(char *str, char *pattern);
+
 char		**cur_dir_list(void);
+char		**cur_dir_onlydir_list(void);
 
 void		input_set(int input);
 void		output_set(int output);

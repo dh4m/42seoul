@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 16:52:31 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 19:59:16 by dham             ###   ########.fr       */
+/*   Created: 2023/01/17 18:30:15 by dham              #+#    #+#             */
+/*   Updated: 2023/01/17 18:35:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 #include <dirent.h>
+#include <sys/stat.h>
 
 char	*filelist_join(char *str, char *file)
 {
@@ -33,44 +34,13 @@ char	*filelist_join(char *str, char *file)
 	return (ret_str);
 }
 
-int	cur_dir_list_len(void)
+int	front_matching(char *str, char *pattern)
 {
-	DIR				*dp;
-	struct dirent	*entry;
-	int				ret_val;
-
-	ret_val = 0;
-	dp = opendir(".");
-	entry = readdir(dp);
-	while (entry)
-	{
-		ret_val++;
-		entry = readdir(dp);
-	}
-	closedir(dp);
-	return (ret_val);
+	return (ft_strnstr(str, pattern, ft_strlen(str)) == str);
 }
 
-char	**cur_dir_list(void)
+int	back_matching(char *str, char *pattern)
 {
-	DIR				*dp;
-	struct dirent	*entry;
-	int				i;
-	char			**ret_list;
-
-	ret_list = malloc(sizeof(char *) * (cur_dir_list_len() + 1));
-	i = 0;
-	dp = opendir(".");
-	entry = readdir(dp);
-	while (entry)
-	{
-		ret_list[i] = malloc(ft_strlen(entry->d_name) + 1);
-		ft_strlcpy(ret_list[i], entry->d_name, \
-					ft_strlen(entry->d_name) + 1);
-		i++;
-		entry = readdir(dp);
-	}
-	ret_list[i] = NULL;
-	closedir(dp);
-	return (ret_list);
+	return (ft_strncmp(&str[ft_strlen(str) - ft_strlen(pattern)], pattern, \
+			ft_strlen(pattern)) == 0);
 }

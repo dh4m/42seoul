@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:59:23 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 20:35:51 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/17 18:37:12 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	pattern_matching(char *str, char **pattern, int front, int back)
 	int		i;
 	char	*ptr;
 
-	if (*pattern == NULL && *str == '.')
+	if ((*pattern == NULL || **pattern != '.') && *str == '.')
 		return (0);
-	if (front && (ft_strnstr(str, pattern[0], ft_strlen(str)) != str))
+	if (front && !front_matching(str, pattern[0]))
 		return (0);
 	i = 0;
 	ptr = str;
@@ -38,7 +38,7 @@ int	pattern_matching(char *str, char **pattern, int front, int back)
 			return (0);
 		i++;
 	}
-	if (back && (ft_strlen(ptr) != ft_strlen(pattern[i - 1])))
+	if (back && !back_matching(ptr, pattern[i - 1]))
 		return (0);
 	return (1);
 }
@@ -69,7 +69,10 @@ char	*wild_filelist(char *p_str)
 	pattern = shell_split(p_str, '*');
 	quote_proc(pattern);
 	escape_proc(pattern);
-	dir_list = cur_dir_list();
+	if (p_str[ft_strlen(p_str) - 1] == '/')
+		dir_list = cur_dir_onlydir_list();
+	else 
+		dir_list = cur_dir_list();
 	i = 0;
 	while (dir_list[i])
 	{
