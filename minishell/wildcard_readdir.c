@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 16:52:31 by dham              #+#    #+#             */
-/*   Updated: 2023/01/17 18:30:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 19:51:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char	**cur_dir_onlydir_list(void)
 	int				i;
 	char			**ret_list;
 	struct stat		file_stat;
-	
 
 	ret_list = ft_calloc(cur_dir_onlydir_len() + 1, sizeof(char *));
 	i = 0;
@@ -113,4 +112,3 @@ char	**cur_dir_onlydir_list(void)
 	closedir(dp);
 	return (ret_list);
 }
-

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:46:51 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 16:34:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 19:53:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	clear_strlist(t_strlist *list)
 	}
 }
 
-int avail_node(t_cmdnode *node)
+int	avail_node(t_cmdnode *node)
 {
 	return (node && node->type != PIPE \
 			&& node->type != AND && node->type != OR);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:45:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 20:06:51 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 19:55:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist)
 {
-	t_astnode *ret_node;
-	t_astnode *left;
+	t_astnode	*ret_node;
+	t_astnode	*left;
 
 	left = make_bracket_node(cmdlist);
 	if (!left)

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 20:06:03 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 19:53:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	make_ast(t_cmdlist *cmdlist, t_ast *ast)
 
 t_astnode	*make_pipeline(t_cmdlist *cmdlist)
 {
-	t_astnode *ret_node;
-	t_astnode *left;
+	t_astnode	*ret_node;
+	t_astnode	*left;
 
 	left = make_node(cmdlist);
 	if (!left)

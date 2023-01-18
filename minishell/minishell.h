@@ -6,14 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/17 18:33:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 19:55:21 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <stdio.h>
+# include <stdio.h>
 # define RANDSTR_LEN 8
 
 # define BACKSLASH_E 1
@@ -142,7 +142,7 @@ t_astnode	*make_oper_node(t_cmdlist *cmdlist);
 void		clear_ast(t_astnode *root);
 
 t_astnode	*init_astnode(void);
-int 		avail_node(t_cmdnode *node);
+int			avail_node(t_cmdnode *node);
 int			is_redirection(int type);
 void		clear_strlist(t_strlist *list);
 
@@ -158,16 +158,19 @@ int			make_bracket_ast(t_cmdlist *cmdlist, t_ast *ast);
 t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist);
 t_astnode	*make_bracket_node(t_cmdlist *cmdlist);
 
-int			node_syntax_error(int ret_val, t_astnode *need_free, t_cmdnode *node);
+int			node_syntax_error(int ret_val, \
+								t_astnode *need_free, t_cmdnode *node);
 int			node_free_return(int ret_val, t_astnode *need_free);
 int			redi_error(char *name);
 int			ambiguous_error(char *name);
 
 void		exe_ast(t_astnode *node, int input, int output, int parent);
 
-void		exe_ast_and(t_astnode *left_node, t_astnode *right_node, int parent);
+void		exe_ast_and(t_astnode *left_node, \
+							t_astnode *right_node, int parent);
 void		exe_ast_or(t_astnode *left_node, t_astnode *right_node, int parent);
-void		exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input);
+void		exe_ast_pipe(t_astnode *left_node, \
+							t_astnode *right_node, int input);
 int			exe_ast_cmd(t_astnode *node, int input, int output, int remain);
 int			exe_ast_bracket(t_astnode *node, int input, int output, int remain);
 

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/15 18:48:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 19:57:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 	close(fd_w);
 	if (heredoc_quotes(end_flag))
 		add_strnode(NULL, fd, RE_HEREDOC_EXPAND, list);
-	else 
+	else
 		add_strnode(NULL, fd, RE_HEREDOC, list);
 	free(temp_name);
 	return (1);

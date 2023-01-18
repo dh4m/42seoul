@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/17 19:37:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 20:39:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,9 @@ char	*expansion(char *str)
 		idx = pos - str;
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
 		pos = &str[idx];
-		free(rep);
 		free(name);
-		pos = dollor_search(pos + dollor_len(pos));
+		pos = dollor_search(pos + ft_strlen(rep));
+		free(rep);
 	}
 	return (str);
 }

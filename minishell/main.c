@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2023/01/17 18:44:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 21:39:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static int	is_space_str(char *str);
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	char *str;
-	
+	char	*str;
+
 	ft_readline_signal_set();
 	turn_off_show_signal();
 	info_init(envp);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 21:09:53 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 18:47:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/18 20:23:39 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 # define NUM_BUILTIN 7
 # include "../minishell.h"
 
-typedef int (*t_builtin_func)(char **);
+typedef int	(*t_builtin_func)(char **);
 
 void	exe_builtin(char **argv, t_astnode *node, int parents, int pre_re);
+
+void	getcwd_error(void);
+char	*get_oldpwd(void);
+char	*get_pwd(char *path);
+void	cd_error(char *name);
 
 int		exe_cd(char **argv);
 void	cd_env_set(char *pwd, char *oldpwd);
