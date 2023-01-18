@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 20:39:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 00:53:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,32 @@ int	dollor_len(char *str)
 	int	len;
 
 	len = 1;
-	if (str[len] == '?')
+	if (str[1] == '?')
 		return (1);
-	while (str[len] && ft_isalpha(str[len]) || str[len] == '_')
+	if (str[1] != '_' && !ft_isalpha(str[1]))
+		return (0);
+	while (str[len] && (ft_isalnum(str[len]) || str[len] == '_'))
 	{
 		len++;
 	}
 	return (len - 1);
 }
 
-char	*dollor_search(char *str)
+char	*dollor_search(char *str, char *search)
 {
 	int	bracket;
 
 	bracket = 0;
+	while (*str && str < search)
+	{
+		if (*str == '\\')
+			str++;
+		else if (*str == '"')
+			bracket = (bracket == 0);
+		else if (!bracket && *str == '\'')
+			str = ft_strchr(str + 1, '\'');
+		str++;
+	}
 	while (*str)
 	{
 		if (*str == '\\')
@@ -119,7 +131,7 @@ char	*expansion(char *str)
 	char	*rep;
 	char	*name;
 
-	pos = dollor_search(str);
+	pos = dollor_search(str, str);
 	while (pos)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
@@ -133,7 +145,7 @@ char	*expansion(char *str)
 		str = strreplace(str, pos - str, pos - str + dollor_len(pos), rep);
 		pos = &str[idx];
 		free(name);
-		pos = dollor_search(pos + ft_strlen(rep));
+		pos = dollor_search(str, pos + ft_strlen(rep));
 		free(rep);
 	}
 	return (str);
