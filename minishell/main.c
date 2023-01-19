@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 21:39:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:19:19 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(int argc, char *argv[], char *envp[])
 		else if (!str)
 		{
 			printf("\033[1A\033[11Cexit\n");
-			//system("leaks minishell"); //debug
 			exit(g_info.ret_val);
 		}
 		free(str);

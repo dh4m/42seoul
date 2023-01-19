@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:32:09 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 16:10:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 12:30:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	node_syntax_error(int ret_val, t_astnode *need_free, t_cmdnode *node)
 	ft_putstr_fd(token_str(node), 2);
 	ft_putstr_fd("\'\n", 2);
 	if (need_free)
-			clear_ast(need_free);
+		clear_ast(need_free);
 	return (ret_val);
 }
 

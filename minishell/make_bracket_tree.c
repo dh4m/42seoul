@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:45:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:55:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 15:21:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,19 @@ t_astnode	*make_bracket_node(t_cmdlist *cmdlist)
 		return ((void *)(long)node_syntax_error(0, ret_node, cmdlist->current));
 	if (cmdlist->current->type == BRACKET_OPEN)
 		return (bracket_tree(cmdlist));
-	if (!avail_node(cmdlist->current) || cmdlist->current->type == BRACKET_CLOSE)
+	if (!avail_node(cmdlist->current) || \
+		cmdlist->current->type == BRACKET_CLOSE)
 		return ((void *)(long)node_syntax_error(0, NULL, cmdlist->current));
 	ret_node = init_astnode();
 	while (cmdlist->current && avail_node(cmdlist->current) \
 			&& cmdlist->current->type != BRACKET_CLOSE)
 	{
 		if (cmdlist->current->type == BRACKET_OPEN)
-			return ((void *)(long)node_syntax_error(0, ret_node, cmdlist->current));
-		else if (is_redirection(cmdlist->current->type))
-		{
-			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_free_return(0, ret_node));
-		}
+			return ((void *)(long)node_syntax_error(0, ret_node, \
+													cmdlist->current));
+		else if (is_redirection(cmdlist->current->type) && \
+				!redir_proc(cmdlist, ret_node))
+			return ((void *)(long)node_free_return(0, ret_node));
 		else
 			cmd_proc(cmdlist, ret_node);
 		cmdlist->current = cmdlist->current->next;

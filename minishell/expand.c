@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 00:53:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:21:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,65 +18,6 @@
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
-
-char	*make_escape_character(char *str, int idx, char ch)
-{
-	char	*ret_str;
-	char	escape_char[3];
-
-	escape_char[0] = '\\';
-	escape_char[1] = ch;
-	escape_char[2] = 0;
-	ret_str = strreplace(str, idx, idx, escape_char);
-	return (ret_str);
-}
-
-char	*insert_escape(char *str, unsigned char flag)
-{
-	int		i;
-	char	*ret_str;
-
-	i = 0;
-	ret_str = ft_strdup(str);
-	while (ret_str[i])
-	{
-		if (((ret_str[i] == '\"' || ret_str[i] == '\'') && (flag & QUOTES_E)) \
-			|| (ret_str[i] == ' ' && (flag & SPACE_E)) \
-			|| (ret_str[i] == '\\' && (flag & BACKSLASH_E)))
-		{
-			ret_str = make_escape_character(ret_str, i, ret_str[i]);
-			i++;
-		}
-		i++;
-	}
-	return (ret_str);
-}
-
-char	*remove_escape(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\\')
-			str = strreplace(str, i, i, "");
-		i++;
-	}
-	return (str);
-}
-
-void	escape_proc(char **argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i])
-	{
-		argv[i] = remove_escape(argv[i]);
-		i++;
-	}
-}
 
 int	dollor_len(char *str)
 {
@@ -99,23 +40,13 @@ char	*dollor_search(char *str, char *search)
 	int	bracket;
 
 	bracket = 0;
-	while (*str && str < search)
-	{
-		if (*str == '\\')
-			str++;
-		else if (*str == '"')
-			bracket = (bracket == 0);
-		else if (!bracket && *str == '\'')
-			str = ft_strchr(str + 1, '\'');
-		str++;
-	}
 	while (*str)
 	{
 		if (*str == '\\')
 			str++;
 		else if (*str == '"')
 			bracket = (bracket == 0);
-		else if (*str == '$' && dollor_len(str))
+		else if (str >= search && *str == '$' && dollor_len(str))
 			return (str);
 		else if (!bracket && *str == '\'')
 			str = ft_strchr(str + 1, '\'');
@@ -136,7 +67,8 @@ char	*expansion(char *str)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
 		if (search_env(name))
-			rep = insert_escape(search_env(name)->value, BACKSLASH_E | QUOTES_E);
+			rep = insert_escape(search_env(name)->value, \
+								BACKSLASH_E | QUOTES_E);
 		else if (*name == '?')
 			rep = ft_itoa(g_info.ret_val);
 		else

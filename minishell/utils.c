@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 15:28:32 by dham              #+#    #+#             */
-/*   Updated: 2023/01/12 20:31:45 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:29:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,13 @@ int	ft_isblank(int ch)
 	if (ch == ' ' || ch == '\t')
 		return (1);
 	return (0);
+}
+
+int	ft_oper_len(int type)
+{
+	if (type == AND || type == OR || type == RE_APPEND || type == RE_HEREDOC)
+		return (2);
+	return (1);
 }
 
 int	ft_isoper(char *str)

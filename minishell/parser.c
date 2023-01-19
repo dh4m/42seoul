@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:54:37 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:53:28 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 15:20:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,11 @@ t_astnode	*make_node(t_cmdlist *cmdlist)
 	{
 		if (cmdlist->current->type == BRACKET_OPEN || \
 			cmdlist->current->type == BRACKET_CLOSE)
-			return ((void *)(long)node_syntax_error(0, ret_node, cmdlist->current));
-		else if (is_redirection(cmdlist->current->type))
-		{
-			if (!redir_proc(cmdlist, ret_node))
-				return ((void *)(long)node_free_return(0, ret_node));
-		}
+			return ((void *)(long)node_syntax_error(0, ret_node, \
+													cmdlist->current));
+		else if (is_redirection(cmdlist->current->type) && \
+				!redir_proc(cmdlist, ret_node))
+			return ((void *)(long)node_free_return(0, ret_node));
 		else
 			cmd_proc(cmdlist, ret_node);
 		cmdlist->current = cmdlist->current->next;

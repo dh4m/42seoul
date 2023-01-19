@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 14:36:26 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 16:21:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:24:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	make_cmdlist(t_cmdlist *cmdlist, t_strbuff *buff)
 	int			err;
 
 	err = 0;
+	cur_node = NULL;
 	err = get_token(buff, &cur_node);
 	while (cur_node != NULL && !err)
 	{

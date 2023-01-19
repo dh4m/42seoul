@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:55:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:30:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_info
 extern t_info	g_info;
 
 int			ft_isblank(int ch);
+int			ft_oper_len(int type);
 int			ft_isoper(char *str);
 int			ft_isquotes(int ch);
 int			ft_ismeta(char *str);
@@ -178,6 +179,7 @@ int			re_in_set(t_strnode *red_node);
 int			re_out_set(t_strnode *red_node);
 int			redirect_set(t_astnode *node);
 void		redirect_reset(int backup[2]);
+char		*filename_expansion(char *str);
 
 int			exe_cmd(t_astnode *node);
 int			exe_cmd_fork(t_astnode *node);
@@ -190,15 +192,16 @@ void		free_path_list(char **path);
 
 size_t		list_strlen(t_strlist *list);
 char		*list_to_str(t_strlist *list);
+char		*table_to_str(char **table);
 char		*strreplace(char *str, size_t start, size_t end, char *rep);
 char		**get_argv(t_astnode *node);
-char		*filename_expansion(char *str);
 
 char		**shell_split(char const *s, char c);
 
 char		*insert_escape(char *str, unsigned char flag);
 void		escape_proc(char **argv);
 char		*remove_escape(char *str);
+
 int			dollor_len(char *str);
 char		*remove_quote(char *str);
 void		quote_proc(char **argv);

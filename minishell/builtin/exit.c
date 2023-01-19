@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:13 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 00:33:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 12:27:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	exe_exit(char **argv, int parents)
 		return (0);
 	}
 	if (parents)
-			ft_putstr_fd("exit\n", 2);
+		ft_putstr_fd("exit\n", 2);
 	if (argv[1])
 		ft_exit(ft_atoi(argv[1]));
 	else

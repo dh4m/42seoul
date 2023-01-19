@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/17 12:52:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:16:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,30 @@ void	redirect_reset(int backup[2])
 	close(backup[0]);
 	dup2(backup[1], 1);
 	close(backup[1]);
+}
+
+char	*filename_expansion(char *str)
+{
+	char	**name_list;
+	char	*ret_str;
+	char	*temp_str;
+
+	temp_str = ft_strdup(str);
+	temp_str = expansion(temp_str);
+	name_list = shell_split(temp_str, ' ');
+	wildcard(name_list);
+	free(temp_str);
+	temp_str = table_to_str(name_list);
+	free_path_list(name_list);
+	name_list = shell_split(temp_str, ' ');
+	quote_proc(name_list);
+	free(temp_str);
+	if (name_list[1])
+	{
+		free_path_list(name_list);
+		return (0);
+	}
+	ret_str = ft_strdup(name_list[0]);
+	free_path_list(name_list);
+	return (ret_str);
 }

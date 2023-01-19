@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2023/01/13 17:49:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 13:31:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,13 @@ int	get_token(t_strbuff *buff, t_cmdnode **cur_node)
 	while (ft_isblank(buff->str[buff->now_read]))
 		buff->now_read++;
 	if (buff->now_read == buff->len)
-	{
-		*cur_node = NULL;
 		return (0);
-	}
 	*cur_node = malloc(sizeof(t_cmdnode));
 	(*cur_node)->type = ft_isoper(&buff->str[buff->now_read]);
 	if ((*cur_node)->type != CMD)
 	{
 		(*cur_node)->cmd = NULL;
-		if ((*cur_node)->type == AND || (*cur_node)->type == OR || \
-			(*cur_node)->type == RE_APPEND || (*cur_node)->type == RE_HEREDOC)
-			buff->now_read += 2;
-		else
-			buff->now_read++;
+		buff->now_read += ft_oper_len((*cur_node)->type);
 		return (0);
 	}
 	len = cmd_len(&buff->str[buff->now_read]);
