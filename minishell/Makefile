@@ -6,14 +6,14 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/28 13:48:24 by dham              #+#    #+#              #
-#    Updated: 2023/01/19 17:42:30 by dham             ###   ########.fr        #
+#    Updated: 2023/01/19 20:36:45 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -g3 -fsanitize=address -Wall -Wextra -Werror
 NAME = minishell
-SRCS = $(wildcard *.c) $(wildcard builtin/*.c) $(wildcard signal/*.c) $(wildcard get_next_line/*.c)
+SRCS = $(wildcard *.c) $(wildcard builtin/*.c) $(wildcard signal/*.c) $(wildcard get_next_line/*.c) $(wildcard ascii/*.c)
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
 

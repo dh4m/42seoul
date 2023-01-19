@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 18:17:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 20:35:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include "builtin/ft_builtin.h"
 #include "signal/ft_signal.h"
 #include "minishell.h"
+#include "ascii/ascii_art.h"
 
 t_info	g_info;
 
@@ -56,7 +57,7 @@ static void	start_ascii_art(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-	;
+	output_ascii();
 }
 
 static int	is_space_str(char *str)
