@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 17:26:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 17:38:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,21 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-static void	command_err(const char *cmd)
+void	filepath_exit(char *path)
+{
+	if (access(path, F_OK) == 0)
+		exit(126);
+	exit(127);
+}
+
+int	command_err(const char *cmd)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd("command not found: ", 2);
 	ft_putstr_fd((char *)cmd, 2);
 	ft_putstr_fd("\n", 2);
+	g_info.ret_val = 127;
+	return (0);
 }
 
 static int	is_builtin(char *str)
@@ -59,13 +68,12 @@ int	exe_cmd_fork(t_astnode *node)
 	if (ft_strchr(argv[0], '/'))
 	{
 		execve(argv[0], argv, envp);
-		command_err(argv[0]);
-		exit(127);
+		common_error(argv[0]);
+		filepath_exit(argv[0]);
 	}
 	cmd_str = search_cmd(argv[0], envp);
 	execve(cmd_str, argv, envp);
-	command_err(argv[0]);
-	exit(127);
+	exit(g_info.ret_val);
 }
 
 int	exe_pure_cmd(t_astnode *node, int parent)

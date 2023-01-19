@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 13:16:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 16:48:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	re_in_set(t_strnode *red_node)
 	}
 	if (fd < 0)
 	{
-		redi_error(filename);
+		common_error(filename);
 		free(filename);
 		return (0);
 	}
@@ -63,7 +63,7 @@ int	re_out_set(t_strnode *red_node)
 	}
 	if (fd < 0)
 	{
-		redi_error(filename);
+		common_error(filename);
 		free(filename);
 		return (0);
 	}

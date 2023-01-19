@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 16:32:09 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 12:30:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 16:47:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	node_free_return(int ret_val, t_astnode *need_free)
 	return (ret_val);
 }
 
-int	redi_error(char *name)
+int	common_error(char *name)
 {
 	char	*err_str;
 
