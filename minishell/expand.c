@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:57:47 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 13:21:45 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 02:01:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*expansion(char *str)
 	while (pos)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
-		if (search_env(name))
+		if (search_env(name) && search_env(name)->value)
 			rep = insert_escape(search_env(name)->value, \
 								BACKSLASH_E | QUOTES_E);
 		else if (*name == '?')

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:21:11 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 20:41:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 02:01:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*expansion_heredoc(char *str)
 	while (pos)
 	{
 		name = ft_substr(pos, 1, dollor_len(pos));
-		if (search_env(name))
+		if (search_env(name) && search_env(name)->value)
 			rep = ft_strdup(search_env(name)->value);
 		else if (*name == '?')
 			rep = ft_itoa(g_info.ret_val);
