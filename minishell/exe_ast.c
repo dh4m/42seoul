@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:24:59 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:40:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 17:43:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-void	exe_ast(t_astnode *node, int input, int output, int parent)
+void	exe_ast(t_astnode *node, int parent)
 {
 	if (!node)
 		return ;

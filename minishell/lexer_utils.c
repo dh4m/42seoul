@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 11:53:39 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 16:07:36 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 17:46:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ t_cmdnode	*make_cmdnode(t_strbuff *buff)
 
 int	get_token(t_strbuff *buff, t_cmdnode **cur_node)
 {
-	int			len;
-
 	while (ft_isblank(buff->str[buff->now_read]))
 		buff->now_read++;
 	if (buff->now_read == buff->len)

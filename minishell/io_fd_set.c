@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 19:35:57 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:56:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 17:46:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	re_out_set_fd(t_strnode *red_node)
 int	io_fd_set(t_astnode *node)
 {
 	t_strnode	*red_node;
-	int			fd;
 
 	red_node = node->redi.prenode.next;
 	while (red_node)

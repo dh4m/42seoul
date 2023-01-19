@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 13:19:19 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 18:17:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@
 t_info	g_info;
 
 static int	is_space_str(char *str);
+static void	start_ascii_art(int argc, char *argv[]);
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*str;
 
+	start_ascii_art(argc, argv);
 	ft_readline_signal_set();
 	turn_off_show_signal();
 	info_init(envp);
@@ -48,6 +50,13 @@ int	main(int argc, char *argv[], char *envp[])
 		free(str);
 	}
 	return (0);
+}
+
+static void	start_ascii_art(int argc, char *argv[])
+{
+	(void)argc;
+	(void)argv;
+	;
 }
 
 static int	is_space_str(char *str)

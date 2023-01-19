@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:57:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 17:45:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 	char	*temp_name;
 	int		fd_w;
 	int		fd;
-	char	*str;
 
 	temp_name = make_heredoc_temp_name();
 	fd_w = open(temp_name, O_WRONLY | O_CREAT | O_TRUNC, 0666);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:07 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:26:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 18:19:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_env(void)
 
 int	exe_env(char **argv)
 {
+	(void)argv;
 	ft_env();
 	g_info.ret_val = 0;
 	return (0);

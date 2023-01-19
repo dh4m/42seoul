@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2023/01/16 16:09:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 17:44:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 
 void	exe_ast_and(t_astnode *left_node, t_astnode *right_node, int parent)
 {
-	exe_ast(left_node, 0, 1, parent);
+	exe_ast(left_node, parent);
 	if (g_info.ret_val == 0)
-		exe_ast(right_node, 0, 1, parent);
+		exe_ast(right_node, parent);
 }
 
 void	exe_ast_or(t_astnode *left_node, t_astnode *right_node, int parent)
 {
-	exe_ast(left_node, 0, 1, parent);
+	exe_ast(left_node, parent);
 	if (g_info.ret_val != 0)
-		exe_ast(right_node, 0, 1, parent);
+		exe_ast(right_node, parent);
 }
 
 void	exe_ast_pipe(t_astnode *left_node, t_astnode *right_node, int input)
@@ -99,7 +99,7 @@ int	exe_ast_bracket(t_astnode *node, int input, int output, int remain)
 		output_set(output);
 		if (!io_fd_set(node))
 			exit(1);
-		exe_ast(node->left, 0, 1, 0);
+		exe_ast(node->left, 0);
 		exit(g_info.ret_val);
 	}
 	return (pid);

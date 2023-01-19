@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 15:55:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:24:57 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 18:20:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	ft_pwd(void)
 
 int	exe_pwd(char **argv)
 {
+	(void)argv;
 	ft_pwd();
 	g_info.ret_val = 0;
 	return (0);

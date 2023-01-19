@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 15:27:35 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 16:48:35 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/19 18:19:30 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@ int	re_in_set(t_strnode *red_node)
 	filename = filename_expansion(red_node->content.str);
 	if (!filename)
 		return (ambiguous_error(red_node->content.str));
-	if (red_node->type == RE_IN)
-	{
-		fd = open(red_node->content.str, O_RDONLY);
-		red_node->content.fd = fd;
-	}
+	fd = open(red_node->content.str, O_RDONLY);
+	red_node->content.fd = fd;
 	if (fd < 0)
 	{
 		common_error(filename);
@@ -56,7 +53,7 @@ int	re_out_set(t_strnode *red_node)
 		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		red_node->content.fd = fd;
 	}
-	else if (red_node->type == RE_APPEND)
+	else
 	{
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		red_node->content.fd = fd;
@@ -74,7 +71,6 @@ int	re_out_set(t_strnode *red_node)
 int	redirect_set(t_astnode *node)
 {
 	t_strnode	*red_node;
-	int			fd;
 
 	red_node = node->redi.prenode.next;
 	while (red_node)
