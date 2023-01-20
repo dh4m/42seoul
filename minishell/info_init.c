@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 13:41:10 by dham              #+#    #+#             */
-/*   Updated: 2022/12/23 12:05:08 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/21 00:46:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 
 void	info_init(char **envp)
 {
-	int	i;
+	int		i;
+	int		tmp;
+	t_env	*shlvl;
 
 	i = 0;
 	g_info.ret_val = 0;
@@ -25,5 +27,13 @@ void	info_init(char **envp)
 	{
 		add_env(envp[i]);
 		i++;
+	}
+	shlvl = search_env("SHLVL");
+	if (shlvl && shlvl->value)
+	{
+		tmp = ft_atoi(shlvl->value);
+		tmp++;
+		free(shlvl->value);
+		shlvl->value = ft_itoa(tmp);
 	}
 }
