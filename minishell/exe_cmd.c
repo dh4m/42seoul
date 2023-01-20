@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 12:32:18 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 17:38:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 15:57:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,8 @@ int	exe_pure_cmd(t_astnode *node, int parent)
 		waitpid(pid, &ret_val, 0);
 		if (WIFEXITED(ret_val))
 			g_info.ret_val = WEXITSTATUS(ret_val);
-		else if (WTERMSIG(ret_val) == SIGINT)
-			g_info.ret_val = 130;
 		else
-			g_info.ret_val = 131;
+			recieve_signal(ret_val);
 	}
 	free_path_list(argv);
 	redirect_reset(fd_backup);

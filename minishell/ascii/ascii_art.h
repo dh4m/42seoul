@@ -6,14 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:44:54 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 20:35:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 16:07:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ASCII_H
-# define ASCII_H
+#ifndef ASCII_ART_H
+# define ASCII_ART_H
 
-#include <stdio.h>
+# include <stdio.h>
 
 typedef void	(*t_ascii_func)(void);
 

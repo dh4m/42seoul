@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:46:32 by dham              #+#    #+#             */
-/*   Updated: 2023/01/11 16:23:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 16:04:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "ft_signal.h"
@@ -26,14 +27,23 @@ void	newline_proc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_info.ret_val = 130;
-		printf("\n");
+		return ;
 	}
 	else if (sig == SIGQUIT)
 	{
-		g_info.ret_val = 131;
-		printf("Quit: 3\n");
+		return ;
 	}
+}
+
+void	recieve_signal(int sig)
+{
+	const int	sig_exit_code = WTERMSIG(sig);
+
+	g_info.ret_val = sig_exit_code + 128;
+	if (sig_exit_code == SIGINT)
+		printf("\n");
+	else if (sig_exit_code == SIGQUIT)
+		printf("Quit: %d\n", SIGQUIT);
 }
 
 void	readline_proc(int sig)
