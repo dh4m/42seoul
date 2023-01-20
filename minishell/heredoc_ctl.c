@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 17:45:34 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 18:56:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	heredoc_proc(char *end_flag, t_strlist *list)
 char	*make_heredoc_temp_name(void)
 {
 	char		rand_str[RANDSTR_LEN + 1];
-	const char	*name = "./temp/here_temp_";
+	const char	*name = "/tmp/here_temp_";
 	char		*ret_name;
 
 	make_rand_str(rand_str);
