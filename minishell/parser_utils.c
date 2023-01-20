@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:46:51 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:53:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 16:20:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include "minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+int	check_error(t_cmdlist *cmdlist)
+{
+	if (!cmdlist->current)
+		return (node_syntax_error(0, NULL, cmdlist->current));
+	if (!avail_node(cmdlist->current))
+		return (node_syntax_error(0, NULL, cmdlist->current));
+	return (1);
+}
 
 t_astnode	*init_astnode(void)
 {

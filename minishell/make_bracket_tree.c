@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 19:45:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 01:40:15 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 16:22:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,25 @@ t_astnode	*make_bracket_pipeline(t_cmdlist *cmdlist)
 	return (ret_node);
 }
 
+int	check_error_bracket(t_cmdlist *cmdlist)
+{
+	if (!cmdlist->current)
+		return (node_syntax_error(0, NULL, cmdlist->current));
+	if (!avail_node(cmdlist->current) || \
+		cmdlist->current->type == BRACKET_CLOSE)
+		return (node_syntax_error(0, NULL, cmdlist->current));
+	return (1);
+}
+
 t_astnode	*make_bracket_node(t_cmdlist *cmdlist)
 {
 	t_astnode	*ret_node;
 
 	ret_node = NULL;
-	if (!cmdlist->current)
-		return ((void *)(long)node_syntax_error(0, ret_node, cmdlist->current));
-	if (cmdlist->current->type == BRACKET_OPEN)
+	if (cmdlist->current && cmdlist->current->type == BRACKET_OPEN)
 		return (bracket_tree(cmdlist));
-	if (!avail_node(cmdlist->current) || \
-		cmdlist->current->type == BRACKET_CLOSE)
-		return ((void *)(long)node_syntax_error(0, NULL, cmdlist->current));
+	if (!check_error_bracket(cmdlist))
+		return (NULL);
 	ret_node = init_astnode();
 	while (cmdlist->current && avail_node(cmdlist->current) \
 			&& cmdlist->current->type != BRACKET_CLOSE)
