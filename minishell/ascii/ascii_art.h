@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 18:44:54 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 16:07:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 17:03:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 typedef void	(*t_ascii_func)(void);
 
 void	output_ascii(void);
+void	prompt_color(int ret_code);
+
 void	ascii_1(void);
 void	ascii_2(void);
 void	ascii_3(void);

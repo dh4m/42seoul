@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 20:27:53 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 16:10:15 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/20 17:03:22 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 void	logo(void)
 {
+	printf("\n");
+	printf("\033[5;32m");
 	printf("███╗   ███╗██╗███╗   ██╗██╗    ");
 	printf("███████╗██╗  ██╗███████╗██╗     ██╗     \n");
 	printf("████╗ ████║██║████╗  ██║██║    ");
@@ -28,6 +30,8 @@ void	logo(void)
 	printf("███████║██║  ██║███████╗███████╗███████╗\n");
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝    ");
 	printf("╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝\n");
+	printf("\033[m");
+	printf("\n");
 }
 
 void	erase_ascii(int sig)
@@ -73,6 +77,7 @@ void	output_ascii(void)
 	i = 0;
 	signal(SIGINT, erase_ascii);
 	signal(SIGQUIT, erase_ascii);
+	printf("\033[32m");
 	while (i < 25)
 	{
 		draw[i]();
@@ -83,7 +88,14 @@ void	output_ascii(void)
 			delay++;
 		i++;
 	}
-	printf("\n");
+	printf("\033[m");
 	logo();
-	printf("\n");
+}
+
+void	prompt_color(int ret_code)
+{
+	if (ret_code == 0)
+		printf("\033[1;32m");
+	else
+		printf("\033[1;31m");
 }
