@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:47:04 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 15:57:03 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 20:15:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	end_heredoc_set(void);
 
 void	readline_proc(int sig);
 void	heredoc_sig_proc(int sig);
-void	newline_proc(int sig);
 int		empty_event(void);
 void	recieve_signal(int sig);
 

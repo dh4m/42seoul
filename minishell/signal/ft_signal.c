@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:49:14 by dham              #+#    #+#             */
-/*   Updated: 2023/01/23 15:28:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 20:14:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	ft_readline_signal_set(void)
 
 void	ft_excute_signal_set(void)
 {
-	signal(SIGINT, newline_proc);
-	signal(SIGQUIT, newline_proc);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	ft_default_signal_set(void)
@@ -39,7 +39,7 @@ void	ft_heredoc_signal_set(void)
 {
 	rl_event_hook = empty_event;
 	signal(SIGINT, heredoc_sig_proc);
-	signal(SIGQUIT, readline_proc);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	end_heredoc_set(void)

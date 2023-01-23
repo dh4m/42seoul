@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:46:32 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 17:02:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 20:14:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,6 @@
 int	empty_event(void)
 {
 	return (0);
-}
-
-void	newline_proc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		return ;
-	}
-	else if (sig == SIGQUIT)
-	{
-		return ;
-	}
 }
 
 void	recieve_signal(int sig)
@@ -55,11 +43,6 @@ void	readline_proc(int sig)
 		printf("\033[1;31m");
 		rl_on_new_line();
 		rl_replace_line("", 1);
-		rl_redisplay();
-	}
-	else if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
 		rl_redisplay();
 	}
 }
