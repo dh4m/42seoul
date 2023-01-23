@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 23:17:29 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 12:00:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int argc, char *argv[], char *envp[])
 	{
 		prompt_color(g_info.ret_val);
 		str = readline("minishell$ \001\033[m\002");
-		//str = readline("minishell$ ");
 		if (str && !is_space_str(str) && *str != 0)
 		{
 			proc_cmd(str);
