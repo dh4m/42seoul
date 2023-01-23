@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 13:41:10 by dham              #+#    #+#             */
-/*   Updated: 2023/01/21 00:46:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 12:28:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,5 @@ void	info_init(char **envp)
 		free(shlvl->value);
 		shlvl->value = ft_itoa(tmp);
 	}
+	add_env("CLICOLOR=1");
 }
