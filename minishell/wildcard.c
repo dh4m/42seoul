@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:59:23 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 12:30:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 20:04:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,14 @@ char	*wild_filelist(char *p_str)
 		dir_list = cur_dir_onlydir_list();
 	else
 		dir_list = cur_dir_list();
-	i = 0;
-	while (dir_list[i])
+	i = -1;
+	while (dir_list[++i])
 	{
+		if (*p_str != '.' && dir_list[i][0] == '.')
+			continue ;
 		if (pattern_matching(dir_list[i], pattern, \
 			(p_str[0] != '*'), (p_str[ft_strlen(p_str) - 1] != '*')))
 			ret_str = filelist_join(ret_str, dir_list[i]);
-		i++;
 	}
 	free_path_list(pattern);
 	free_path_list(dir_list);

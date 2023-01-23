@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_ctl.c                                      :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 18:56:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 15:27:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	heredoc_write(char *end_flag, int fd)
 		else if (*str == 0 && g_info.ret_val == SIGINT_CATCH)
 		{
 			free(str);
+			free((void *)quotes_end);
 			g_info.ret_val = 1;
 			end_heredoc_set();
 			return (0);
@@ -65,8 +66,7 @@ int	heredoc_write(char *end_flag, int fd)
 		write(fd, "\n", 1);
 		free(str);
 	}
-	if (str)
-		free(str);
+	free(str);
 	free((void *)quotes_end);
 	end_heredoc_set();
 	return (1);

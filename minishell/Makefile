@@ -6,20 +6,19 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/28 13:48:24 by dham              #+#    #+#              #
-#    Updated: 2023/01/23 12:01:05 by dham             ###   ########.fr        #
+#    Updated: 2023/01/23 20:11:18 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -g3 -fsanitize=address -Wall -Wextra -Werror
+CFLAGS = -g3 -Wall -Wextra -Werror #-fsanitize=address 
 NAME = minishell
 SRCS = $(wildcard *.c) $(wildcard builtin/*.c) $(wildcard signal/*.c) $(wildcard get_next_line/*.c) $(wildcard ascii/*.c)
 OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
 LIBFT_DIR = ./libft
-RDLN_DIR = ${HOME}/.brew/opt/readline
-# RDLN_DIR = /opt/homebrew/opt/readline
+RDLN_DIR = ${shell brew --prefix readline}
 
 LIBFT_COMPILE = -I$(LIBFT_DIR)
 LIBFT_LINKING = -L$(LIBFT_DIR) -lft

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 16:29:39 by dham              #+#    #+#             */
-/*   Updated: 2023/01/19 17:23:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/23 19:23:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*search_cmd(char *cmd, char *envp[])
 
 	i = 0;
 	path = path_list(envp);
-	if (!path && !command_err(cmd))
+	if ((!*cmd || !path) && !command_err(cmd))
 		return (ft_strdup(cmd));
 	ret_path = path_join(path[i], cmd);
 	while (access(ret_path, F_OK) == -1 && path[i])
