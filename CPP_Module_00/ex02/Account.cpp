@@ -6,12 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 03:45:55 by dham              #+#    #+#             */
-/*   Updated: 2023/01/23 00:23:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/24 18:41:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Account.hpp"
 #include <iostream>
+#include <iomanip>
+#include <ctime>
 
 Account::Account( int initial_deposit )
 {
@@ -39,12 +41,36 @@ Account::~Account(void)
 
 void	Account::makeDeposit( int deposit )
 {
-
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ';';
+	std::cout << "p_amount:" << _amount << ';';
+	std::cout << "deposit:" << deposit << ';';
+	_amount += deposit;
+	_totalAmount += deposit;
+	_nbDeposits++;
+	_totalNbDeposits++;
+	std::cout << "amount:" << _amount << ';';
+	std::cout << "nb_deposits:" << _nbDeposits << '\n';
 }
 
 bool	Account::makeWithdrawal( int withdrawal )
 {
-	
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ';';
+	std::cout << "p_amount:" << _amount << ';';
+	if (_amount < withdrawal)
+	{
+		std::cout << "withdrawal:refused\n";
+		return false;
+	}
+	std::cout << "withdrawal:" << withdrawal << ';';
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	_nbWithdrawals++;
+	_totalNbWithdrawals++;
+	std::cout << "amount:" << _amount << ';';
+	std::cout << "nb_withdrawals:" << _nbWithdrawals << '\n';
+	return true;
 }
 
 int		Account::checkAmount( void ) const
@@ -98,5 +124,16 @@ int	Account::_totalNbWithdrawals = 0;
 
 void	Account::_displayTimestamp( void )
 {
+	time_t		timer;
+	struct tm	*t;
 
+	timer = time(NULL);
+	t = localtime(&timer);
+	std::cout << '[' << 1900 + t->tm_year;
+	std::cout << std::setw(2) << std::setfill('0') << t->tm_mon + 1;
+	std::cout << std::setw(2) << std::setfill('0') << t->tm_mday;
+	std::cout << '_';
+	std::cout << std::setw(2) << std::setfill('0') << t->tm_hour;
+	std::cout << std::setw(2) << std::setfill('0') << t->tm_min;
+	std::cout << std::setw(2) << std::setfill('0') << t->tm_sec << "] ";
 }
