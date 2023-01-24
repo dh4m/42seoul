@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 01:05:13 by dham              #+#    #+#             */
-/*   Updated: 2023/01/24 19:47:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/24 19:55:19 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,24 @@ void	Harl::complain(void)
 		&Harl::debug, &Harl::info, &Harl::warning, &Harl::error
 	};
 
-	if (filter_idx == -1)
+	switch (filter_idx)
 	{
-		std::cout << "[ Probably complaining about insignificant problems ]\n";
-		return ;
-	}
-	for (int i = filter_idx; i < 4; i++)
-	{
-		(this->*m_func[i])();
+	case 0:
+		(this->*m_func[0])();
 		std::cout << '\n';
+	case 1:
+		(this->*m_func[1])();
+		std::cout << '\n';
+	case 2:
+		(this->*m_func[2])();
+		std::cout << '\n';
+	case 3:
+		(this->*m_func[3])();
+		std::cout << '\n';
+		break ;
+	default:
+		std::cout << "[ Probably complaining about insignificant problems ]\n";
+		break ;
 	}
 }
 
