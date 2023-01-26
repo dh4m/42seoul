@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:13:45 by dham              #+#    #+#             */
-/*   Updated: 2023/01/25 21:24:07 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/26 17:22:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
 #include <iostream>
+#include <cmath>
 
 Fixed::Fixed(void)
 {
@@ -21,13 +22,14 @@ Fixed::Fixed(void)
 
 Fixed::Fixed(const int num)
 {
-	_number = 0;////
-	
+	std::cout << "Int constructor called\n";
+	_number = num << _fractional_bits;
 }
 
 Fixed::Fixed(const float num)
 {
-
+	std::cout << "Float constructor called\n";
+	_number = roundf(num * (1 << _fractional_bits));
 }
 
 Fixed::Fixed(const Fixed &f)
@@ -62,12 +64,12 @@ void	Fixed::setRawBits(int const raw)
 
 float	Fixed::toFloat(void) const
 {
-
+	return ((float)_number / (1 << _fractional_bits));
 }
 
 int	Fixed::toInt(void) const
 {
-
+	return (_number >> _fractional_bits);
 }
 
 std::ostream& operator<<(std::ostream& out, const Fixed &f)
