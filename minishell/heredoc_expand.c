@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 15:21:11 by dham              #+#    #+#             */
-/*   Updated: 2023/01/20 02:01:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/27 15:19:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,18 @@ int	expansion_heredoc_file(int fd_original)
 	close(fd_w);
 	close(fd_original);
 	return (fd);
+}
+
+int	heredoc_quotes(char *end_flag)
+{
+	int	i;
+
+	i = 0;
+	while (end_flag[i])
+	{
+		if (end_flag[i] == '\"' || end_flag[i] == '\'')
+			return (0);
+		i++;
+	}
+	return (1);
 }

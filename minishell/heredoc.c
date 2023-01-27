@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:40:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/23 15:27:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/27 15:23:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ static void	make_rand_str(char *buf)
 	close(fd);
 }
 
+int	ft_rl_eof(char *str)
+{
+	if (str == NULL)
+	{
+		rl_eof_found = 0;
+		return (1);
+	}
+	return (0);
+}
+
 int	heredoc_write(char *end_flag, int fd)
 {
 	char		*str;
@@ -52,7 +62,7 @@ int	heredoc_write(char *end_flag, int fd)
 	while (1)
 	{
 		str = readline("> ");
-		if (!str || ft_strncmp(str, quotes_end, ft_strlen(str) + 1) == 0)
+		if (ft_rl_eof(str) || !ft_strncmp(str, quotes_end, ft_strlen(str) + 1))
 			break ;
 		else if (*str == 0 && g_info.ret_val == SIGINT_CATCH)
 		{
@@ -69,20 +79,6 @@ int	heredoc_write(char *end_flag, int fd)
 	free(str);
 	free((void *)quotes_end);
 	end_heredoc_set();
-	return (1);
-}
-
-int	heredoc_quotes(char *end_flag)
-{
-	int	i;
-
-	i = 0;
-	while (end_flag[i])
-	{
-		if (end_flag[i] == '\"' || end_flag[i] == '\'')
-			return (0);
-		i++;
-	}
 	return (1);
 }
 

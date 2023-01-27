@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/31 20:59:02 by dham              #+#    #+#             */
-/*   Updated: 2023/01/23 12:00:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/27 15:21:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,7 @@ int	main(int argc, char *argv[], char *envp[])
 			add_history(str);
 		}
 		else if (!str)
-		{
-			printf("\033[1A\033[11Cexit\n");
 			exit(g_info.ret_val);
-		}
 		free(str);
 	}
 	return (0);
