@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 18:32:45 by dham              #+#    #+#             */
-/*   Updated: 2023/01/27 20:34:49 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/28 13:48:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	exe_ast_cmd(t_astnode *node, int input, int output, int remain)
 			exe_cmd_fork(node);
 		}
 	}
+	close_redirect_fd(node);
 	return (pid);
 }
 

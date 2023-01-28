@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 19:40:44 by dham              #+#    #+#             */
-/*   Updated: 2023/01/27 20:34:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/28 13:48:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include "signal/ft_signal.h"
 #include "minishell.h"
 
-int	close_fd(t_astnode *node)
+int	close_redirect_fd(t_astnode *node)
 {
 	t_strnode	*cur_node;
 

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 14:56:56 by dham              #+#    #+#             */
-/*   Updated: 2023/01/27 15:20:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/28 13:48:21 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,5 +229,7 @@ void		output_set(int output);
 int			io_fd_set(t_astnode *node);
 int			re_in_set_fd(t_strnode *red_node);
 int			re_out_set_fd(t_strnode *red_node);
+
+int			close_redirect_fd(t_astnode *node);
 
 #endif

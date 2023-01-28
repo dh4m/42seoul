@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:02:32 by dham              #+#    #+#             */
-/*   Updated: 2023/01/18 19:50:59 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/28 13:50:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	exe_builtin(char **argv, t_astnode *node, int parents, int pre_re)
 	const int				cmd_len = ft_strlen(argv[0]);
 	int						i;
 
-	if ((!pre_re && !redirect_set(node)) || !io_fd_set(node))
+	if ((!pre_re && !redirect_set(node) && close_redirect_fd(node)) \
+		|| !io_fd_set(node))
 	{
 		g_info.ret_val = 1;
 		return ;
