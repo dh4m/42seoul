@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:13:45 by dham              #+#    #+#             */
-/*   Updated: 2023/01/29 12:58:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/29 13:12:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 #include <iostream>
 #include <cmath>
 
-수정 필요요요요요;;;;;;;;
-
 Fixed::Fixed(void)
+: _number(0)
 {
 	std::cout << "Default constructor called\n";
-	_number = 0;
 }
 
 Fixed::Fixed(const int num)
