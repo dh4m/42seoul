@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/01/30 15:40:36 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/30 19:02:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ public:
 	ClapTrap(const ClapTrap &c);
 	~ClapTrap(void);
 
-	ClapTrap	&operator==(const ClapTrap &c);
+	ClapTrap	&operator=(const ClapTrap &c);
 
 	void	attack(const std::string& target);
 	void	takeDamage(unsigned int amount);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:28:25 by dham              #+#    #+#             */
-/*   Updated: 2023/01/30 15:44:01 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/30 19:55:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ ClapTrap::~ClapTrap(void)
 	std::cout << "ClapTrap(" << _name <<  ") destructor called" << '\n';
 }
 
-ClapTrap	&ClapTrap::operator==(const ClapTrap &c)
+ClapTrap	&ClapTrap::operator=(const ClapTrap &c)
 {
 	_name = c._name;
 	_hit_point = c._hit_point;
@@ -58,7 +58,10 @@ void	ClapTrap::takeDamage(unsigned int amount)
 		return ;
 	}
 	std::cout << "ClapTrap " << _name << " received " << amount << " damage." << '\n';
-	_hit_point -= amount;
+	if (_hit_point > amount)
+		_hit_point -= amount;
+	else
+		_hit_point = 0;
 }
 
 void	ClapTrap::beRepaired(unsigned int amount)
