@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/01/30 19:02:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/01/30 20:12:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 class ClapTrap
 {
 public:
+	ClapTrap(void);
 	ClapTrap(std::string name);
 	ClapTrap(const ClapTrap &c);
 	~ClapTrap(void);
