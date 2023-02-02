@@ -6,10 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 12:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/01/30 20:44:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/02 15:06:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef CLAPTRAP_HPP
+# define CLAPTRAP_HPP
 #include <string>
 
 class ClapTrap
@@ -33,3 +35,5 @@ protected:
 	unsigned int	_energy_point;
 	unsigned int	_attack_damage;
 };
+
+#endif

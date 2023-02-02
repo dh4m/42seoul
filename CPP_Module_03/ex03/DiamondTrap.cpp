@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   FragTrap.hpp                                       :+:      :+:    :+:   */
+/*   DiamondTrap.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/01 21:43:08 by dham              #+#    #+#             */
-/*   Updated: 2023/02/02 15:04:08 by dham             ###   ########.fr       */
+/*   Created: 2023/02/02 18:14:54 by dham              #+#    #+#             */
+/*   Updated: 2023/02/02 18:14:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRAGTRAP_HPP
-# define FRAGTRAP_HPP
+#include "DiamondTrap.hpp"
 
-# include "ClapTrap.hpp"
-
-class FragTrap: public ClapTrap
+DiamondTrap::DiamondTrap(void)
 {
-public:
-	FragTrap(void);
-	FragTrap(std::string name);
-	FragTrap(const FragTrap &copy);
-	~FragTrap(void);
 
-	FragTrap	&operator=(const FragTrap &copy);
+}
 
-	void	highFivesGuys(void);
-};
+DiamondTrap::DiamondTrap(const DiamondTrap &copy)
+{
 
-#endif
+}
+
+DiamondTrap::~DiamondTrap(void)
+{
+
+}
+
+DiamondTrap	&DiamondTrap::operator=(const DiamondTrap &copy)
+{
+
+	return (*this);
+}
