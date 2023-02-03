@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 21:43:08 by dham              #+#    #+#             */
-/*   Updated: 2023/02/02 15:04:08 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/03 12:43:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "ClapTrap.hpp"
 
-class FragTrap: public ClapTrap
+class FragTrap: virtual public ClapTrap
 {
 public:
 	FragTrap(void);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 20:02:58 by dham              #+#    #+#             */
-/*   Updated: 2023/02/02 15:07:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/03 12:43:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define SCAVTRAP_HPP
 # include "ClapTrap.hpp"
 
-class ScavTrap: public ClapTrap
+class ScavTrap: virtual public ClapTrap
 {
 public:
 	ScavTrap(void);
