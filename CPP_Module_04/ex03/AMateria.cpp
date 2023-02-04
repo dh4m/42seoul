@@ -6,11 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:15:14 by dham              #+#    #+#             */
-/*   Updated: 2023/02/04 18:34:12 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 21:28:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "AMateria.hpp"
+
+AMateria::AMateria(void)
+{}
 
 AMateria::AMateria(std::string const & type)
 :_type(type)

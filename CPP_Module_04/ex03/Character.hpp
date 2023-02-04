@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:24:33 by dham              #+#    #+#             */
-/*   Updated: 2023/02/04 20:37:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 21:29:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ private:
 	AMateria *_slot[SLOT_MAX];
 	bool _valid_slot[SLOT_MAX];
 	int _num_materia;
+
+	Character(void);
 };
 
 #endif

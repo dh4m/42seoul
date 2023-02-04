@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:15:06 by dham              #+#    #+#             */
-/*   Updated: 2023/02/04 20:26:29 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 21:28:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ public:
 	virtual void use(ICharacter& target) = 0;
 protected:
 	std::string _type;
+private:
+	AMateria(void);
 };
 
 #endif

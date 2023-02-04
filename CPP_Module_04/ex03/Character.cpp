@@ -6,11 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 18:25:16 by dham              #+#    #+#             */
-/*   Updated: 2023/02/04 19:59:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 21:29:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Character.hpp"
+
+Character::Character(void)
+{}
 
 Character::Character(std::string name)
 :_name(name)
