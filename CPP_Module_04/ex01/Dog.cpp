@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 17:36:49 by dham              #+#    #+#             */
-/*   Updated: 2023/02/03 21:06:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 16:06:12 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ Dog	&Dog::operator=(const Dog &copy)
 void	Dog::makeSound(void) const
 {
 	std::cout << "bow wow!" << '\n';
+}
+
+const std::string &Dog::getIdeas(int idx) const
+{
+	return (brain->getIdeas(idx));
+}
+
+void Dog::setIdeas(int idx, const std::string &str)
+{
+	brain->setIdeas(idx, str);
 }

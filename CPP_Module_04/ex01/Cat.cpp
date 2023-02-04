@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 17:24:17 by dham              #+#    #+#             */
-/*   Updated: 2023/02/03 21:02:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 16:06:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,14 @@ Cat	&Cat::operator=(const Cat &copy)
 void	Cat::makeSound(void) const
 {
 	std::cout << "meow! meow!" << '\n';
+}
+
+const std::string &Cat::getIdeas(int idx) const
+{
+	return (brain->getIdeas(idx));
+}
+
+void Cat::setIdeas(int idx, const std::string &str)
+{
+	brain->setIdeas(idx, str);
 }

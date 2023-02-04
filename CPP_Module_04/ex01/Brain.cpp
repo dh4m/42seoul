@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/03 20:28:20 by dham              #+#    #+#             */
-/*   Updated: 2023/02/03 21:01:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 16:15:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,26 @@ Brain	&Brain::operator=(const Brain &copy)
 	}
 	return (*this);
 }
+
+const std::string &Brain::getIdeas(int idx) const
+{
+	static const std::string empty;
+	
+	if (idx >= NUM_IDEAS)
+	{
+		std::cerr << "getIdeas: wrong index!" << '\n';
+		return (empty);
+	}
+	return (ideas[idx]);
+}
+
+void Brain::setIdeas(int idx, const std::string &str)
+{
+	if (idx >= NUM_IDEAS)
+	{
+		std::cerr << "setIdeas: wrong index!" << '\n';
+		return ;
+	}
+	ideas[idx] = str;
+}
+
