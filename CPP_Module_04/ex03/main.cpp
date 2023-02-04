@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 17:11:41 by dham              #+#    #+#             */
-/*   Updated: 2023/02/04 20:56:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/04 21:21:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,24 @@ int main(void)
 	me->equip(tmp);
 	delete tmp;
 
+	Character test("test");
+
+	tmp = src->createMateria("ice");
+	test.equip(tmp);
+	delete tmp;
+
+	Character clone = test;
+	tmp = src->createMateria("cure");
+	clone.equip(tmp);
+	delete tmp;
+
 	ICharacter* bob = new Character("bob");
 
 	me->use(0, *bob);
+	clone.use(0, *me);
 	me->use(1, *bob);
+	test.use(1, *me);
+	clone.use(1, *me);
 
 	delete bob;
 	delete me;
