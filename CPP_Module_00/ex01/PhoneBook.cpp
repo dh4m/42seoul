@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:10:11 by dham              #+#    #+#             */
-/*   Updated: 2023/01/06 16:16:17 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/05 14:21:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 static	int	str_to_index(std::string& str)
 {
+	if (str.empty())
+		return (0);
 	for (std::string::iterator iter = str.begin(); iter != str.end(); iter++)
 	{
 		if (!isdigit(*iter))
@@ -57,6 +59,12 @@ void	PhoneBook::search(void)
 	index = str_to_index(choice);
 	while (!index || index > _num)
 	{
+		if (std::cin.eof())
+		{
+			std::cin.clear();
+			std::clearerr(stdin);
+			std::cout << '\n';
+		}
 		std::cout << "invalid input! Please try again : ";
 		std::getline(std::cin, choice);
 		index = str_to_index(choice);

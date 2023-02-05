@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 14:08:22 by dham              #+#    #+#             */
-/*   Updated: 2023/01/06 16:15:53 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/05 14:20:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	Contact::field_input(int field)
 		std::cout << "contact can't have empty space!" << '\n';
 		std::cout << filed_name << " : ";
 		std::cin.clear();
-		std::cin.ignore();
 		std::clearerr(stdin);
 		std::getline(std::cin, str);
 	}

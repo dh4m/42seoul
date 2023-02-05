@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 22:42:49 by dham              #+#    #+#             */
-/*   Updated: 2023/01/06 01:08:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/05 14:23:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@ int	main(void)
 	{
 		std::cout << "> ";
 		std::getline(std::cin, input);
+		if (std::cin.eof())
+		{
+			std::cin.clear();
+			std::clearerr(stdin);
+			std::cout << '\n';
+		}
 		if (input.compare("ADD") == 0)
 			book.add();
 		else if (input.compare ("SEARCH") == 0)
