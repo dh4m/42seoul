@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:13:45 by dham              #+#    #+#             */
-/*   Updated: 2023/01/29 13:18:01 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/06 18:22:19 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ Fixed	&Fixed::operator++(void)
 	return (*this);
 }
 
-Fixed	Fixed::operator++(int post)
+const Fixed	Fixed::operator++(int post)
 {
 	Fixed	temp(*this);
 
@@ -140,7 +140,7 @@ Fixed	&Fixed::operator--(void)
 	return (*this);
 }
 
-Fixed	Fixed::operator--(int post)
+const Fixed	Fixed::operator--(int post)
 {
 	Fixed	temp(*this);
 

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 23:14:04 by dham              #+#    #+#             */
-/*   Updated: 2023/01/29 12:11:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/06 18:22:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,21 @@ public:
 	Fixed(const float num);
 	Fixed(const Fixed &f);
 	~Fixed(void);
-	Fixed	&operator= (const Fixed &f);
-	bool	operator> (const Fixed &f) const;
-	bool	operator< (const Fixed &f) const;
-	bool	operator>= (const Fixed &f) const;
-	bool	operator<= (const Fixed &f) const;
-	bool	operator== (const Fixed &f) const;
-	bool	operator!= (const Fixed &f) const;
-	Fixed	operator+(const Fixed &f) const;
-	Fixed	operator-(const Fixed &f) const;
-	Fixed	operator*(const Fixed &f) const;
-	Fixed	operator/(const Fixed &f) const;
-	Fixed	&operator++(void);
-	Fixed	operator++(int post);
-	Fixed	&operator--(void);
-	Fixed	operator--(int post);
+	Fixed		&operator= (const Fixed &f);
+	bool		operator> (const Fixed &f) const;
+	bool		operator< (const Fixed &f) const;
+	bool		operator>= (const Fixed &f) const;
+	bool		operator<= (const Fixed &f) const;
+	bool		operator== (const Fixed &f) const;
+	bool		operator!= (const Fixed &f) const;
+	Fixed		operator+(const Fixed &f) const;
+	Fixed		operator-(const Fixed &f) const;
+	Fixed		operator*(const Fixed &f) const;
+	Fixed		operator/(const Fixed &f) const;
+	Fixed		&operator++(void);
+	const Fixed	operator++(int post);
+	Fixed		&operator--(void);
+	const Fixed	operator--(int post);
 
 	int		getRawBits(void) const;
 	void	setRawBits(int const raw);
