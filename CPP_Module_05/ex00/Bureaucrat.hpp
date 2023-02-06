@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 15:02:53 by dham              #+#    #+#             */
-/*   Updated: 2023/02/05 20:04:03 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/06 16:50:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #ifndef BUREAUCRAT_HPP
 # define BUREAUCRAT_HPP
 
-# include <string>
+# include <iostream>
 
 class Bureaucrat
 {
@@ -26,20 +26,29 @@ public:
 
 	Bureaucrat	&operator=(const Bureaucrat &copy);
 
+	const std::string &getName() const;
+	int getGrade() const;
+	void incrementGrade(int grade);
+	void decrementGrade(int grade);
+
 	class GradeTooHighException: public std::exception
 	{
 	public:
 		const char *what() const throw();
 	};
-	class GradeTooHighException: public std::exception
+
+	class GradeTooLowException: public std::exception
 	{
 	public:
 		const char *what() const throw();
 	};
+
 private:
 	Bureaucrat(void);
 	const std::string _name;
 	int _grade;
 };
+
+std::ostream& operator<<(std::ostream &out, const Bureaucrat& b);
 
 #endif
