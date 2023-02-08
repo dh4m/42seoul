@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 15:02:53 by dham              #+#    #+#             */
-/*   Updated: 2023/02/06 16:50:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/08 00:43:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ public:
 	};
 
 private:
-	Bureaucrat(void);
 	const std::string _name;
 	int _grade;
+
+	Bureaucrat(void);
 };
 
 std::ostream& operator<<(std::ostream &out, const Bureaucrat& b);
