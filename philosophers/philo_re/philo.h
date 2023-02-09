@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:24:45 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 20:34:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/09 21:18:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_info
 	int				each_must_eat;
 	struct timeval	s_time;
 	int				all_ready;
+	int				print_able;
 	pthread_mutex_t	print_m;
 	pthread_mutex_t	ready_m;
 	pthread_mutex_t	last_m;

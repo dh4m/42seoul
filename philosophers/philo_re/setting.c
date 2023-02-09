@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 18:43:42 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 20:34:35 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/09 21:18:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	info_set(int argc, char *argv[], t_info *info)
 	pthread_mutex_init(&info->eat_m, NULL);
 	pthread_mutex_init(&info->print_m, NULL);
 	pthread_mutex_lock(&info->ready_m);
+	info->print_able = 1;
 	info->all_ready = 1;
 	info->n_philoshphers = ft_atoi(argv[1]);
 	info->die = ft_atoi(argv[2]);

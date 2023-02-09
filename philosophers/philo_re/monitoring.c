@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/10 15:56:28 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 20:38:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/09 21:19:30 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	print_die(int num, t_info *info)
 	info->all_ready = 0;
 	pthread_mutex_unlock(&info->ready_m);
 	pthread_mutex_lock(&info->print_m);
+	info->print_able = 0;
 	printf("%d %d died\n", diff_time(info->s_time), num);
 	pthread_mutex_unlock(&info->print_m);
 	return (1);

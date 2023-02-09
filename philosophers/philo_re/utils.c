@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/09 14:32:35 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 20:37:22 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/09 21:19:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int	mutex_print(char *str, int num, t_info *info)
 	}
 	pthread_mutex_unlock(&info->ready_m);
 	pthread_mutex_lock(&info->print_m);
-	printf(str, diff_time(info->s_time), num);
+	if(info->print_able)
+		printf(str, diff_time(info->s_time), num);
 	pthread_mutex_unlock(&info->print_m);
 	return (1);
 }
