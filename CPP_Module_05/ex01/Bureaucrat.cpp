@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 15:03:02 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 00:49:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/09 16:36:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void Bureaucrat::signForm(Form &f)
 	}
 	catch(const Form::GradeTooLowException& e)
 	{
-		std::cout << _name << "couldn't sign " << f.getName() \
+		std::cout << _name << " couldn't sign " << f.getName() \
 					<< " because Bureaucrat has too low grade" << '\n';
 	}
 	catch(const std::exception& e)
