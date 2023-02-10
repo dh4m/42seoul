@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:14:50 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 17:15:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/10 18:18:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 #ifndef ROBOTOMYREQUESTFORM_HPP
 # define ROBOTOMYREQUESTFORM_HPP
 
-class RobotomyRequestForm
+#include "AForm.hpp"
+
+class RobotomyRequestForm: public AForm
 {
 public:
-	RobotomyRequestForm(void);
+	RobotomyRequestForm(std::string target);
 	RobotomyRequestForm(const RobotomyRequestForm &copy);
 	~RobotomyRequestForm(void);
 
-	RobotomyRequestForm	&operator=(const RobotomyRequestForm &copy);
+	void execute(Bureaucrat const & executor) const;
 private:
-
+	RobotomyRequestForm	&operator=(const RobotomyRequestForm &copy);
 };
 
 #endif

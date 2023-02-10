@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:14:38 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 17:14:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/10 18:18:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 #ifndef PRESIDENTIALPARDONFORM_HPP
 # define PRESIDENTIALPARDONFORM_HPP
 
-class PresidentialPardonForm
+#include "AForm.hpp"
+
+class PresidentialPardonForm: public AForm
 {
 public:
-	PresidentialPardonForm(void);
+	PresidentialPardonForm(std::string target);
 	PresidentialPardonForm(const PresidentialPardonForm &copy);
 	~PresidentialPardonForm(void);
 
-	PresidentialPardonForm	&operator=(const PresidentialPardonForm &copy);
+	void execute(Bureaucrat const & executor) const;
 private:
-
+	PresidentialPardonForm	&operator=(const PresidentialPardonForm &copy);
 };
 
 #endif

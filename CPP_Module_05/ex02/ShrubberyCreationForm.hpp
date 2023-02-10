@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:15:13 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 17:15:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/10 18:18:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 #ifndef SHRUBBERYCREATIONFORM_HPP
 # define SHRUBBERYCREATIONFORM_HPP
 
-class ShrubberyCreationForm
+#include "AForm.hpp"
+
+class ShrubberyCreationForm: public AForm
 {
 public:
-	ShrubberyCreationForm(void);
+	ShrubberyCreationForm(std::string target);
 	ShrubberyCreationForm(const ShrubberyCreationForm &copy);
 	~ShrubberyCreationForm(void);
 
-	ShrubberyCreationForm	&operator=(const ShrubberyCreationForm &copy);
+	void execute(Bureaucrat const & executor) const;
 private:
-
+	ShrubberyCreationForm	&operator=(const ShrubberyCreationForm &copy);
 };
 
 #endif

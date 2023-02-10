@@ -6,12 +6,15 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:21:54 by dham              #+#    #+#             */
-/*   Updated: 2023/02/09 16:37:35 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/10 18:27:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include <iostream>
 
 int main(void)
@@ -19,21 +22,30 @@ int main(void)
 	try
 	{
 		Bureaucrat a("a", 2);
-		Bureaucrat b("b", 150);
-		Bureaucrat c("c", 10);
-		Form f_a("f_a", 1, 10);
-		Form f_b("f_b", 150, 10);
-		Form f_c("f_c", 10, 10);
+		Bureaucrat b("b", 50);
+		Bureaucrat c("c", 30);
+		ShrubberyCreationForm s_f("home");
+		RobotomyRequestForm r_f("human");
+		PresidentialPardonForm p_f("dham");
+		
 
-		a.signForm(f_a);
+		a.signForm(s_f);
 		std::cout << a << '\n';
-		std::cout << f_a << '\n';
-		b.signForm(f_b);
+		std::cout << s_f << '\n';
+		a.executeForm(s_f);
+		std::cout << "\n";
+
+		b.signForm(r_f);
 		std::cout << b << '\n';
-		std::cout << f_b << '\n';
-		c.signForm(f_c);
+		std::cout << r_f << '\n';
+		b.executeForm(r_f);
+		std::cout << "\n";
+
+		c.signForm(p_f);
 		std::cout << c << '\n';
-		std::cout << f_c << '\n';
+		std::cout << p_f << '\n';
+		c.executeForm(p_f);
+		std::cout << "\n";
 	}
 	catch(std::exception& e)
 	{
