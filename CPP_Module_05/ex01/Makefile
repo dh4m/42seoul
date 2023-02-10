@@ -1,5 +1,5 @@
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 NAME = a.out
 SRCS = main.cpp Bureaucrat.cpp Form.cpp
 OBJS = $(SRCS:.cpp=.o)
@@ -8,9 +8,9 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^
 %.o: %.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJS)
