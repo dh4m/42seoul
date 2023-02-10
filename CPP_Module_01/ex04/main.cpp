@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 21:35:12 by dham              #+#    #+#             */
-/*   Updated: 2023/01/10 03:58:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/10 14:49:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ int	main(int argc, char *argv[])
 		buffer.replace(s1, s2);
 		ofs << buffer.write_str();
 	}
+	ifs.close();
+	ofs.close();
 	return (0);
 }
