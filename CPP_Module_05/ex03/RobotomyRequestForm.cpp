@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:14:44 by dham              #+#    #+#             */
-/*   Updated: 2023/02/10 18:18:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 00:04:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,9 @@ void RobotomyRequestForm::execute(Bureaucrat const & executor) const
 		std::cout << getTarget() << " has been robotomized successfully!" << '\n';
 	else
 		std::cout << "Failed to robotomized " << getTarget() << ".." << '\n';
+}
+
+AForm *RobotomyRequestForm::formMaker(const std::string &target)
+{
+	return (new RobotomyRequestForm(target));
 }

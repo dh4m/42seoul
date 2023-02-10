@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:14:50 by dham              #+#    #+#             */
-/*   Updated: 2023/02/10 18:18:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 00:03:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ public:
 	~RobotomyRequestForm(void);
 
 	void execute(Bureaucrat const & executor) const;
+	static AForm *formMaker(const std::string &target);
 private:
 	RobotomyRequestForm	&operator=(const RobotomyRequestForm &copy);
 };

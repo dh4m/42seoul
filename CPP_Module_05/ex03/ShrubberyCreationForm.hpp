@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:15:13 by dham              #+#    #+#             */
-/*   Updated: 2023/02/10 18:18:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 00:03:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ public:
 	~ShrubberyCreationForm(void);
 
 	void execute(Bureaucrat const & executor) const;
+	static AForm *formMaker(const std::string &target);
 private:
 	ShrubberyCreationForm	&operator=(const ShrubberyCreationForm &copy);
 };

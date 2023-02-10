@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 17:15:10 by dham              #+#    #+#             */
-/*   Updated: 2023/02/10 18:18:29 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 00:04:39 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,9 @@ void ShrubberyCreationForm::execute(Bureaucrat const & executor) const
 		<< "       |.|        | |         | |\n"
 		<< "    \\/ ._\\//_/__/  ,\\_//__\\/.  \\_//__/_\n";
 	ofs.close();
+}
+
+AForm *ShrubberyCreationForm::formMaker(const std::string &target)
+{
+	return (new ShrubberyCreationForm(target));
 }

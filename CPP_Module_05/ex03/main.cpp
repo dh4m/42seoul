@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:21:54 by dham              #+#    #+#             */
-/*   Updated: 2023/02/10 18:27:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 01:04:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 #include <iostream>
 
 int main(void)
@@ -24,28 +25,39 @@ int main(void)
 		Bureaucrat a("a", 2);
 		Bureaucrat b("b", 50);
 		Bureaucrat c("c", 30);
-		ShrubberyCreationForm s_f("home");
-		RobotomyRequestForm r_f("human");
-		PresidentialPardonForm p_f("dham");
-		
 
-		a.signForm(s_f);
+		Intern someRandomIntern;
+		AForm *s_f;
+		s_f = someRandomIntern.makeForm("shrubbery creation", "home");
+		AForm *r_f;
+		r_f = someRandomIntern.makeForm("robotomy request", "human");
+		AForm *p_f;
+		p_f = someRandomIntern.makeForm("presidential pardon", "dham");
+		if (!s_f || !r_f || !p_f)
+			return (1);
+		std::cout << "\n";
+
+		a.signForm(*s_f);
 		std::cout << a << '\n';
-		std::cout << s_f << '\n';
-		a.executeForm(s_f);
+		std::cout << *s_f << '\n';
+		a.executeForm(*s_f);
 		std::cout << "\n";
 
-		b.signForm(r_f);
+		b.signForm(*r_f);
 		std::cout << b << '\n';
-		std::cout << r_f << '\n';
-		b.executeForm(r_f);
+		std::cout << *r_f << '\n';
+		b.executeForm(*r_f);
 		std::cout << "\n";
 
-		c.signForm(p_f);
+		c.signForm(*p_f);
 		std::cout << c << '\n';
-		std::cout << p_f << '\n';
-		c.executeForm(p_f);
+		std::cout << *p_f << '\n';
+		c.executeForm(*p_f);
 		std::cout << "\n";
+
+		delete s_f;
+		delete r_f;
+		delete p_f;
 	}
 	catch(std::exception& e)
 	{
