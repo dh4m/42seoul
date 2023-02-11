@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 18:44:21 by dham              #+#    #+#             */
-/*   Updated: 2023/02/11 20:10:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 21:41:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ public:
 	void printDoubleType(void);
 private:
 	int _typeDecision(void);
+	bool _isint(const std::string &raw);
+	bool _isfloat(const std::string &raw);
+	bool _isdouble(const std::string &raw);
 	std::string _raw;
 	int _type;
 	ActualType _actual_type;

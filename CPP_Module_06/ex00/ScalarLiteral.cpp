@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/02/11 20:21:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 21:48:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,34 @@ ScalarLiteral	&ScalarLiteral::operator=(const ScalarLiteral &copy)
 	return (*this);
 }
 
+bool ScalarLiteral::_isint(const std::string &raw)
+{
+	
+}
+
+bool ScalarLiteral::_isfloat(const std::string &raw)
+{
+	
+}
+
+bool ScalarLiteral::_isdouble(const std::string &raw)
+{
+	
+}
+
 int ScalarLiteral::_typeDecision(void)
 {
-
+	if (1)
+		_type = INT;
+	else if (_isdouble(_raw))
+		_type = DOUBLE;
+	else if (_isfloat(_raw))//////////
+		_type = FLOAT;
+	else if (_raw.length() == 1 && isprint(_raw[0]))
+		_type = CHAR;
+	else
+		_type = UNAVILABLE;
+	
 }
 
 void ScalarLiteral::printAllConversion(void)
