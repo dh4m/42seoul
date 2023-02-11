@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 14:21:54 by dham              #+#    #+#             */
-/*   Updated: 2023/02/11 01:04:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 15:53:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(void)
 		AForm *p_f;
 		p_f = someRandomIntern.makeForm("presidential pardon", "dham");
 		if (!s_f || !r_f || !p_f)
-			return (1);
+			exit(1);
 		std::cout << "\n";
 
 		a.signForm(*s_f);
