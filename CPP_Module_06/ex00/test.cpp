@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 20:11:17 by dham              #+#    #+#             */
-/*   Updated: 2023/02/11 21:23:39 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 22:24:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 int main(void)
 {
-	std::string str = ".12";
-	float i;
-	i = std::stof(str);
-	std::cout << i << '\n';
+	std::string str = "9999999999999999999999999999999999999999999";
+	float f;
+	f = std::stof(str);
+	std::cout << f << '\n';
 	return (0);
 }

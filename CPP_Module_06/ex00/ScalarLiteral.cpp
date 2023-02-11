@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 19:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/02/11 21:48:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/11 22:22:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,61 @@ ScalarLiteral	&ScalarLiteral::operator=(const ScalarLiteral &copy)
 
 bool ScalarLiteral::_isint(const std::string &raw)
 {
+	int idx = 0;
+	int len = _raw.length();
 	
+	if ((raw[idx] == '+' || raw[idx] == '-') && raw.length() != 1)
+		idx++;
+	while (idx < len)
+	{
+		if (!('0' <= raw[idx] && raw[idx] <= '9'))
+			return (false);
+		idx++;
+	}
+	try
+	{
+		std::stoi(raw);
+		return (true);
+	}
+	catch(const std::exception& e)
+	{
+		return (false);
+	}
 }
 
 bool ScalarLiteral::_isfloat(const std::string &raw)
 {
-	
+	try
+	{
+		std::stof(raw);
+		return (true);
+	}
+	catch(const std::exception& e)
+	{
+		return (false);
+	}
 }
 
 bool ScalarLiteral::_isdouble(const std::string &raw)
 {
-	
+	try
+	{
+		std::stod(raw);
+		return (true);
+	}
+	catch(const std::out_of_range& e)
+	{
+		return (true);
+	}
+	catch(const std::exception& e)
+	{
+		return (false);
+	}
 }
 
 int ScalarLiteral::_typeDecision(void)
 {
-	if (1)
+	if (_isint(_raw))
 		_type = INT;
 	else if (_isdouble(_raw))
 		_type = DOUBLE;
