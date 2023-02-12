@@ -2,12 +2,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 NAME = a.out
 SRCS =	main.cpp \
-		Bureaucrat.cpp \
-		AForm.cpp \
-		ShrubberyCreationForm.cpp \
-		RobotomyRequestForm.cpp \
-		PresidentialPardonForm.cpp \
-		Intern.cpp
+		Base.cpp
 OBJS = $(SRCS:.cpp=.o)
 RM = rm -f
 
