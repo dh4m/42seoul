@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   iter.hpp                                           :+:      :+:    :+:   */
+/*   Array.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/12 19:50:16 by dham              #+#    #+#             */
-/*   Updated: 2023/02/13 01:14:53 by dham             ###   ########.fr       */
+/*   Created: 2023/02/13 01:19:12 by dham              #+#    #+#             */
+/*   Updated: 2023/02/13 01:21:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ITER_HPP
-# define ITER_HPP
+#pragma once
 
-#include <iostream>
+#ifndef ARRAY_HPP
+# define ARRAY_HPP
 
-template<typename T, typename F>
-void iter(T *arr, size_t len, F func)
+template<typename T>
+class Array
 {
-	for (size_t i = 0; i < len; i++)
+public:
+	Array(void)
 	{
-		func(arr[i]);
+		
 	}
-}
+
+	Array(const Array &copy);
+	~Array(void);
+
+	Array	&operator=(const Array &copy);
+private:
+
+};
 
 #endif
