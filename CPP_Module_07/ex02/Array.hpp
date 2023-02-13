@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 01:19:12 by dham              #+#    #+#             */
-/*   Updated: 2023/02/13 02:07:53 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/13 14:28:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,14 @@ public:
 		}
 	}
 
-	T &operator[](int i)
+	T &operator[](unsigned int i)
+	{
+		if (_len == 0 || i >= _len || i < 0)
+			throw (std::exception());
+		return (_arr[i]);
+	}
+
+	const T &operator[](unsigned int i) const
 	{
 		if (_len == 0 || i >= _len || i < 0)
 			throw (std::exception());
