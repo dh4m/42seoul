@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:53:40 by dham              #+#    #+#             */
-/*   Updated: 2023/02/13 20:41:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/15 14:05:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 class Span
 {
 public:
-	Span(void);
 	Span(unsigned int n);
 	Span(const Span &copy);
 	~Span(void);
@@ -52,9 +51,10 @@ public:
 		const char *what() const throw();
 	};
 private:
-	int *_arr;
-	size_t _len;
-	size_t _idx;
+	size_t _max_len;
+	std::vector<int> _v;
+
+	Span(void);
 };
 
 #endif

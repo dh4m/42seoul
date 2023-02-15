@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:53:44 by dham              #+#    #+#             */
-/*   Updated: 2023/02/13 20:42:59 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/15 14:17:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,73 +14,55 @@
 #include <algorithm>
 #include <vector>
 
-Span::Span(void)
-: _arr(NULL), _len(0), _idx(0)
+Span::Span(unsigned int n)
+: _max_len(n)
 {}
 
-Span::Span(unsigned int n)
-: _len(n), _idx(0)
-{
-	_arr = new int[n];
-}
-
 Span::Span(const Span &copy)
-: _len(copy._len), _idx(copy._idx)
-{
-	_arr = new int[_len];
-	for(size_t i = 0; i < _idx; i++)
-	{
-		_arr[i] = copy._arr[i];
-	}
-}
+: _max_len(copy._max_len), _v(copy._v)
+{}
 
 Span::~Span(void)
-{
-	if (_arr)
-		delete[] _arr;
-}
+{}
 
 Span	&Span::operator=(const Span &copy)
 {
-	if (_arr)
-		delete[] _arr;
-	_len = copy._len;
-	_idx = copy._idx;
-	_arr = new int[_len];
-	for(size_t i = 0; i < _idx; i++)
-	{
-		_arr[i] = copy._arr[i];
-	}
+	_v = copy._v;
+	_max_len = copy._max_len;
 	return (*this);
 }
 
 void Span::addNumber(int n)
 {
-	if (_idx == _len)
+	if (_v.size() == _max_len)
 		throw (Span::ArrayNoSpaceException());
-	_arr[_idx++] = n;
+	_v.push_back(n);
 }
 
 unsigned int Span::shortestSpan(void)
 {
-	if (_idx < 2)
+	if (_v.size() < 2)
 		throw (Span::TooFewElementException());
-	std::sort(_arr, _arr + _idx);
+	std::sort(_v.begin(), _v.end());
 	unsigned int gap = UINT_MAX;
-	for (size_t i = 0; i < _idx - 1; i++)
+	for (std::vector<int>::iterator it = _v.begin();
+		it != _v.end() - 1;
+		it++)
 	{
-		if ((unsigned int)_arr[i + 1] - _arr[i] < gap)
-			gap = _arr[i + 1] - _arr[i];
+		if ((unsigned int)*(it + 1) - *it < gap)
+			gap = (unsigned int)*(it + 1) - *it;
 	}
 	return (gap);
 }
 
 unsigned int Span::longestSpan(void)
 {
-	if (_idx < 2)
+	if (_v.size() < 2)
 		throw (Span::TooFewElementException());
-	std::sort(_arr, _arr + _idx);
-	return (_arr[_idx - 1] - _arr[0]);
+	return (
+		*std::max_element(_v.begin(), _v.end()) 
+		- *std::min_element(_v.begin(), _v.end())
+	);
 }
 
 const char *Span::ArrayNoSpaceException::what() const throw()
