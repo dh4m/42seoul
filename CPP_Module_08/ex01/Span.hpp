@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 17:53:40 by dham              #+#    #+#             */
-/*   Updated: 2023/02/15 14:05:28 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/18 20:45:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ public:
 
 	void addNumber(int n);
 
-	template<typename T>
+	template<typename T>///iter 만 가능하게
 	void addNumber_range(T begin, T end)
 	{
 		for (T it = begin; it != end; it++)
