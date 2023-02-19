@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 20:36:40 by dham              #+#    #+#             */
-/*   Updated: 2023/02/19 01:54:35 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/19 20:23:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,21 +106,60 @@ struct enable_if {};
 template <class T>
 struct enable_if<true, T>
 {
-	typedef T type
+	typedef T type;
 };
 /* enable_if end*/
 
 /* is_integral start */
-template<class T>
-struct is_integral
+struct true_type
+{
+	enum {value = true};
+
+	operator bool() const {return value;};
+	bool operator()() const {return value;};
+
+	typedef bool value_type;
+	typedef true_type type;
+};
+struct false_type
 {
 	enum {value = false};
 
-	constexpr operator bool()??????
+	operator bool() const {return value;};
+	bool operator()() const {return value;};
 
-	typedef value_type bool;
-	typedef type is_integral<T>;
+	typedef bool value_type;
+	typedef false_type type;
 };
+
+template<class T>
+struct is_integral : public false_type {};
+
+template<class T>
+struct is_integral<const T> : is_integral<T> {};
+template<class T>
+struct is_integral<volatile T> : is_integral<T> {};
+template<class T>
+struct is_integral<const volatile T> : is_integral<T> {};
+
+template<>
+struct is_integral<bool> : public true_type {};
+template<>
+struct is_integral<char> : public true_type {};
+template<>
+struct is_integral<char16_t> : public true_type {};
+template<>
+struct is_integral<char32_t> : public true_type {};
+template<>
+struct is_integral<wchar_t> : public true_type {};
+template<>
+struct is_integral<short> : public true_type {};
+template<>
+struct is_integral<int> : public true_type {};
+template<>
+struct is_integral<long> : public true_type {};
+template<>
+struct is_integral<long long> : public true_type {};
 /* is_integral end */
 
 }
