@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/12 19:50:14 by dham              #+#    #+#             */
-/*   Updated: 2023/02/13 14:21:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/20 15:30:30 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,29 @@ int main(void)
 	iter(arr, 10, increament<std::string>);
 	iter(arr, 10, print_int<std::string>);
 }
+
+/*
+class Awesome
+{
+  public:
+    Awesome( void ) : _n( 42 ) { return; }
+    int get( void ) const { return this->_n; }
+  private:
+    int _n;
+};
+
+std::ostream & operator<<( std::ostream & o, Awesome const & rhs ) { o << rhs.get(); return o; }
+
+template< typename T >
+void print( T const & x ) { std::cout << x << std::endl; return; }
+
+int main() {
+  int tab[] = { 0, 1, 2, 3, 4 };  // <--- I never understood why you can't write int[] tab. Wouldn't that make more sense?
+  Awesome tab2[5];
+
+  iter( tab, 5, print<int> );
+  iter( tab2, 5, print<Awesome> );
+
+  return 0;
+}
+*/
