@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/18 20:36:40 by dham              #+#    #+#             */
-/*   Updated: 2023/02/19 20:23:24 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/20 15:34:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 namespace ft
 {
 
-/* pair start */
+/* <<<<<<<pair start>>>>>>> */
 template <class T1, class T2>
 struct pair
 {
@@ -97,9 +97,9 @@ bool operator>=(const pair<T1, T2>& lhs, const pair<U1, U2>& rhs)
 		return (true);
 	return (false);
 }
-/* pair end */
+/* <<<<<<<pair end>>>>>>> */
 
-/* enable_if start */
+/* <<<<<<<enable_if start>>>>>>> */
 template<bool B, class T = void>
 struct enable_if {};
 
@@ -108,9 +108,9 @@ struct enable_if<true, T>
 {
 	typedef T type;
 };
-/* enable_if end*/
+/* <<<<<<<enable_if end>>>>>>> */
 
-/* is_integral start */
+/* <<<<<<<is_integral start>>>>>>> */
 struct true_type
 {
 	enum {value = true};
@@ -147,19 +147,25 @@ struct is_integral<bool> : public true_type {};
 template<>
 struct is_integral<char> : public true_type {};
 template<>
-struct is_integral<char16_t> : public true_type {};
-template<>
-struct is_integral<char32_t> : public true_type {};
+struct is_integral<unsigned char> : public true_type {};
 template<>
 struct is_integral<wchar_t> : public true_type {};
 template<>
 struct is_integral<short> : public true_type {};
 template<>
+struct is_integral<unsigned short> : public true_type {};
+template<>
 struct is_integral<int> : public true_type {};
+template<>
+struct is_integral<unsigned int> : public true_type {};
 template<>
 struct is_integral<long> : public true_type {};
 template<>
+struct is_integral<unsigned long> : public true_type {};
+template<>
 struct is_integral<long long> : public true_type {};
-/* is_integral end */
+template<>
+struct is_integral<unsigned long long> : public true_type {};
+/* <<<<<<<is_integral end>>>>>>> */
 
 }
