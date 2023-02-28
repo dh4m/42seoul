@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/02/28 19:18:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 02:35:12 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,15 @@ float	cam_obj_distance(t_ray *ray, t_obj *obj)
 
 int	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj)
 {
+	t_color	color;
+
 	if (hit_obj->shape == SPHERE)
-		return (sphere_color(ray, min_t, content, hit_obj));
+		color = sphere_color(ray, min_t, content, hit_obj);
 	else if (hit_obj->shape == PLANE)
-		return (plane_color(ray, min_t, content, hit_obj));
+		color = plane_color(ray, min_t, content, hit_obj);
 	else if (hit_obj->shape == CYLINDER)
-		return (cylinder_color(ray, min_t, content, hit_obj));
+		color = cylinder_color(ray, min_t, content, hit_obj);
 	else
-		return (cone_color(ray, min_t, content, hit_obj));
+		color = cone_color(ray, min_t, content, hit_obj);
+	return (color_to_int(&color));
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/02/28 19:34:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 02:16:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,12 @@ typedef struct s_content
 	t_ambient	ambient;
 }	t_content;
 
+typedef struct s_hitpoint
+{
+	t_vec	nomal_v;
+	t_vec	hit_p;
+	t_color	point_color;
+}	t_hitpoint;
 
 void	invalid_args(void);
 
@@ -138,6 +144,11 @@ int		ray_calculate(int x, int y, t_content *content);
 int		clear_list(t_content *content);
 void	make_ray(int x, int y, t_ray *ray, t_content *content);
 void	camera_set(t_content *content);
+void	bright_set(t_color *color, float bright);
+t_color	reflex_color(t_color *light, t_color *obj);
+t_color	color_combine(t_color *a, t_color *b);
+int		color_to_int(t_color *color);
+int	light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
 
 int		eq_f(float a, float b);
 float	square_f(float a);
@@ -152,15 +163,21 @@ float	vector_size(const t_vec *vec);
 void	vector_normalize(t_vec *vec);
 
 float	sphere_distance(t_ray *ray, t_obj *obj);
-int		sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
 
 float	cone_distance(t_ray *ray, t_obj *obj);
-int		cone_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_color	cone_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
 
 float	cylinder_distance(t_ray *ray, t_obj *obj);
-int		cylinder_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_color	cylinder_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
 
 float	plane_distance(t_ray *ray, t_obj *obj);
-int		plane_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_color	plane_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+
+t_color	sphere_mapped_color(t_obj *obj, t_vec *hit_p);
+t_color	plane_mapped_color(t_obj *obj, t_vec *hit_p);
+t_color	cylinder_mapped_color(t_obj *obj, t_vec *hit_p);
+t_color	cone_mapped_color(t_obj *obj, t_vec *hit_p);
+t_color	mapped_color(t_obj *obj, t_vec *hit_p);
 
 #endif

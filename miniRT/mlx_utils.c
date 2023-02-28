@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/02/28 18:41:31 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 04:03:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "minirt.h"
 #include <stdlib.h>
 #include <math.h>
+#include <stdio.h>
 
 void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
@@ -43,10 +44,12 @@ void	bright_normalize(t_content *content)
 		light = light->next;
 	}
 	content->ambient.bright /= total_b;
+	bright_set(&content->ambient.color, content->ambient.bright);
 	light = content->light_list.next;
 	while (light)
 	{
 		light->bright /= total_b;
+		bright_set(&light->color, light->bright);
 		light = light->next;
 	}
 }
@@ -90,5 +93,75 @@ void	camera_set(t_content *content)
 int	clear_list(t_content *content)
 {
 	;
+}
+
+void	bright_set(t_color *color, float bright)
+{
+	color->r = round(color->r * bright);
+	color->g = round(color->g * bright);
+	color->b = round(color->b * bright);
+}
+
+t_color	reflex_color(t_color *light, t_color *obj)
+{
+	t_color	ret_c;
+
+	ret_c.r = round(obj->r * (light->r / 255.));
+	ret_c.g = round(obj->g * (light->g / 255.));
+	ret_c.b = round(obj->b * (light->b / 255.));
+	return (ret_c);
+}
+
+t_color	color_combine(t_color *a, t_color *b)
+{
+	t_color	ret_c;
+
+	ret_c.r = a->r + b->r;
+	ret_c.g = a->g + b->g;
+	ret_c.b = a->b + b->b;
+	return (ret_c);
+}
+
+int	color_to_int(t_color *color)
+{
+	int	ret_i;
+
+	ret_i = 0;
+	ret_i += (color->r << 16);
+	ret_i += (color->g << 8);
+	ret_i += color->b;
+	return (ret_i);
+}
+
+float	distance_point(t_vec *v1, t_vec *v2)
+{
+	t_vec	temp;
+	
+	temp = vec_minus(v2, v1);
+	return (vector_size(&temp));
+}
+
+int	light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj)
+{
+	const float	light_distance = distance_point(&light->loc, hit_p);
+	float		obj_distance;
+	t_obj		*obj;
+	t_ray		ray;
+
+	ray.start = *hit_p;
+	ray.dir = vec_minus(&light->loc, hit_p);
+	vector_normalize(&ray.dir);
+	obj = content->obj_list.next;
+	while(obj)
+	{
+		if (obj != hit_obj)
+		{
+			obj_distance = cam_obj_distance(&ray, obj);
+			if (obj_distance > 0 && obj_distance < light_distance)
+				return (0);
+		}
+		obj = obj->next;
+	}
+	return (1);
 }
 

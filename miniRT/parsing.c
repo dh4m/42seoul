@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/02/27 18:20:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 03:45:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ int	parsing(const char *rt_file, t_content *content)
 
 	// light 1
 	content->light_list.next = ft_calloc(1, sizeof(t_light));
-	content->light_list.next->bright = 0.5;
+	content->light_list.next->bright = 1.0;
 	content->light_list.next->color.r = 255;
 	content->light_list.next->color.g = 255;
 	content->light_list.next->color.b = 255;
-	content->light_list.next->loc.x = 1;
-	content->light_list.next->loc.y = 1;
-	content->light_list.next->loc.z = 1;
+	content->light_list.next->loc.x = 4;
+	content->light_list.next->loc.y = 4;
+	content->light_list.next->loc.z = 4;
 
 	// obj 1
 	content->obj_list.next = ft_calloc(1, sizeof(t_obj));
@@ -53,5 +53,17 @@ int	parsing(const char *rt_file, t_content *content)
 	content->obj_list.next->color.g = 255;
 	content->obj_list.next->color.b = 229;
 	content->obj_list.next->diameter = 3;
+/*
+	// obj 2
+	content->obj_list.next->next = ft_calloc(1, sizeof(t_obj));
+	content->obj_list.next->next->shape = SPHERE;
+	content->obj_list.next->next->loc.x = 10;
+	content->obj_list.next->next->loc.y = 5;
+	content->obj_list.next->next->loc.z = 5;
+	content->obj_list.next->next->color.r = 207;
+	content->obj_list.next->next->color.g = 255;
+	content->obj_list.next->next->color.b = 229;
+	content->obj_list.next->next->diameter = 3;
+*/
 	return (SUCCESS);
 }
