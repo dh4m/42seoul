@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/02/27 18:11:03 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/28 18:41:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,6 @@ void	bright_normalize(t_content *content)
 		light->bright /= total_b;
 		light = light->next;
 	}
-}
-
-float	vector_size(const t_vec *vec)
-{
-	return (sqrtf(powf(vec->x, 2) + powf(vec->y, 2) + powf(vec->z, 2)));
-}
-
-void	vector_normalize(t_vec *vec)
-{
-	const float	len = vector_size(vec);
-
-	vec->x /= len;
-	vec->y /= len;
-	vec->z /= len;
 }
 
 void	make_ray(int x, int y, t_ray *ray, t_content *content)

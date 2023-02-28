@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float_utils.c                                      :+:      :+:    :+:   */
+/*   obj_cone.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/27 17:07:23 by dham              #+#    #+#             */
-/*   Updated: 2023/02/28 19:12:47 by dham             ###   ########.fr       */
+/*   Created: 2023/02/28 18:23:59 by dham              #+#    #+#             */
+/*   Updated: 2023/02/28 18:27:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "minirt.h"
-#include <stdlib.h>
+#include "libft.h"
+#include <stdio.h>
 #include <math.h>
 
-int	eq_f(float a, float b)
+float	cone_distance(t_ray *ray, t_obj *obj)
 {
-	if (a >= b)
-		return ((a - b) < __FLT_EPSILON__);
-	return ((b - a) < __FLT_EPSILON__);
-}
-
-float	square_f(float a)
-{
-	return (a * a);
+	;
 }

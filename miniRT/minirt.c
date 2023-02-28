@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/02/27 18:49:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/02/28 19:18:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,39 @@ int	ray_calculate(int x, int y, t_content *content)
 	while (obj)
 	{
 		t = cam_obj_distance(&ray, obj);
-		if (t > 0 && (min_t == -1 || min_t > t))
+		if (t > 0 && (eq_f(min_t, -1) || min_t > t))
 		{
 			min_t = t;
-			hit_obj = obj;//////
+			hit_obj = obj;
 		}
 		obj = obj->next;
 	}
-	return (0x00ffffff);
+	if (min_t == -1)
+		return (0);
+	else
+		return (color_cal(&ray, min_t, content, hit_obj));/////////
 }
 
 float	cam_obj_distance(t_ray *ray, t_obj *obj)
 {
+	if (obj->shape == SPHERE)
+		return (sphere_distance(ray, obj));
+	else if (obj->shape == PLANE)
+		return (plane_distance(ray, obj));
+	else if (obj->shape == CYLINDER)
+		return (cylinder_distance(ray, obj));
+	else
+		return (cone_distance(ray, obj));
+}
 
+int	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj)
+{
+	if (hit_obj->shape == SPHERE)
+		return (sphere_color(ray, min_t, content, hit_obj));
+	else if (hit_obj->shape == PLANE)
+		return (plane_color(ray, min_t, content, hit_obj));
+	else if (hit_obj->shape == CYLINDER)
+		return (cylinder_color(ray, min_t, content, hit_obj));
+	else
+		return (cone_color(ray, min_t, content, hit_obj));
 }
