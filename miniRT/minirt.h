@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 18:48:08 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 20:18:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ t_color	cylinder_mapped_color(t_obj *obj, t_vec *hit_p);
 t_color	cone_mapped_color(t_obj *obj, t_vec *hit_p);
 t_color	mapped_color(t_obj *obj, t_vec *hit_p);
 
-t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray);
+t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin);
+t_color	specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin, t_obj *obj);
 
 #endif

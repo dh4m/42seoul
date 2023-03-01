@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:50 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 19:13:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 20:07:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,11 @@ t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 	bright_set(&ambient, 1 - hit_obj->reflection);
 	diffuse = diffuse_value(&hit_info, content, hit_obj);
 	ret_c = color_combine(&ambient, &diffuse);
-
 	if (ray->reflect <= REFL_NUM)
 	{
-		specular = reflect_value(&hit_info, content, ray);
+		specular = specular_value(&hit_info, content, ray, hit_obj);
 		bright_set(&specular, hit_obj->reflection);
-		if (hit_obj->reflection < 0.3 && specular.r != specular.g) 
-			printf("%f, %d %d %d\n", hit_obj->reflection, specular.r, specular.g, specular.b);
 		ret_c = color_combine(&ret_c, &specular);
 	}
-
 	return (ret_c);
 }
