@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 02:35:12 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 16:53:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	make_image(t_info *info, t_img *img, const char *rt_file)
 
 int	draw_img(t_info *info, t_img *img, t_content *content)
 {
-	int	x;
-	int	y;
-	int	color;
+	int		x;
+	int		y;
+	int		color;
+	t_color	buf[WIDTH][HEIGHT];
 
 	bright_normalize(content);
 	camera_set(content);
@@ -45,15 +46,20 @@ int	draw_img(t_info *info, t_img *img, t_content *content)
 	{
 		x = -1;
 		while (++x < WIDTH)
-		{
-			color = ray_calculate(x, y, content);
-			my_mlx_pixel_put(img, x, y, color);
-		}
+			buf[x][y] = ray_calculate(x, y, content);
+	}
+	buf_nomalize(buf);
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+			my_mlx_pixel_put(img, x, y, color_to_int(&buf[x][y]));
 	}
 	return (SUCCESS);
 }
 
-int	ray_calculate(int x, int y, t_content *content)
+t_color	ray_calculate(int x, int y, t_content *content)
 {
 	t_ray	ray;
 	float	t;
@@ -75,10 +81,10 @@ int	ray_calculate(int x, int y, t_content *content)
 		}
 		obj = obj->next;
 	}
-	if (min_t == -1)
-		return (0);
+	if (min_t < 0)
+		return ((t_color){0, 0, 0});
 	else
-		return (color_cal(&ray, min_t, content, hit_obj));/////////
+		return (color_cal(&ray, min_t, content, hit_obj));
 }
 
 float	cam_obj_distance(t_ray *ray, t_obj *obj)
@@ -93,7 +99,7 @@ float	cam_obj_distance(t_ray *ray, t_obj *obj)
 		return (cone_distance(ray, obj));
 }
 
-int	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj)
+t_color	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj)
 {
 	t_color	color;
 
@@ -105,5 +111,5 @@ int	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj)
 		color = cylinder_color(ray, min_t, content, hit_obj);
 	else
 		color = cone_color(ray, min_t, content, hit_obj);
-	return (color_to_int(&color));
+	return (color);
 }

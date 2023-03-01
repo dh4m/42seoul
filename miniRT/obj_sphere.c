@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:50 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 14:25:17 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 19:13:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static t_color	diffuse_value(t_hitpoint *hitinfo, \
 			vector_normalize(&temp_v);
 			if (vec_inner(&hitinfo->nomal_v, &temp_v) > 0)
 			{
-				bright_set(&temp_c, vec_inner(&hitinfo->nomal_v, &temp_v));
+				bright_set(&temp_c, vec_inner(&hitinfo->nomal_v, &temp_v) * (1 - hit_obj->reflection));
 				ret_c = color_combine(&ret_c, &temp_c);
 			}
 		}
@@ -76,6 +76,7 @@ t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 	t_color		ambient;
 	t_color		diffuse;
 	t_color		specular;
+	t_color		ret_c;
 	t_hitpoint	hit_info;
 
 	hit_info.hit_p = vec_multi(&ray->dir, t);
@@ -83,8 +84,18 @@ t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 	hit_info.nomal_v = nomal_v_cal(&hit_info.hit_p, hit_obj);
 	hit_info.point_color = sphere_mapped_color(hit_obj, &hit_info.hit_p);
 	ambient = reflex_color(&content->ambient.color, &hit_info.point_color);
+	bright_set(&ambient, 1 - hit_obj->reflection);
 	diffuse = diffuse_value(&hit_info, content, hit_obj);
-	//specular 구해야 함
-	//specular 적용해야 함
-	return (color_combine(&ambient, &diffuse));
+	ret_c = color_combine(&ambient, &diffuse);
+
+	if (ray->reflect <= REFL_NUM)
+	{
+		specular = reflect_value(&hit_info, content, ray);
+		bright_set(&specular, hit_obj->reflection);
+		if (hit_obj->reflection < 0.3 && specular.r != specular.g) 
+			printf("%f, %d %d %d\n", hit_obj->reflection, specular.r, specular.g, specular.b);
+		ret_c = color_combine(&ret_c, &specular);
+	}
+
+	return (ret_c);
 }

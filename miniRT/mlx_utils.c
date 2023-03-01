@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 04:17:45 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 19:36:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ void	bright_normalize(t_content *content)
 		total_b += light->bright;
 		light = light->next;
 	}
-	content->ambient.bright /= total_b;
 	bright_set(&content->ambient.color, content->ambient.bright);
 	light = content->light_list.next;
 	while (light)
 	{
-		light->bright /= total_b;
 		bright_set(&light->color, light->bright);
 		light = light->next;
 	}
@@ -70,6 +68,7 @@ void	make_ray(int x, int y, t_ray *ray, t_content *content)
 	temp = vec_multi(&(content->camera.ver), e * y);
 	ray->dir = vec_plus(&ray->dir, &temp);
 	vector_normalize(&(ray->dir));
+	ray->reflect = 0;
 }
 
 void	camera_set(t_content *content)
@@ -166,3 +165,35 @@ int	light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj)
 	return (1);
 }
 
+void	buf_nomalize(t_color *buf)
+{
+	int		y;
+	int		x;
+	int		max = 255;
+	float	r;
+
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+		{
+			if (buf[x + (y * WIDTH)].r > max)
+				max = buf[x + (y * WIDTH)].r;
+			if (buf[x + (y * WIDTH)].g > max)
+				max = buf[x + (y * WIDTH)].g;
+			if (buf[x + (y * WIDTH)].b > max)
+				max = buf[x + (y * WIDTH)].b;
+		}
+	}
+	if (max == 255)
+		return ;
+	r = 255. / max;
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+			bright_set(&buf[x + (y * WIDTH)], r);
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 02:16:11 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 18:48:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
+# define REFL_NUM 2
 
 enum e_return_value
 {
@@ -52,6 +53,7 @@ typedef struct s_ray
 {
 	t_vec	start;
 	t_vec	dir;
+	int		reflect;
 }	t_ray;
 
 typedef struct s_camera
@@ -92,6 +94,8 @@ typedef struct s_obj
 	float			height;
 	float			theta;
 	t_color			color;
+	float			reflection;
+	float			sparkle;
 	t_vec			nomal_v;
 	t_texture		texture;
 	t_texture		bump;
@@ -137,10 +141,10 @@ void	bright_normalize(t_content *content);
 int		make_image(t_info *info, t_img *img, const char *rt_file);
 int		draw_img(t_info *info, t_img *img, t_content *content);
 float	cam_obj_distance(t_ray *ray, t_obj *obj);
-int		color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj);
+t_color	ray_calculate(int x, int y, t_content *content);
+t_color	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj);
 
 int		parsing(const char *rt_file, t_content *content);
-int		ray_calculate(int x, int y, t_content *content);
 int		clear_list(t_content *content);
 void	make_ray(int x, int y, t_ray *ray, t_content *content);
 void	camera_set(t_content *content);
@@ -148,7 +152,8 @@ void	bright_set(t_color *color, float bright);
 t_color	reflex_color(t_color *light, t_color *obj);
 t_color	color_combine(t_color *a, t_color *b);
 int		color_to_int(t_color *color);
-int	light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
+int		light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
+void	buf_nomalize(t_color *buf);
 
 int		eq_f(float a, float b);
 float	square_f(float a);
@@ -179,5 +184,7 @@ t_color	plane_mapped_color(t_obj *obj, t_vec *hit_p);
 t_color	cylinder_mapped_color(t_obj *obj, t_vec *hit_p);
 t_color	cone_mapped_color(t_obj *obj, t_vec *hit_p);
 t_color	mapped_color(t_obj *obj, t_vec *hit_p);
+
+t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray);
 
 #endif
