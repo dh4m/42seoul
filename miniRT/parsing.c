@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 00:24:07 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 01:50:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	parsing(const char *rt_file, t_content *content)
 	content->camera.dir.x = 1;
 	content->camera.dir.y = 0;
 	content->camera.dir.z = 0;
-	content->camera.fov = 60;
+	content->camera.fov = 80;
 	
 	// ambient
 	content->ambient.bright = 0.2;
@@ -39,8 +39,8 @@ int	parsing(const char *rt_file, t_content *content)
 	content->light_list.next->color.r = 255;
 	content->light_list.next->color.g = 255;
 	content->light_list.next->color.b = 255;
-	content->light_list.next->loc.x = -1;
-	content->light_list.next->loc.y = 4;
+	content->light_list.next->loc.x = -5;
+	content->light_list.next->loc.y = 10;
 	content->light_list.next->loc.z = 10;
 
 	// light 2 - 버그있음
@@ -49,9 +49,9 @@ int	parsing(const char *rt_file, t_content *content)
 	content->light_list.next->next->color.r = 255;
 	content->light_list.next->next->color.g = 255;
 	content->light_list.next->next->color.b = 255;
-	content->light_list.next->next->loc.x = 3;
-	content->light_list.next->next->loc.y = 0;
-	content->light_list.next->next->loc.z = -2;
+	content->light_list.next->next->loc.x = -5;
+	content->light_list.next->next->loc.y = -10;
+	content->light_list.next->next->loc.z = 10;
 
 	// obj 1
 	content->obj_list.next = ft_calloc(1, sizeof(t_obj));
@@ -60,9 +60,9 @@ int	parsing(const char *rt_file, t_content *content)
 	content->obj_list.next->loc.y = 0;
 	content->obj_list.next->loc.z = 0;
 	content->obj_list.next->color.r = 255;
-	content->obj_list.next->color.g = 0;
+	content->obj_list.next->color.g = 255;
 	content->obj_list.next->color.b = 255;
-	content->obj_list.next->reflection = 0.4;
+	content->obj_list.next->reflection = 1;
 	content->obj_list.next->sparkle = 30;
 	content->obj_list.next->diameter = 3;
 
@@ -74,23 +74,23 @@ int	parsing(const char *rt_file, t_content *content)
 	content->obj_list.next->next->loc.z = 0.5;
 	content->obj_list.next->next->color.r = 255;
 	content->obj_list.next->next->color.g = 255;
-	content->obj_list.next->next->color.b = 255;
-	content->obj_list.next->next->reflection = 0.5;
+	content->obj_list.next->next->color.b = 100;
+	content->obj_list.next->next->reflection = 0.4;
 	content->obj_list.next->next->sparkle = 30;
 	content->obj_list.next->next->diameter = 1;
 
 	// obj 3
 	content->obj_list.next->next->next = ft_calloc(1, sizeof(t_obj));
 	content->obj_list.next->next->next->shape = SPHERE;
-	content->obj_list.next->next->next->loc.x = -4;
-	content->obj_list.next->next->next->loc.y = -2.5;
+	content->obj_list.next->next->next->loc.x = 3;
+	content->obj_list.next->next->next->loc.y = -1.5;
 	content->obj_list.next->next->next->loc.z = -1;
 	content->obj_list.next->next->next->color.r = 255;
-	content->obj_list.next->next->next->color.g = 255;
+	content->obj_list.next->next->next->color.g = 100;
 	content->obj_list.next->next->next->color.b = 255;
-	content->obj_list.next->next->next->reflection = 0.2;
+	content->obj_list.next->next->next->reflection = 0;
 	content->obj_list.next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->diameter = 2;
+	content->obj_list.next->next->next->diameter = 1;
 
 
 	// obj 4
@@ -98,32 +98,32 @@ int	parsing(const char *rt_file, t_content *content)
 	content->obj_list.next->next->next->next->shape = PLANE;
 	content->obj_list.next->next->next->next->loc.x = 0;
 	content->obj_list.next->next->next->next->loc.y = 0;
-	content->obj_list.next->next->next->next->loc.z = -0.7;
+	content->obj_list.next->next->next->next->loc.z = -1.6;
 	content->obj_list.next->next->next->next->nomal_v.x = 0;
 	content->obj_list.next->next->next->next->nomal_v.y = 0;
 	content->obj_list.next->next->next->next->nomal_v.z = 1;
-	content->obj_list.next->next->next->next->color.r = 255;
+	content->obj_list.next->next->next->next->color.r = 200;
 	content->obj_list.next->next->next->next->color.g = 255;
 	content->obj_list.next->next->next->next->color.b = 255;
-	content->obj_list.next->next->next->next->reflection = 0.2;
+	content->obj_list.next->next->next->next->reflection = 0.4;
 	content->obj_list.next->next->next->next->sparkle = 30;
 	content->obj_list.next->next->next->next->diameter = -1;
 
 	// obj 5
 	content->obj_list.next->next->next->next->next = ft_calloc(1, sizeof(t_obj));
 	content->obj_list.next->next->next->next->next->shape = PLANE;
-	content->obj_list.next->next->next->next->next->loc.x = 20;
+	content->obj_list.next->next->next->next->next->loc.x = 25;
 	content->obj_list.next->next->next->next->next->loc.y = 0;
 	content->obj_list.next->next->next->next->next->loc.z = 0;
-	content->obj_list.next->next->next->next->next->nomal_v.x = 1;
+	content->obj_list.next->next->next->next->next->nomal_v.x = -1;
 	content->obj_list.next->next->next->next->next->nomal_v.y = 0;
 	content->obj_list.next->next->next->next->next->nomal_v.z = 0;
 	content->obj_list.next->next->next->next->next->color.r = 255;
 	content->obj_list.next->next->next->next->next->color.g = 255;
 	content->obj_list.next->next->next->next->next->color.b = 255;
-	content->obj_list.next->next->next->next->next->reflection = 0.2;
+	content->obj_list.next->next->next->next->next->reflection = 0.1;
 	content->obj_list.next->next->next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->next->next->diameter = 35;
+	content->obj_list.next->next->next->next->next->diameter = -1;
 
 	return (SUCCESS);
 }

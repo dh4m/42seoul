@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:50 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 20:07:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 01:47:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 		bright_set(&specular, hit_obj->reflection);
 		ret_c = color_combine(&ret_c, &specular);
 	}
+	if (t > 1)
+		bright_set(&ret_c, powf(1 / t, 0.5));
 	return (ret_c);
 }
