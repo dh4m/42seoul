@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:44:23 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 21:19:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 00:26:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	make_reflect_ray(t_ray *ray, t_vec *ray_origin, t_hitpoint *hitinfo,
 {
 	t_vec	temp;
 
-	temp = vec_multi(&hitinfo->nomal_v, 0.1);
+	temp = vec_multi(&hitinfo->nomal_v, 0.001);
 	ray->start = vec_plus(&hitinfo->hit_p, &temp);
 	temp = vec_multi(&hitinfo->nomal_v, 2 * vec_inner(&hitinfo->nomal_v, ray_origin));
 	ray->dir = vec_minus(ray_origin, &temp);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 19:36:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 00:21:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	make_ray(int x, int y, t_ray *ray, t_content *content)
 	t_vec	temp;
 	static const double degree = M_PI / 180;
 
-	e = (2 * tan(content->camera.fov * degree / 2.)) / WIDTH;
+	e = (2 * tan(content->camera.fov * degree / 2.)) / (WIDTH - 1);
 	x -= WIDTH / 2;
 	y = -y + (HEIGHT / 2);
 	ray->start = content->camera.loc;

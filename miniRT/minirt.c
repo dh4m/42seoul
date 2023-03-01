@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 16:53:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 00:26:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	draw_img(t_info *info, t_img *img, t_content *content)
 
 	bright_normalize(content);
 	camera_set(content);
+	// obj nomal vec nomalize
 	y = -1;
 	while (++y < HEIGHT)
 	{
