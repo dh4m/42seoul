@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:50 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 04:34:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/01 14:25:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ static t_color	diffuse_value(t_hitpoint *hitinfo, \
 
 t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 {
-	t_color	ambient;
-	t_color	diffuse;
-	t_color	specular;
+	t_color		ambient;
+	t_color		diffuse;
+	t_color		specular;
 	t_hitpoint	hit_info;
 
 	hit_info.hit_p = vec_multi(&ray->dir, t);
