@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:53 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 01:48:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 14:56:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ float	plane_distance(t_ray *ray, t_obj *obj)
 	if (obj->diameter > 0 && vector_size(&len) > obj->diameter / 2)
 		return (-1);
 	return (t);
+}
+
+static t_vec	nomal_v_cal(t_vec *hit_p, t_obj *hit_obj)
+{
+	return (hit_obj->nomal_v);
 }
 
 static t_color	diffuse_value(t_hitpoint *hitinfo, \
@@ -74,7 +79,7 @@ t_color	plane_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 
 	hit_info.hit_p = vec_multi(&ray->dir, t);
 	hit_info.hit_p = vec_plus(&hit_info.hit_p, &ray->start);
-	hit_info.nomal_v = hit_obj->nomal_v;
+	hit_info.nomal_v = nomal_v_cal(&hit_info.hit_p, hit_obj);
 	hit_info.point_color = plane_mapped_color(hit_obj, &hit_info.hit_p);
 	ambient = reflex_color(&content->ambient.color, &hit_info.point_color);
 	bright_set(&ambient, 1 - hit_obj->reflection);

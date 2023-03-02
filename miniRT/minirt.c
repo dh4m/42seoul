@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 14:24:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_color	ray_calculate(int x, int y, t_content *content)
 		obj = obj->next;
 	}
 	if (min_t < 0)
-		return ((t_color){20, 20, 20});
+		return (BACKGROUND);
 	else
 		return (color_cal(&ray, min_t, content, hit_obj));
 }

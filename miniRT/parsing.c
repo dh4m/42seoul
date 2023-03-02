@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 01:50:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 16:33:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	parsing(const char *rt_file, t_content *content)
 	content->camera.dir.x = 1;
 	content->camera.dir.y = 0;
 	content->camera.dir.z = 0;
-	content->camera.fov = 80;
+	content->camera.fov = 120;
 	
 	// ambient
 	content->ambient.bright = 0.2;
@@ -123,7 +123,41 @@ int	parsing(const char *rt_file, t_content *content)
 	content->obj_list.next->next->next->next->next->color.b = 255;
 	content->obj_list.next->next->next->next->next->reflection = 0.1;
 	content->obj_list.next->next->next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->next->next->diameter = -1;
+	content->obj_list.next->next->next->next->next->diameter = 40;
+
+	// obj 6
+	content->obj_list.next->next->next->next->next->next = ft_calloc(1, sizeof(t_obj));
+	content->obj_list.next->next->next->next->next->next->shape = CYLINDER;
+	content->obj_list.next->next->next->next->next->next->loc.x = 3;
+	content->obj_list.next->next->next->next->next->next->loc.y = 2;
+	content->obj_list.next->next->next->next->next->next->loc.z = -1.6;
+	content->obj_list.next->next->next->next->next->next->nomal_v.x = 0;
+	content->obj_list.next->next->next->next->next->next->nomal_v.y = 0;
+	content->obj_list.next->next->next->next->next->next->nomal_v.z = 1;
+	content->obj_list.next->next->next->next->next->next->color.r = 255;
+	content->obj_list.next->next->next->next->next->next->color.g = 255;
+	content->obj_list.next->next->next->next->next->next->color.b = 255;
+	content->obj_list.next->next->next->next->next->next->reflection = 0;
+	content->obj_list.next->next->next->next->next->next->sparkle = 30;
+	content->obj_list.next->next->next->next->next->next->diameter = 0.5;
+	content->obj_list.next->next->next->next->next->next->height = 7;
+
+	// obj 6
+	content->obj_list.next->next->next->next->next->next = ft_calloc(1, sizeof(t_obj));
+	content->obj_list.next->next->next->next->next->next->shape = CYLINDER;
+	content->obj_list.next->next->next->next->next->next->loc.x = 3;
+	content->obj_list.next->next->next->next->next->next->loc.y = 2;
+	content->obj_list.next->next->next->next->next->next->loc.z = -1.6;
+	content->obj_list.next->next->next->next->next->next->nomal_v.x = 0;
+	content->obj_list.next->next->next->next->next->next->nomal_v.y = 0;
+	content->obj_list.next->next->next->next->next->next->nomal_v.z = 1;
+	content->obj_list.next->next->next->next->next->next->color.r = 255;
+	content->obj_list.next->next->next->next->next->next->color.g = 255;
+	content->obj_list.next->next->next->next->next->next->color.b = 255;
+	content->obj_list.next->next->next->next->next->next->reflection = 0.7;
+	content->obj_list.next->next->next->next->next->next->sparkle = 30;
+	content->obj_list.next->next->next->next->next->next->diameter = 0.5;
+	content->obj_list.next->next->next->next->next->next->height = 7;
 
 	return (SUCCESS);
 }

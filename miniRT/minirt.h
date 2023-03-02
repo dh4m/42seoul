@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 14:25:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 16:10:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define REFL_NUM 2
+# define BACKGROUND (t_color){0, 0, 0}
 
 enum e_return_value
 {
