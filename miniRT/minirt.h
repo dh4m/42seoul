@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 20:18:55 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 14:25:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ t_color	reflex_color(t_color *light, t_color *obj);
 t_color	color_combine(t_color *a, t_color *b);
 int		color_to_int(t_color *color);
 int		light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
-void	buf_nomalize(t_color *buf);
+void	buf_nomalize(t_color *buf[]);
 
 int		eq_f(float a, float b);
 float	square_f(float a);

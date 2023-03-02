@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 01:27:22 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 14:24:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,26 +37,41 @@ int	draw_img(t_info *info, t_img *img, t_content *content)
 	int		x;
 	int		y;
 	int		color;
-	t_color	buf[WIDTH][HEIGHT];
+	t_color	*buf[WIDTH];
 
 	bright_normalize(content);
 	camera_set(content);
 	// obj nomal vec nomalize
-	y = -1;
-	while (++y < HEIGHT)
+	x = -1;
+	while (++x < WIDTH)
 	{
-		x = -1;
-		while (++x < WIDTH)
+		buf[x] = malloc(sizeof(t_color) * HEIGHT);
+		if (!buf[x])
+		{
+			y = -1;
+			while (++y < x)
+				free(buf[y]);
+			return (FATAL_ERROR);
+		}
+	}
+	x = -1;
+	while (++x < WIDTH)
+	{
+		y = -1;
+		while (++y < HEIGHT)
 			buf[x][y] = ray_calculate(x, y, content);
 	}
 	buf_nomalize(buf);
-	y = -1;
-	while (++y < HEIGHT)
+	x = -1;
+	while (++x < WIDTH)
 	{
-		x = -1;
-		while (++x < WIDTH)
+		y = -1;
+		while (++y < HEIGHT)
 			my_mlx_pixel_put(img, x, y, color_to_int(&buf[x][y]));
 	}
+	x = -1;
+	while (++x < WIDTH)
+		free(buf[x]);
 	return (SUCCESS);
 }
 

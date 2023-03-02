@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 00:21:24 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/02 14:20:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,35 +165,35 @@ int	light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj)
 	return (1);
 }
 
-void	buf_nomalize(t_color *buf)
+void	buf_nomalize(t_color *buf[])
 {
 	int		y;
 	int		x;
 	int		max = 255;
 	float	r;
 
-	y = -1;
-	while (++y < HEIGHT)
+	x = -1;
+	while (++x < WIDTH)
 	{
-		x = -1;
-		while (++x < WIDTH)
+		y = -1;
+		while (++y < HEIGHT)
 		{
-			if (buf[x + (y * WIDTH)].r > max)
-				max = buf[x + (y * WIDTH)].r;
-			if (buf[x + (y * WIDTH)].g > max)
-				max = buf[x + (y * WIDTH)].g;
-			if (buf[x + (y * WIDTH)].b > max)
-				max = buf[x + (y * WIDTH)].b;
+			if (buf[x][y].r > max)
+				max = buf[x][y].r;
+			if (buf[x][y].g > max)
+				max = buf[x][y].g;
+			if (buf[x][y].b > max)
+				max = buf[x][y].b;
 		}
 	}
 	if (max == 255)
 		return ;
 	r = 255. / max;
-	y = -1;
-	while (++y < HEIGHT)
+	x = -1;
+	while (++x < WIDTH)
 	{
-		x = -1;
-		while (++x < WIDTH)
-			bright_set(&buf[x + (y * WIDTH)], r);
+		y = -1;
+		while (++y < HEIGHT)
+			bright_set(&buf[x][y], r);
 	}
 }

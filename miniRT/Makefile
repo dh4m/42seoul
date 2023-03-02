@@ -6,12 +6,12 @@
 #    By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/21 16:13:33 by dham              #+#    #+#              #
-#    Updated: 2023/02/27 15:13:02 by dham             ###   ########.fr        #
+#    Updated: 2023/03/02 14:24:57 by dham             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -O3 ##-Wall -Wextra -Werror
+CFLAGS = -g -O3 ##-Wall -Wextra -Werror
 TARGET = minirt
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
