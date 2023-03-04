@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:59 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 01:43:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/04 22:46:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ float	cone_distance(t_ray *ray, t_obj *obj)
 	;
 }
 
-t_color	cone_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
+t_vec	cone_nomal_v(t_vec *hit_p, t_obj *hit_obj)
 {
 	;
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 16:10:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/04 22:46:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,4 @@ float	cam_obj_distance(t_ray *ray, t_obj *obj)
 		return (cylinder_distance(ray, obj));
 	else
 		return (cone_distance(ray, obj));
-}
-
-t_color	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj)
-{
-	t_color	color;
-
-	if (hit_obj->shape == SPHERE)
-		color = sphere_color(ray, min_t, content, hit_obj);
-	else if (hit_obj->shape == PLANE)
-		color = plane_color(ray, min_t, content, hit_obj);
-	else if (hit_obj->shape == CYLINDER)
-		color = cylinder_color(ray, min_t, content, hit_obj);
-	else
-		color = cone_color(ray, min_t, content, hit_obj);
-	return (color);
 }
