@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 14:26:08 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 02:19:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parsing(const char *rt_file, t_content *content)
 
 	// light 1
 	content->light_list.next = ft_calloc(1, sizeof(t_light));
-	content->light_list.next->bright = 1.0;
+	content->light_list.next->bright = 100.0;
 	content->light_list.next->color.r = 255;
 	content->light_list.next->color.g = 255;
 	content->light_list.next->color.b = 255;
@@ -45,7 +45,7 @@ int	parsing(const char *rt_file, t_content *content)
 
 	// light 2 - 버그있음
 	content->light_list.next->next = ft_calloc(1, sizeof(t_light));
-	content->light_list.next->next->bright = 1.0;
+	content->light_list.next->next->bright = 100.0;
 	content->light_list.next->next->color.r = 255;
 	content->light_list.next->next->color.g = 255;
 	content->light_list.next->next->color.b = 255;

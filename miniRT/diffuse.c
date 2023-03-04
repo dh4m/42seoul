@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:31:30 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 14:32:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/04 23:13:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ t_color	diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj)
 			vector_normalize(&temp_v);
 			if (vec_inner(&hitinfo->nomal_v, &temp_v) > 0)
 			{
-				bright_set(&temp_c, vec_inner(&hitinfo->nomal_v, &temp_v) * (1 - hit_obj->reflection));
+				bright_set(&temp_c, vec_inner(&hitinfo->nomal_v, &temp_v) \
+							* (1 - hit_obj->reflection) * attenuation(light, hitinfo));
 				ret_c = color_combine(&ret_c, &temp_c);
 			}
 		}

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:41 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 14:41:39 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 02:21:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ float	cylinder_distance(t_ray *ray, t_obj *obj)
 {
 	float	det;
 	float	det_c[3];
-	t_vec	cp;
 	t_vec	ce;
 	float	t;
 

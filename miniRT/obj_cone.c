@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:59 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 22:46:07 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 02:24:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include "libft.h"
 #include <stdio.h>
 #include <math.h>
+
+static int	hit_det(t_ray *ray, float t, t_obj *obj)
+{
+	;
+}
 
 float	cone_distance(t_ray *ray, t_obj *obj)
 {

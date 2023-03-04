@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 14:20:55 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 00:39:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,24 @@ int	clear_list(t_content *content)
 
 void	bright_set(t_color *color, float bright)
 {
-	color->r = round(color->r * bright);
-	color->g = round(color->g * bright);
-	color->b = round(color->b * bright);
+	if (color->r)
+	{
+		color->r = round(color->r * bright);
+		if (color->r == 0)
+			color->r = 1;
+	}
+	if (color->g)
+	{
+		color->g = round(color->g * bright);
+		if (color->g == 0)
+			color->g = 1;
+	}
+	if (color->b)
+	{
+		color->b = round(color->b * bright);
+		if (color->b == 0)
+			color->b = 1;
+	}
 }
 
 t_color	reflex_color(t_color *light, t_color *obj)
@@ -196,4 +211,14 @@ void	buf_nomalize(t_color *buf[])
 		while (++y < HEIGHT)
 			bright_set(&buf[x][y], r);
 	}
+}
+
+float	attenuation(t_light *light, t_hitpoint *hitinfo)
+{
+	float	d;
+	t_vec	light_to_obj;
+
+	light_to_obj = vec_minus(&light->loc, &hitinfo->hit_p);
+	d = vector_size(&light_to_obj);
+	return (1 / d);
 }
