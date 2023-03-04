@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/02 16:10:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/04 14:42:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,6 @@ int		make_image(t_info *info, t_img *img, const char *rt_file);
 int		draw_img(t_info *info, t_img *img, t_content *content);
 float	cam_obj_distance(t_ray *ray, t_obj *obj);
 t_color	ray_calculate(int x, int y, t_content *content);
-t_color	color_cal(t_ray *ray, float min_t, t_content *content, t_obj *hit_obj);
 
 int		parsing(const char *rt_file, t_content *content);
 int		clear_list(t_content *content);
@@ -169,16 +168,16 @@ float	vector_size(const t_vec *vec);
 void	vector_normalize(t_vec *vec);
 
 float	sphere_distance(t_ray *ray, t_obj *obj);
-t_color	sphere_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_vec	sphere_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
 float	cone_distance(t_ray *ray, t_obj *obj);
-t_color	cone_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_vec	cone_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
 float	cylinder_distance(t_ray *ray, t_obj *obj);
-t_color	cylinder_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_vec	cylinder_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
 float	plane_distance(t_ray *ray, t_obj *obj);
-t_color	plane_color(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_vec	plane_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
 t_color	sphere_mapped_color(t_obj *obj, t_vec *hit_p);
 t_color	plane_mapped_color(t_obj *obj, t_vec *hit_p);
@@ -188,5 +187,10 @@ t_color	mapped_color(t_obj *obj, t_vec *hit_p);
 
 t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin);
 t_color	specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin, t_obj *obj);
+
+t_color	diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj);
+
+t_color	color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_vec	nomal_v_cal(t_vec *hit_p, t_obj *hit_obj);
 
 #endif
