@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 23:08:45 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 15:59:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ typedef struct s_obj
 	t_vec			loc;
 	float			diameter;
 	float			height;
-	float			theta;
 	t_color			color;
 	float			reflection;
 	float			sparkle;
@@ -192,6 +191,6 @@ t_color	specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origi
 t_color	diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj);
 
 t_color	color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
-t_vec	nomal_v_cal(t_vec *hit_p, t_obj *hit_obj);
+t_vec	nomal_v_cal(t_vec *hit_p, t_obj *hit_obj, t_vec *cam_loc);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:41 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 02:21:16 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 14:03:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,11 @@ static int	hit_det(t_ray *ray, float t, t_obj *obj)
 	return (1);
 }
 
-float	cylinder_distance(t_ray *ray, t_obj *obj)
+static float	t_val_calculate(float det_c[3], t_ray *ray, t_obj *obj)
 {
 	float	det;
-	float	det_c[3];
-	t_vec	ce;
 	float	t;
 
-	ce = vec_minus(&ray->start, &obj->loc);
-	det_c[0] = square_f(vec_inner(&ray->dir, &obj->nomal_v)) - 1;
-	det_c[1] = vec_inner(&ray->dir, &obj->nomal_v) * vec_inner(&ce, &obj->nomal_v) \
-		- vec_inner(&ce, &ray->dir);
-	det_c[2] = square_f(obj->diameter / 2) - vec_square(&ce) + square_f(vec_inner(&ce, &obj->nomal_v));
 	det = square_f(det_c[1]) - (det_c[0] * det_c[2]);
 	if (det < 0 || eq_f(det_c[0], 0))
 		return (-1);
@@ -55,6 +48,20 @@ float	cylinder_distance(t_ray *ray, t_obj *obj)
 			return (-1);
 	}
 	return (t);
+}
+
+float	cylinder_distance(t_ray *ray, t_obj *obj)
+{
+	float	det;
+	float	det_c[3];
+	t_vec	ce;
+
+	ce = vec_minus(&ray->start, &obj->loc);
+	det_c[0] = square_f(vec_inner(&ray->dir, &obj->nomal_v)) - 1;
+	det_c[1] = vec_inner(&ray->dir, &obj->nomal_v) * vec_inner(&ce, &obj->nomal_v) \
+		- vec_inner(&ce, &ray->dir);
+	det_c[2] = square_f(obj->diameter / 2) - vec_square(&ce) + square_f(vec_inner(&ce, &obj->nomal_v));
+	return (t_val_calculate(det_c, ray, obj));
 }
 
 t_vec	cylinder_nomal_v(t_vec *hit_p, t_obj *hit_obj)

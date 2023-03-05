@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 00:39:34 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 15:59:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	make_ray(int x, int y, t_ray *ray, t_content *content)
 	t_vec	temp;
 	static const double degree = M_PI / 180;
 
-	e = (2 * tan(content->camera.fov * degree / 2.)) / (WIDTH - 1);
-	x -= WIDTH / 2;
-	y = -y + (HEIGHT / 2);
+	e = (2 * tan(content->camera.fov * degree / 2.)) / ((WIDTH * 2) - 1);
+	x -= WIDTH;
+	y = -y + (HEIGHT);
 	ray->start = content->camera.loc;
 	ray->dir = content->camera.dir;
 	temp = vec_multi(&(content->camera.hor), e * x);
@@ -188,10 +188,10 @@ void	buf_nomalize(t_color *buf[])
 	float	r;
 
 	x = -1;
-	while (++x < WIDTH)
+	while (++x < WIDTH * 2)
 	{
 		y = -1;
-		while (++y < HEIGHT)
+		while (++y < HEIGHT * 2)
 		{
 			if (buf[x][y].r > max)
 				max = buf[x][y].r;
@@ -205,10 +205,10 @@ void	buf_nomalize(t_color *buf[])
 		return ;
 	r = 255. / max;
 	x = -1;
-	while (++x < WIDTH)
+	while (++x < WIDTH * 2)
 	{
 		y = -1;
-		while (++y < HEIGHT)
+		while (++y < HEIGHT * 2)
 			bright_set(&buf[x][y], r);
 	}
 }
