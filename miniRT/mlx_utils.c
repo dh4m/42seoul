@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 15:59:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 16:51:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,4 +221,22 @@ float	attenuation(t_light *light, t_hitpoint *hitinfo)
 	light_to_obj = vec_minus(&light->loc, &hitinfo->hit_p);
 	d = vector_size(&light_to_obj);
 	return (1 / d);
+}
+
+t_color	color_reversal(t_color *origin)
+{
+	t_color	ret_c;
+	int		max;
+
+	max = 255;
+	if (origin->r > max)
+		max = origin->r;
+	if (origin->g > max)
+		max = origin->g;
+	if (origin->b > max)
+		max = origin->b;
+	ret_c.r = max - origin->r;
+	ret_c.g = max - origin->g;
+	ret_c.b = max - origin->b;
+	return (ret_c);
 }

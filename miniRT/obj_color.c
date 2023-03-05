@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 00:57:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/01 01:05:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 21:51:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@
 
 t_color	sphere_mapped_color(t_obj *obj, t_vec *hit_p)
 {
+	int			checker_num;
+	const t_vec	uv = uv_calculate(hit_p, obj);
+	
+	if (obj->checker)
+	{
+		checker_num = obj->diameter * 4;
+		if ((int)(roundf(uv.x * checker_num) + roundf(uv.y * checker_num)) % 2)
+			return (obj->color);
+		else
+			return (color_reversal(&obj->color));
+	}
 	return (obj->color);
 }
 

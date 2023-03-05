@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 16:12:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 21:56:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int	parsing(const char *rt_file, t_content *content)
 	content->obj_list.next->color.r = 255;
 	content->obj_list.next->color.g = 255;
 	content->obj_list.next->color.b = 255;
-	content->obj_list.next->reflection = 1;
+	content->obj_list.next->reflection = 0;
 	content->obj_list.next->sparkle = 30;
 	content->obj_list.next->diameter = 3;
+	content->obj_list.next->checker = 1;
 
 	// obj 2
 	content->obj_list.next->next = ft_calloc(1, sizeof(t_obj));

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 15:59:57 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/05 21:37:21 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_obj
 	float			reflection;
 	float			sparkle;
 	t_vec			nomal_v;
+	int				checker;
 	t_texture		texture;
 	t_texture		bump;
 	struct s_obj	*next;
@@ -154,6 +155,7 @@ int		color_to_int(t_color *color);
 int		light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
 void	buf_nomalize(t_color *buf[]);
 float	attenuation(t_light *light, t_hitpoint *hitinfo);
+t_color	color_reversal(t_color *origin);
 
 int		eq_f(float a, float b);
 float	square_f(float a);
@@ -192,5 +194,7 @@ t_color	diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj);
 
 t_color	color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
 t_vec	nomal_v_cal(t_vec *hit_p, t_obj *hit_obj, t_vec *cam_loc);
+
+t_vec	uv_calculate(t_vec *hit_p, t_obj *obj);
 
 #endif
