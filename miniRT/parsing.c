@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 22:05:30 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/07 23:48:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,34 @@
 #include "minirt.h"
 #include "libft.h"
 
+void	insert_content_list(t_content *content, int type, void *object)
+{
+	t_light	*light;
+	t_obj	*obj;
+
+	if (type == LIGHT)
+	{
+		light = &content->light_list;
+		while (light->next)
+			light = light->next;
+		light->next = (t_light*)object;
+		light->next->next = NULL;
+	}
+	else if (type == OBJECT)
+	{
+		obj = &content->obj_list;
+		while (obj->next)
+			obj = obj->next;
+		obj->next = (t_obj*)object;
+		obj->next->next = NULL;
+	}
+}
+
 int	parsing(const char *rt_file, t_content *content)
 {
 	(void) rt_file;
+	t_light	*temp_l;
+	t_obj	*temp_o;
 	
 	// camera
 	content->camera.loc.x = 0;
@@ -34,134 +59,143 @@ int	parsing(const char *rt_file, t_content *content)
 	content->ambient.color.b = 255;
 
 	// light 1
-	content->light_list.next = ft_calloc(1, sizeof(t_light));
-	content->light_list.next->bright = 100.0;
-	content->light_list.next->color.r = 255;
-	content->light_list.next->color.g = 255;
-	content->light_list.next->color.b = 255;
-	content->light_list.next->loc.x = -5;
-	content->light_list.next->loc.y = 10;
-	content->light_list.next->loc.z = 10;
+	temp_l = ft_calloc(1, sizeof(t_light));
+	temp_l->bright = 100.0;
+	temp_l->color.r = 255;
+	temp_l->color.g = 255;
+	temp_l->color.b = 255;
+	temp_l->loc.x = -5;
+	temp_l->loc.y = 10;
+	temp_l->loc.z = 10;
+	insert_content_list(content, LIGHT, temp_l);
 
 	// light 2
-	content->light_list.next->next = ft_calloc(1, sizeof(t_light));
-	content->light_list.next->next->bright = 100.0;
-	content->light_list.next->next->color.r = 255;
-	content->light_list.next->next->color.g = 255;
-	content->light_list.next->next->color.b = 255;
-	content->light_list.next->next->loc.x = -5;
-	content->light_list.next->next->loc.y = -10;
-	content->light_list.next->next->loc.z = 10;
+	temp_l = ft_calloc(1, sizeof(t_light));
+	temp_l->bright = 100.0;
+	temp_l->color.r = 255;
+	temp_l->color.g = 255;
+	temp_l->color.b = 255;
+	temp_l->loc.x = -5;
+	temp_l->loc.y = -10;
+	temp_l->loc.z = 10;
+	insert_content_list(content, LIGHT, temp_l);
 
 	// obj 1
-	content->obj_list.next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->shape = SPHERE;
-	content->obj_list.next->loc.x = 5;
-	content->obj_list.next->loc.y = 0;
-	content->obj_list.next->loc.z = 0;
-	content->obj_list.next->color.r = 255;
-	content->obj_list.next->color.g = 255;
-	content->obj_list.next->color.b = 255;
-	content->obj_list.next->reflection = 0;
-	content->obj_list.next->sparkle = 30;
-	content->obj_list.next->diameter = 3;
-	content->obj_list.next->checker = 1;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = SPHERE;
+	temp_o->loc.x = 5;
+	temp_o->loc.y = 0;
+	temp_o->loc.z = 0;
+	temp_o->color.r = 255;
+	temp_o->color.g = 255;
+	temp_o->color.b = 255;
+	temp_o->reflection = 0;
+	temp_o->sparkle = 30;
+	temp_o->diameter = 3;
+	temp_o->checker = 1;
+	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 2
-	content->obj_list.next->next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->next->shape = SPHERE;
-	content->obj_list.next->next->loc.x = 3;
-	content->obj_list.next->next->loc.y = 1;
-	content->obj_list.next->next->loc.z = 0.5;
-	content->obj_list.next->next->color.r = 255;
-	content->obj_list.next->next->color.g = 255;
-	content->obj_list.next->next->color.b = 100;
-	content->obj_list.next->next->reflection = 0.4;
-	content->obj_list.next->next->sparkle = 30;
-	content->obj_list.next->next->diameter = 1;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = SPHERE;
+	temp_o->loc.x = 3;
+	temp_o->loc.y = 1;
+	temp_o->loc.z = 0.5;
+	temp_o->color.r = 255;
+	temp_o->color.g = 255;
+	temp_o->color.b = 100;
+	temp_o->reflection = 0.4;
+	temp_o->sparkle = 30;
+	temp_o->diameter = 1;
+	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 3
-	content->obj_list.next->next->next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->next->next->shape = SPHERE;
-	content->obj_list.next->next->next->loc.x = 3;
-	content->obj_list.next->next->next->loc.y = -1.5;
-	content->obj_list.next->next->next->loc.z = -1;
-	content->obj_list.next->next->next->color.r = 255;
-	content->obj_list.next->next->next->color.g = 100;
-	content->obj_list.next->next->next->color.b = 255;
-	content->obj_list.next->next->next->reflection = 0;
-	content->obj_list.next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->diameter = 1;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = SPHERE;
+	temp_o->loc.x = 3;
+	temp_o->loc.y = -1.5;
+	temp_o->loc.z = -1;
+	temp_o->color.r = 255;
+	temp_o->color.g = 100;
+	temp_o->color.b = 255;
+	temp_o->reflection = 0;
+	temp_o->sparkle = 30;
+	temp_o->diameter = 1;
+	insert_content_list(content, OBJECT, temp_o);
 
 
 	// obj 4
-	content->obj_list.next->next->next->next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->next->next->next->shape = PLANE;
-	content->obj_list.next->next->next->next->loc.x = 0;
-	content->obj_list.next->next->next->next->loc.y = 0;
-	content->obj_list.next->next->next->next->loc.z = -1.6;
-	content->obj_list.next->next->next->next->nomal_v.x = 0;
-	content->obj_list.next->next->next->next->nomal_v.y = 0;
-	content->obj_list.next->next->next->next->nomal_v.z = 1;
-	content->obj_list.next->next->next->next->color.r = 200;
-	content->obj_list.next->next->next->next->color.g = 255;
-	content->obj_list.next->next->next->next->color.b = 255;
-	content->obj_list.next->next->next->next->reflection = 0.4;
-	content->obj_list.next->next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->next->diameter = -1;
-	content->obj_list.next->next->next->next->checker = 1;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = PLANE;
+	temp_o->loc.x = 0;
+	temp_o->loc.y = 0;
+	temp_o->loc.z = -1.6;
+	temp_o->nomal_v.x = 0;
+	temp_o->nomal_v.y = 0;
+	temp_o->nomal_v.z = 1;
+	temp_o->color.r = 200;
+	temp_o->color.g = 255;
+	temp_o->color.b = 255;
+	temp_o->reflection = 0.4;
+	temp_o->sparkle = 30;
+	temp_o->diameter = -1;
+	temp_o->checker = 1;
+	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 5
-	content->obj_list.next->next->next->next->next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->next->next->next->next->shape = PLANE;
-	content->obj_list.next->next->next->next->next->loc.x = 25;
-	content->obj_list.next->next->next->next->next->loc.y = 0;
-	content->obj_list.next->next->next->next->next->loc.z = 0;
-	content->obj_list.next->next->next->next->next->nomal_v.x = 1;
-	content->obj_list.next->next->next->next->next->nomal_v.y = 0;
-	content->obj_list.next->next->next->next->next->nomal_v.z = 0;
-	content->obj_list.next->next->next->next->next->color.r = 255;
-	content->obj_list.next->next->next->next->next->color.g = 255;
-	content->obj_list.next->next->next->next->next->color.b = 255;
-	content->obj_list.next->next->next->next->next->reflection = 0;
-	content->obj_list.next->next->next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->next->next->diameter = 40;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = PLANE;
+	temp_o->loc.x = 25;
+	temp_o->loc.y = 0;
+	temp_o->loc.z = 0;
+	temp_o->nomal_v.x = 1;
+	temp_o->nomal_v.y = 0;
+	temp_o->nomal_v.z = 0;
+	temp_o->color.r = 255;
+	temp_o->color.g = 255;
+	temp_o->color.b = 255;
+	temp_o->reflection = 0;
+	temp_o->sparkle = 30;
+	temp_o->diameter = 40;
+	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 6
-	content->obj_list.next->next->next->next->next->next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->next->next->next->next->next->shape = CYLINDER;
-	content->obj_list.next->next->next->next->next->next->loc.x = 3;
-	content->obj_list.next->next->next->next->next->next->loc.y = 2;
-	content->obj_list.next->next->next->next->next->next->loc.z = -1.6;
-	content->obj_list.next->next->next->next->next->next->nomal_v.x = 0;
-	content->obj_list.next->next->next->next->next->next->nomal_v.y = 0;
-	content->obj_list.next->next->next->next->next->next->nomal_v.z = 1;
-	content->obj_list.next->next->next->next->next->next->color.r = 255;
-	content->obj_list.next->next->next->next->next->next->color.g = 255;
-	content->obj_list.next->next->next->next->next->next->color.b = 255;
-	content->obj_list.next->next->next->next->next->next->reflection = 0.2;
-	content->obj_list.next->next->next->next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->next->next->next->diameter = 2;
-	content->obj_list.next->next->next->next->next->next->height = 1;
-	content->obj_list.next->next->next->next->next->next->checker = 1;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = CYLINDER;
+	temp_o->loc.x = 3;
+	temp_o->loc.y = 2;
+	temp_o->loc.z = -1.6;
+	temp_o->nomal_v.x = 0;
+	temp_o->nomal_v.y = 0;
+	temp_o->nomal_v.z = 1;
+	temp_o->color.r = 255;
+	temp_o->color.g = 255;
+	temp_o->color.b = 255;
+	temp_o->reflection = 0.2;
+	temp_o->sparkle = 30;
+	temp_o->diameter = 2;
+	temp_o->height = 1;
+	temp_o->checker = 1;
+	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 7
-	content->obj_list.next->next->next->next->next->next->next = ft_calloc(1, sizeof(t_obj));
-	content->obj_list.next->next->next->next->next->next->next->shape = CONE;
-	content->obj_list.next->next->next->next->next->next->next->loc.x = 3;
-	content->obj_list.next->next->next->next->next->next->next->loc.y = 0;
-	content->obj_list.next->next->next->next->next->next->next->loc.z = -0.6;
-	content->obj_list.next->next->next->next->next->next->next->nomal_v.x = 0;
-	content->obj_list.next->next->next->next->next->next->next->nomal_v.y = 0;
-	content->obj_list.next->next->next->next->next->next->next->nomal_v.z = -1;
-	content->obj_list.next->next->next->next->next->next->next->color.r = 255;
-	content->obj_list.next->next->next->next->next->next->next->color.g = 255;
-	content->obj_list.next->next->next->next->next->next->next->color.b = 255;
-	content->obj_list.next->next->next->next->next->next->next->reflection = 0.2;
-	content->obj_list.next->next->next->next->next->next->next->sparkle = 30;
-	content->obj_list.next->next->next->next->next->next->next->diameter = 0.8;
-	content->obj_list.next->next->next->next->next->next->next->height = 1;
-	content->obj_list.next->next->next->next->next->next->next->checker = 1;
+	temp_o = ft_calloc(1, sizeof(t_obj));
+	temp_o->shape = CONE;
+	temp_o->loc.x = 3;
+	temp_o->loc.y = 0;
+	temp_o->loc.z = -0.6;
+	temp_o->nomal_v.x = 0;
+	temp_o->nomal_v.y = 0;
+	temp_o->nomal_v.z = -1;
+	temp_o->color.r = 255;
+	temp_o->color.g = 255;
+	temp_o->color.b = 255;
+	temp_o->reflection = 0.2;
+	temp_o->sparkle = 30;
+	temp_o->diameter = 0.8;
+	temp_o->height = 1;
+	temp_o->checker = 1;
+	insert_content_list(content, OBJECT, temp_o);
 
 	return (SUCCESS);
 }

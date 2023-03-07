@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 23:25:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/07 23:35:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ enum e_return_value
 	TEXTURE_FILE_OPEN_ERROR = -3,
 	UNAVILABLE_TEXTURE_FILE = -4,
 	FATAL_ERROR = -5
+};
+
+enum e_contenttype
+{
+	LIGHT,
+	OBJECT
 };
 
 enum e_shape
