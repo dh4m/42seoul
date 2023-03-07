@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 16:51:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/07 23:12:12 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,16 @@ int	color_to_int(t_color *color)
 	ret_i += (color->g << 8);
 	ret_i += color->b;
 	return (ret_i);
+}
+
+t_color	int_to_color(int code)
+{
+	t_color	ret_c;
+
+	ret_c.r = (code >> 16) & 0xff;
+	ret_c.g = (code >> 8) & 0xff;
+	ret_c.b = code & 0xff;
+	return (ret_c);
 }
 
 float	distance_point(t_vec *v1, t_vec *v2)

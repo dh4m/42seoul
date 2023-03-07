@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 21:37:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/07 23:25:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ typedef struct s_hitpoint
 	t_vec	nomal_v;
 	t_vec	hit_p;
 	t_color	point_color;
+	t_vec	uv;
 }	t_hitpoint;
 
 void	invalid_args(void);
@@ -152,6 +153,7 @@ void	bright_set(t_color *color, float bright);
 t_color	reflex_color(t_color *light, t_color *obj);
 t_color	color_combine(t_color *a, t_color *b);
 int		color_to_int(t_color *color);
+t_color	int_to_color(int code);
 int		light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
 void	buf_nomalize(t_color *buf[]);
 float	attenuation(t_light *light, t_hitpoint *hitinfo);
@@ -181,19 +183,14 @@ t_vec	cylinder_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 float	plane_distance(t_ray *ray, t_obj *obj);
 t_vec	plane_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
-t_color	sphere_mapped_color(t_obj *obj, t_vec *hit_p);
-t_color	plane_mapped_color(t_obj *obj, t_vec *hit_p);
-t_color	cylinder_mapped_color(t_obj *obj, t_vec *hit_p);
-t_color	cone_mapped_color(t_obj *obj, t_vec *hit_p);
-t_color	mapped_color(t_obj *obj, t_vec *hit_p);
-
 t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin);
 t_color	specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin, t_obj *obj);
 
 t_color	diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj);
 
 t_color	color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
-t_vec	nomal_v_cal(t_vec *hit_p, t_obj *hit_obj, t_vec *cam_loc);
+t_color	mapped_color(t_hitpoint *hitinfo, t_obj *obj);
+t_vec	nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir);
 
 t_vec	uv_calculate(t_vec *hit_p, t_obj *obj);
 
