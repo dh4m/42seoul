@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 23:35:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/08 01:13:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define HEIGHT 600
 # define REFL_NUM 2
 # define BACKGROUND (t_color){0, 0, 0}
+# define SPARKLE_POWER 30
 
 enum e_return_value
 {
@@ -95,18 +96,17 @@ typedef struct s_texture
 
 typedef struct s_obj
 {
-	int				shape;
-	t_vec			loc;
-	float			diameter;
-	float			height;
-	t_color			color;
-	float			reflection;
-	float			sparkle;
-	t_vec			nomal_v;
-	int				checker;
-	t_texture		texture;
-	t_texture		bump;
-	struct s_obj	*next;
+	int				shape;		//형태
+	t_vec			loc;		//위치
+	float			diameter;	//지름
+	float			height;		//높이
+	t_color			color;		//색상
+	float			reflection;	//반사율
+	t_vec			nomal_v;	//자세 제어 벡터
+	int				checker;	//체커 무늬 여부
+	t_texture		texture;	//텍스쳐 데이터
+	t_texture		bump;		//범프맵 데이터
+	struct s_obj	*next;		//리스트 데이터 구조
 }	t_obj;
 
 typedef struct s_info
@@ -126,10 +126,10 @@ typedef struct s_img
 
 typedef struct s_content
 {
-	t_obj		obj_list;
-	t_light		light_list;
-	t_camera	camera;
-	t_ambient	ambient;
+	t_obj		obj_list;	//물체 목록
+	t_light		light_list;	//광원 목록
+	t_camera	camera;		//카메라
+	t_ambient	ambient;	//주변광
 }	t_content;
 
 typedef struct s_hitpoint

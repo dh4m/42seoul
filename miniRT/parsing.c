@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 23:48:55 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/08 00:54:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 255;
 	temp_o->color.b = 255;
 	temp_o->reflection = 0;
-	temp_o->sparkle = 30;
 	temp_o->diameter = 3;
 	temp_o->checker = 1;
 	insert_content_list(content, OBJECT, temp_o);
@@ -105,7 +104,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 255;
 	temp_o->color.b = 100;
 	temp_o->reflection = 0.4;
-	temp_o->sparkle = 30;
 	temp_o->diameter = 1;
 	insert_content_list(content, OBJECT, temp_o);
 
@@ -119,7 +117,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 100;
 	temp_o->color.b = 255;
 	temp_o->reflection = 0;
-	temp_o->sparkle = 30;
 	temp_o->diameter = 1;
 	insert_content_list(content, OBJECT, temp_o);
 
@@ -137,7 +134,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 255;
 	temp_o->color.b = 255;
 	temp_o->reflection = 0.4;
-	temp_o->sparkle = 30;
 	temp_o->diameter = -1;
 	temp_o->checker = 1;
 	insert_content_list(content, OBJECT, temp_o);
@@ -155,7 +151,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 255;
 	temp_o->color.b = 255;
 	temp_o->reflection = 0;
-	temp_o->sparkle = 30;
 	temp_o->diameter = 40;
 	insert_content_list(content, OBJECT, temp_o);
 
@@ -172,7 +167,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 255;
 	temp_o->color.b = 255;
 	temp_o->reflection = 0.2;
-	temp_o->sparkle = 30;
 	temp_o->diameter = 2;
 	temp_o->height = 1;
 	temp_o->checker = 1;
@@ -191,7 +185,6 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.g = 255;
 	temp_o->color.b = 255;
 	temp_o->reflection = 0.2;
-	temp_o->sparkle = 30;
 	temp_o->diameter = 0.8;
 	temp_o->height = 1;
 	temp_o->checker = 1;

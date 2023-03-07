@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:44:23 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 23:29:03 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/08 00:47:12 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static t_color	sparkle_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit
 			vector_normalize(&temp_v);
 			if (vec_inner(&ray.dir, &temp_v) > 0)
 			{
-				bright_set(&temp_c, powf(vec_inner(&ray.dir, &temp_v), hit_obj->sparkle) \
+				bright_set(&temp_c, powf(vec_inner(&ray.dir, &temp_v), SPARKLE_POWER) \
 									* attenuation(light, hitinfo));
 				ret_c = color_combine(&ret_c, &temp_c);
 			}
