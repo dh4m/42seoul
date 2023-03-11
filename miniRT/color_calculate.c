@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:38:29 by dham              #+#    #+#             */
-/*   Updated: 2023/03/11 16:08:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/11 16:46:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ t_vec	nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir)
 		return (bump_nomal_v_cal(
 				&ret_v, \
 				hit_obj->bump->data\
-				[(int)roundf(hitinfo->uv.x * hit_obj->bump->width)]\
-				[(int)roundf(hitinfo->uv.y * hit_obj->bump->height)]
+				[(int)roundf(hitinfo->uv.y * hit_obj->bump->height)]\
+				[(int)roundf(hitinfo->uv.x * hit_obj->bump->width)]
 				)
 			);
 	}
@@ -92,8 +92,8 @@ t_color	mapped_color(t_hitpoint *hitinfo, t_obj *obj)
 	else if (obj->texture)
 	{
 		color_code = obj->texture->data\
-					[(int)roundf(uv.x * (obj->texture->width - 1))]\
-					[(int)roundf(uv.y * (obj->texture->height - 1))];
+					[(int)roundf(uv.y * (obj->texture->height - 1))]\
+					[(int)roundf(uv.x * (obj->texture->width - 1))];
 		return (int_to_color(color_code));
 	}
 	return (obj->color);

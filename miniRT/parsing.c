@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/11 14:49:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/11 16:43:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parsing(const char *rt_file, t_content *content)
 
 	// light 1
 	temp_l = ft_calloc(1, sizeof(t_light));
-	temp_l->bright = 10.0;
+	temp_l->bright = 100.0;
 	temp_l->color.r = 255;
 	temp_l->color.g = 255;
 	temp_l->color.b = 255;
@@ -72,7 +72,7 @@ int	parsing(const char *rt_file, t_content *content)
 
 	// light 2
 	temp_l = ft_calloc(1, sizeof(t_light));
-	temp_l->bright = 10.0;
+	temp_l->bright = 100.0;
 	temp_l->color.r = 255;
 	temp_l->color.g = 255;
 	temp_l->color.b = 255;
@@ -92,7 +92,7 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.b = 255;
 	temp_o->reflection = 0;
 	temp_o->diameter = 3;
-	//temp_o->texture = bmp_texture("./lion.bmp");
+	temp_o->texture = bmp_texture("./lion.bmp");
 	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 2
@@ -136,8 +136,8 @@ int	parsing(const char *rt_file, t_content *content)
 	temp_o->color.b = 255;
 	temp_o->reflection = 0.4;
 	temp_o->diameter = -1;
-	//temp_o->checker = 1;
-	temp_o->texture = bmp_texture("./lion.bmp");
+	temp_o->checker = 1;
+	//temp_o->texture = bmp_texture("./lion.bmp");
 	insert_content_list(content, OBJECT, temp_o);
 
 	// obj 5

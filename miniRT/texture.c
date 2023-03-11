@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 12:40:28 by dham              #+#    #+#             */
-/*   Updated: 2023/03/11 14:50:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/11 16:35:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	init_texture_data(t_texture *texture, int width, int height)
 	int	i;
 	int	free_i;
 
-	texture->data = malloc(sizeof(int *) * width);
+	texture->data = malloc(sizeof(int *) * height);
 	if (!texture->data)
 		return (FATAL_ERROR);
 	i = -1;
-	while (++i < width)
+	while (++i < height)
 	{
-		texture->data[i] = malloc(sizeof(int) * height);
+		texture->data[i] = malloc(sizeof(int) * width);
 		if (!texture->data[i])
 		{
 			free_i = 0;
@@ -62,11 +62,11 @@ int	texture_data_set(int fd, t_texture *texture)
 	int	i;
 	int	j;
 
-	i = texture->width;
+	i = texture->height;
 	while (--i >= 0)
 	{
 		j = -1;
-		while (++j < texture->height)
+		while (++j < texture->width)
 		{
 			read(fd, &buf, 3);
 			data = buf;
@@ -77,7 +77,7 @@ int	texture_data_set(int fd, t_texture *texture)
 			*/
 			texture->data[i][j] = data;
 		}
-		read(fd, &buf, (texture->height * 3) % 4);
+		read(fd, &buf, (texture->width * 3) % 4);
 	}
 	return (0);
 }
