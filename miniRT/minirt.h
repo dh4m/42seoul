@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:23:00 by dham              #+#    #+#             */
-/*   Updated: 2023/03/08 01:13:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/11 14:11:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ typedef struct s_obj
 	float			reflection;	//반사율
 	t_vec			nomal_v;	//자세 제어 벡터
 	int				checker;	//체커 무늬 여부
-	t_texture		texture;	//텍스쳐 데이터
-	t_texture		bump;		//범프맵 데이터
+	t_texture		*texture;	//텍스쳐 데이터
+	t_texture		*bump;		//범프맵 데이터
 	struct s_obj	*next;		//리스트 데이터 구조
 }	t_obj;
 
@@ -140,64 +140,66 @@ typedef struct s_hitpoint
 	t_vec	uv;
 }	t_hitpoint;
 
-void	invalid_args(void);
+void		invalid_args(void);
 
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color);
-int		win_destroy(void *param);
-void	bright_normalize(t_content *content);
+void		my_mlx_pixel_put(t_img *img, int x, int y, int color);
+int			win_destroy(void *param);
+void		bright_normalize(t_content *content);
 
-int		make_image(t_info *info, t_img *img, const char *rt_file);
-int		draw_img(t_info *info, t_img *img, t_content *content);
-float	cam_obj_distance(t_ray *ray, t_obj *obj);
-t_color	ray_calculate(int x, int y, t_content *content);
+int			make_image(t_info *info, t_img *img, const char *rt_file);
+int			draw_img(t_info *info, t_img *img, t_content *content);
+float		cam_obj_distance(t_ray *ray, t_obj *obj);
+t_color		ray_calculate(int x, int y, t_content *content);
 
-int		parsing(const char *rt_file, t_content *content);
-int		clear_list(t_content *content);
-void	make_ray(int x, int y, t_ray *ray, t_content *content);
-void	camera_set(t_content *content);
-void	bright_set(t_color *color, float bright);
-t_color	reflex_color(t_color *light, t_color *obj);
-t_color	color_combine(t_color *a, t_color *b);
-int		color_to_int(t_color *color);
-t_color	int_to_color(int code);
-int		light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
-void	buf_nomalize(t_color *buf[]);
-float	attenuation(t_light *light, t_hitpoint *hitinfo);
-t_color	color_reversal(t_color *origin);
+int			parsing(const char *rt_file, t_content *content);
+int			clear_list(t_content *content);
+void		make_ray(int x, int y, t_ray *ray, t_content *content);
+void		camera_set(t_content *content);
+void		bright_set(t_color *color, float bright);
+t_color		reflex_color(t_color *light, t_color *obj);
+t_color		color_combine(t_color *a, t_color *b);
+int			color_to_int(t_color *color);
+t_color		int_to_color(int code);
+int			light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj);
+void		buf_nomalize(t_color *buf[]);
+float		attenuation(t_light *light, t_hitpoint *hitinfo);
+t_color		color_reversal(t_color *origin);
 
-int		eq_f(float a, float b);
-float	square_f(float a);
+int			eq_f(float a, float b);
+float		square_f(float a);
 
-t_vec	vec_multi(t_vec *vec, float f);
-float	vec_inner(const t_vec *vec1, const t_vec *vec2);
-t_vec	vec_cross(const t_vec *vec1, const t_vec *vec2);
-t_vec	vec_plus(const t_vec *vec1, const t_vec *vec2);
-t_vec	vec_minus(const t_vec *vec1, const t_vec *vec2);
-float	vec_square(const t_vec *vec);
-float	vector_size(const t_vec *vec);
-void	vector_normalize(t_vec *vec);
+t_vec		vec_multi(t_vec *vec, float f);
+float		vec_inner(const t_vec *vec1, const t_vec *vec2);
+t_vec		vec_cross(const t_vec *vec1, const t_vec *vec2);
+t_vec		vec_plus(const t_vec *vec1, const t_vec *vec2);
+t_vec		vec_minus(const t_vec *vec1, const t_vec *vec2);
+float		vec_square(const t_vec *vec);
+float		vector_size(const t_vec *vec);
+void		vector_normalize(t_vec *vec);
 
-float	sphere_distance(t_ray *ray, t_obj *obj);
-t_vec	sphere_nomal_v(t_vec *hit_p, t_obj *hit_obj);
+float		sphere_distance(t_ray *ray, t_obj *obj);
+t_vec		sphere_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
-float	cone_distance(t_ray *ray, t_obj *obj);
-t_vec	cone_nomal_v(t_vec *hit_p, t_obj *hit_obj);
+float		cone_distance(t_ray *ray, t_obj *obj);
+t_vec		cone_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
-float	cylinder_distance(t_ray *ray, t_obj *obj);
-t_vec	cylinder_nomal_v(t_vec *hit_p, t_obj *hit_obj);
+float		cylinder_distance(t_ray *ray, t_obj *obj);
+t_vec		cylinder_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
-float	plane_distance(t_ray *ray, t_obj *obj);
-t_vec	plane_nomal_v(t_vec *hit_p, t_obj *hit_obj);
+float		plane_distance(t_ray *ray, t_obj *obj);
+t_vec		plane_nomal_v(t_vec *hit_p, t_obj *hit_obj);
 
-t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin);
-t_color	specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin, t_obj *obj);
+t_color		reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin);
+t_color		specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin, t_obj *obj);
 
-t_color	diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj);
+t_color		diffuse_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj);
 
-t_color	color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
-t_color	mapped_color(t_hitpoint *hitinfo, t_obj *obj);
-t_vec	nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir);
+t_color		color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj);
+t_color		mapped_color(t_hitpoint *hitinfo, t_obj *obj);
+t_vec		nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir);
 
-t_vec	uv_calculate(t_vec *hit_p, t_obj *obj);
+t_vec		uv_calculate(t_vec *hit_p, t_obj *obj);
+
+t_texture	*bmp_texture(const char *bmp_file);
 
 #endif

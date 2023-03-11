@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_utils.c                                    :+:      :+:    :+:   */
+/*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/05 16:58:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 21:57:13 by dham             ###   ########.fr       */
+/*   Created: 2023/03/11 12:40:28 by dham              #+#    #+#             */
+/*   Updated: 2023/03/11 14:50:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,72 +15,106 @@
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
+#include <fcntl.h>
+#include <unistd.h>
 
-t_vec	uv_sphere(t_vec *hit_p, t_obj *obj)
+int	size_check(int fd, int idx)
 {
-	t_vec	uv;
-	t_vec	cp;
+	unsigned int	size;
+	unsigned int	buf;
 
-	cp = vec_minus(hit_p, &obj->loc);
-	vector_normalize(&cp);
-	if (cp.y >= 0)
-		uv.x = atan2f(cp.y, cp.x);
-	else
-		uv.x = atan2f(cp.y, cp.x) + 2 * M_PI;
-	uv.x /= 2 * M_PI;
-	uv.y = acosf(cp.z);
-	uv.y /= M_PI;
-	return (uv);
+	size = 0;
+	buf = 0;
+	lseek(fd, idx, SEEK_SET);
+	read(fd, &buf, 4);
+	size = buf;
+	return (size);
 }
 
-t_vec	uv_plane(t_vec *hit_p, t_obj *obj)
+int	init_texture_data(t_texture *texture, int width, int height)
 {
-	t_vec	uv;
-	t_vec	x;
-	t_vec	y;
-	t_vec	defalt_x;
+	int	i;
+	int	free_i;
 
-	defalt_x = (t_vec){1, 0, 0};
-	if (eq_f(obj->nomal_v.x, 1))
-		defalt_x = (t_vec){0, 0, 1};
-	y = vec_cross(&obj->nomal_v, &defalt_x);
-	x = vec_cross(&y, &obj->nomal_v);
-	uv.x = fmodf(vec_inner(hit_p, &x), 1);
-	uv.y = fmodf(vec_inner(hit_p, &y), 1);
-	return (uv);
+	texture->data = malloc(sizeof(int *) * width);
+	if (!texture->data)
+		return (FATAL_ERROR);
+	i = -1;
+	while (++i < width)
+	{
+		texture->data[i] = malloc(sizeof(int) * height);
+		if (!texture->data[i])
+		{
+			free_i = 0;
+			while (free_i < i)
+				free(texture->data[free_i]);
+			free(texture->data);
+			return (FATAL_ERROR);
+		}
+	}
+	return (0);
 }
 
-t_vec	uv_cylinder_cone(t_vec *hit_p, t_obj *obj)
+int	texture_data_set(int fd, t_texture *texture)
 {
-	t_vec	uv;
-	t_vec	x;
-	t_vec	y;
-	t_vec	defalt_x;
-	t_vec	cp;
+	unsigned int	data;
+	unsigned int	buf;
+	int	i;
+	int	j;
 
-	defalt_x = (t_vec){1, 0, 0};
-	if (eq_f(obj->nomal_v.x, -1))
-		defalt_x = (t_vec){0, 0, 1};
-	cp = vec_minus(hit_p, &obj->loc);
-	y = vec_cross(&obj->nomal_v, &defalt_x);
-	x = vec_cross(&y, &obj->nomal_v);
-	uv.x = vec_inner(&cp, &x);
-	uv.y = vec_inner(&cp, &y);
-	if (uv.y >= 0)
-		uv.x = atan2f(uv.y, uv.x);
-	else
-		uv.x = atan2f(uv.y, uv.x) + 2 * M_PI;
-	uv.x /= 2 * M_PI;
-	uv.y = fmodf(obj->height - vec_inner(&cp, &obj->nomal_v), 1);
-	return (uv);
+	i = texture->width;
+	while (--i >= 0)
+	{
+		j = -1;
+		while (++j < texture->height)
+		{
+			read(fd, &buf, 3);
+			data = buf;
+			/*
+			data += (buf & 0xff00) << 8;
+			data += (buf & 0xff0000) >> 8;
+			data += (buf & 0xff000000) >> 24;
+			*/
+			texture->data[i][j] = data;
+		}
+		read(fd, &buf, (texture->height * 3) % 4);
+	}
+	return (0);
 }
 
-t_vec	uv_calculate(t_vec *hit_p, t_obj *obj)
+int	texture_set(int fd, t_texture *texture)
 {
-	if (obj->shape == SPHERE)
-		return (uv_sphere(hit_p, obj));
-	else if (obj->shape == PLANE)
-		return (uv_plane(hit_p, obj));
-	else
-		return (uv_cylinder_cone(hit_p, obj));
+	unsigned char	buf[4];
+	int				i;
+	int				j;
+
+	read(fd, buf, 2);
+	if (buf[0] != 'B' || buf[1] != 'M')
+		return (UNAVILABLE_TEXTURE_FILE);
+	texture->width = size_check(fd, 18);
+	texture->height = size_check(fd, 22);
+	printf("%d %d\n", texture->width, texture->height);
+	if (init_texture_data(texture, texture->width, texture->height) == FATAL_ERROR)
+		return (FATAL_ERROR);
+	lseek(fd, size_check(fd, 10), SEEK_SET);
+	texture_data_set(fd, texture);
+	return (0);
+}
+
+t_texture	*bmp_texture(const char *bmp_file)
+{
+	int			fd;
+	t_texture	*ret_texture;
+
+	fd = open(bmp_file, O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	ret_texture = malloc(sizeof(t_texture));
+	if (texture_set(fd, ret_texture) < 0)
+	{
+		free(ret_texture);
+		return(NULL);
+	}
+	close(fd);
+	return (ret_texture);
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:38:29 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 23:25:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/11 16:08:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ t_vec	nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir)
 		ret_v = cone_nomal_v(&hitinfo->hit_p, hit_obj);
 	if (vec_inner(&ret_v, ray_dir) > 0)
 		ret_v = vec_multi(&ret_v, -1);
-	if (hit_obj->bump.data)
+	if (hit_obj->bump)
 	{
 		return (bump_nomal_v_cal(
 				&ret_v, \
-				hit_obj->bump.data\
-				[(int)roundf(hitinfo->uv.x * hit_obj->bump.width)]\
-				[(int)roundf(hitinfo->uv.y * hit_obj->bump.height)]
+				hit_obj->bump->data\
+				[(int)roundf(hitinfo->uv.x * hit_obj->bump->width)]\
+				[(int)roundf(hitinfo->uv.y * hit_obj->bump->height)]
 				)
 			);
 	}
@@ -89,11 +89,11 @@ t_color	mapped_color(t_hitpoint *hitinfo, t_obj *obj)
 		else
 			return (color_reversal(&obj->color));
 	}
-	else if (obj->texture.data)
+	else if (obj->texture)
 	{
-		color_code = obj->texture.data\
-					[(int)roundf(uv.x * obj->texture.width)]\
-					[(int)roundf(uv.y * obj->texture.height)];
+		color_code = obj->texture->data\
+					[(int)roundf(uv.x * (obj->texture->width - 1))]\
+					[(int)roundf(uv.y * (obj->texture->height - 1))];
 		return (int_to_color(color_code));
 	}
 	return (obj->color);
