@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 19:41:26 by dham              #+#    #+#             */
-/*   Updated: 2023/03/26 01:14:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/26 01:31:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,16 @@ void PmergeMe::vector_merge(int start, int end, std::vector<int> &res)
 void PmergeMe::vector_insert(int start, int end)
 {
 	int temp;
-	int i, j, k;
+	int i, j;
 
 	for (i = start + 1; i <= end; i++)
 	{
 		if (v[i - 1] < v[i])
 			continue;
-		for (j = i - 1; j >= start && v[j] >= v[i]; j--) ;
 		temp = v[i];
-		for (k = i; k > j + 1; k--)
-		{
-			v[k] = v[k - 1];
-		}
-		v[j + 1] = temp;
+		for (j = i; j > start && v[j - 1] >= temp; j--)
+			v[j] = v[j - 1];
+		v[j] = temp;
 	}
 }
 
@@ -186,19 +183,16 @@ void PmergeMe::deque_merge(int start, int end, std::deque<int> &res)
 void PmergeMe::deque_insert(int start, int end)
 {
 	int temp;
-	int i, j, k;
+	int i, j;
 
 	for (i = start + 1; i <= end; i++)
 	{
 		if (d[i - 1] < d[i])
 			continue;
-		for (j = i - 1; j >= start && d[j] >= d[i]; j--) ;
 		temp = d[i];
-		for (k = i; k > j + 1; k--)
-		{
-			d[k] = d[k - 1];
-		}
-		d[j + 1] = temp;
+		for (j = i; j > start && d[j - 1] >= temp; j--)
+			d[j] = d[j - 1];
+		d[j] = temp;
 	}
 }
 
