@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 15:11:14 by dham              #+#    #+#             */
-/*   Updated: 2023/03/25 18:42:55 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/25 19:54:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ bool BitcoinExchange::valid_rate(const std::string &rate_str)
 	int 						flag = 0;
 	std::string::const_iterator	it = rate_str.begin();
 
+	if (rate_str.empty())
+		return (false);
 	if (*it == '+' || *it == '-')
 		it++;
 	for (; it != rate_str.end(); ++it)
