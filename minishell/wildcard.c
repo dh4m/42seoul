@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 13:59:23 by dham              #+#    #+#             */
-/*   Updated: 2023/01/23 20:04:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/03 21:39:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	pattern_matching(char *str, char **pattern, int front, int back)
 		ptr = ft_strnstr(ptr, pattern[i], ft_strlen(ptr));
 		if (!ptr)
 			return (0);
+		ptr += ft_strlen(pattern[i]);
 		i++;
 	}
 	if (back && !back_matching(ptr, pattern[i - 1]))
