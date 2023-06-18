@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/05/06 14:21:29 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/18 12:23:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int Eventq::init(void)
 
 int Eventq::reg_event(int socket, int16_t filter, uint16_t flag, uint16_t fflage, intptr_t data, void *udata)
 {
-	struct kevent temp;
+	t_event temp;
 
 	EV_SET(&temp, socket, filter, flag, fflage, data, udata);
 	change_list.push_back(temp);
 }
 
-int Eventq::get_event(struct kevent event[], int len)
+int Eventq::get_event(t_event event[], int len)
 {
 	int event_num;
 

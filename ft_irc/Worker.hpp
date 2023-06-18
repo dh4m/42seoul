@@ -1,41 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ClientInfo.hpp                                     :+:      :+:    :+:   */
+/*   Worker.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/09 16:20:58 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 16:09:53 by dham             ###   ########.fr       */
+/*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
+/*   Updated: 2023/06/18 20:26:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
-#ifndef CLIENTINFO_HPP
-# define CLIENTINFO_HPP
+#ifndef WORKER_HPP
+# define WORKER_HPP
 
-#include <map>
-#include <string>
-#include <vector>
-#include <pthread.h>
+#include "ClientInfo.hpp"
+#include <deque>
 
-#include "Client.hpp"
+#define NUM_THREAD 12
 
-class ClientInfo
+enum e_command
+{
+	M_READ,
+	M_WRITE
+};
+
+typedef struct s_msg
+{
+	std::string str;
+	int cmd;
+} t_msg;
+
+class Worker
 {
 public:
-	ClientInfo(void);
-	~ClientInfo(void);
+	Worker(void);
+	~Worker(void);
 
+	int init(void);
 	void add_client(int fd);
-	Client *find_client(int fd);
 	void remove_client(int fd, const char *msg);
+	void reg_msg(int fd, int cmd);
+	void reg_err_msg(int fd);
 private:
-	std::map<int, Client> _cl_list;
+	ClientInfo _client;
+	std::deque<t_msg> _messageQ;
 
-	ClientInfo	&operator=(const ClientInfo &copy);
-	ClientInfo(const ClientInfo &copy);
+	Worker(const Worker &copy);
+	Worker	&operator=(const Worker &copy);
 };
 
 #endif

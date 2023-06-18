@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 19:14:23 by dham              #+#    #+#             */
-/*   Updated: 2023/04/09 17:53:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/18 12:05:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void invalid_input(void)
 {
 	std::cerr << "Invalid input!" << std::endl;
+	std::cerr << "Usage: " << std::endl; // usage 쓸 것
 	exit(EXIT_FAILURE);
 }
 

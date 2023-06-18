@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:03:05 by dham              #+#    #+#             */
-/*   Updated: 2023/05/02 16:35:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/18 12:24:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 #include <sys/types.h>
 #include <vector>
 
+typedef struct kevent t_event;
+
 class Eventq
 {
 public:
@@ -28,10 +30,10 @@ public:
 
 	int init(void);
 	int reg_event(int socket, int16_t filter, uint16_t flag, uint16_t fflage, intptr_t data, void *udata);
-	int get_event(struct kevent event[], int len);
+	int get_event(t_event event[], int len);
 private:
 	int _kq;
-	std::vector<struct kevent> change_list;
+	std::vector<t_event> change_list;
 	
 	Eventq	&operator=(const Eventq &copy);
 	Eventq(const Eventq &copy);

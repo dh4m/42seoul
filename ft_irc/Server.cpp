@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/05/06 22:00:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/18 20:27:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int Server::init(void)
 int Server::run(void)
 {
 	int new_event;
-	struct kevent ev_list[ACCEPT_EV_NUM];
+	t_event ev_list[ACCEPT_EV_NUM];
 	int i;
+	Client *op_cl;
 
 	while (1)
 	{
@@ -74,15 +75,68 @@ int Server::run(void)
 		{
 			if (ev_list[i].flags & EV_ERROR)
 			{
-
-			}
-			else if (ev_list[i].flags == EVFILT_WRITE)
-			{
-
+				if (ev_list[i].ident == _socket)
+				{
+					std::cerr << "server socket Error" << std::endl;
+					// server close
+					return (0);
+				}
+				else
+				{
+					_worker.reg_err_msg(ev_list[i].ident);
+					/*
+					op_cl = _client.find_client(ev_list[i].ident);
+					if (!op_cl)
+						continue;
+					_client.remove_client(ev_list[i].ident, "unknown client socker error");
+					*/
+				}
 			}
 			else if (ev_list[i].flags == EVFILT_READ)
 			{
-
+				if (ev_list[i].ident == _socket)
+				{
+					int cl_fd;
+					
+					cl_fd = accept(_socket, NULL, NULL);
+					if (cl_fd == -1)
+					{
+						std::cerr << "accept error" << std::endl;
+						;// server close
+						return (0);
+					}
+					_add_client(cl_fd);
+				}
+				else
+				{
+					int res_read;
+				
+					_worker.reg_msg(ev_list[i].ident, M_READ);
+					/*
+					op_cl = _client.find_client(ev_list[i].ident);
+					if (!op_cl)
+						continue;
+					res_read = op_cl->client_read();
+					if (res_read == -1)
+						_client.remove_client(ev_list[i].ident, "receive error");
+					else if (res_read == 0)
+						; // client disconnect
+					*/
+				}
+			}
+			else if (ev_list[i].flags == EVFILT_WRITE)
+			{
+				_worker.reg_msg(ev_list[i].ident, M_READ);
+				/*
+				op_cl = _client.find_client(ev_list[i].ident);
+				if (!op_cl)
+					continue;
+				if (op_cl->output_exist())
+				{
+					if (op_cl->client_write() == -1)
+						_client.remove_client(ev_list[i].ident, "send error");
+				}
+				*/
 			}
 		}
 	}

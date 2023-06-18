@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:07 by dham              #+#    #+#             */
-/*   Updated: 2023/05/06 14:36:17 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/18 18:01:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # define ACCEPT_EV_NUM 10
 
 #include "Eventq.hpp"
-#include "ThreadPool.hpp"
 #include "ClientInfo.hpp"
+#include "Worker.hpp"
 
 #include <iostream>
 #include <map>
@@ -39,15 +39,18 @@ public:
 	int run(void);
 	void errDetect(void);
 private:
+	void _add_client(int fd);
+
 	int _port;
 	std::string _passwd;
 	int _socket;
 	struct sockaddr_in _addr;
 	int _err_state;
 
+	Worker _worker;
 	Eventq _ev_q;
-	ThreadPool _thr_pool;
-	std::map<int, ClientInfo> _client_list;
+	ClientInfo _client;
+	// std::map<int, ClientInfo> _client_list;
 
 	Server	&operator=(const Server &copy);
 	Server(const Server &copy);

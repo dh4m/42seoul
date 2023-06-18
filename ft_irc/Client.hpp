@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/05/06 21:58:34 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/18 21:58:51 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,18 @@ public:
 
 	void add_output(std::string &str);
 	int get_fd(void);
-	int client_read(std::string &str);
+	int client_read(void);
 	int client_write(void);
 	bool output_exist(void);
 	bool usable_client(void);
+	void client_err_close(const char *err_msg);
+
 private:
+	bool _client_lock(void);
+	void _client_unlock(void);
+
 	pthread_mutex_t _client_m;
+	bool _lock_client;
 	int _fd;
 	std::deque<std::string> _output_buf;
 	// std::vector<unsigned char> _file_buf;
