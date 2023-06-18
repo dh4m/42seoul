@@ -6,13 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/04/09 20:13:29 by dham             ###   ########.fr       */
+/*   Updated: 2023/05/06 22:00:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
 #include <sys/socket.h>
 #include <cstring>
+#include <unistd.h>
 #include <fcntl.h>
 
 Server::Server(int port, std::string passwd)
@@ -50,10 +51,39 @@ int Server::init(void)
 		return (0);
 	}
 	fcntl(_socket, F_SETFL, O_NONBLOCK);
+	_ev_q.reg_event(_socket, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 	return (1);
 }
 
 int Server::run(void)
 {
+	int new_event;
+	struct kevent ev_list[ACCEPT_EV_NUM];
+	int i;
 
+	while (1)
+	{
+		new_event = _ev_q.get_event(ev_list, ACCEPT_EV_NUM);
+		if (new_event == -1)
+		{
+			;//err
+			return (0);
+		}
+		
+		for (i = 0; i < new_event; i++)
+		{
+			if (ev_list[i].flags & EV_ERROR)
+			{
+
+			}
+			else if (ev_list[i].flags == EVFILT_WRITE)
+			{
+
+			}
+			else if (ev_list[i].flags == EVFILT_READ)
+			{
+
+			}
+		}
+	}
 }
