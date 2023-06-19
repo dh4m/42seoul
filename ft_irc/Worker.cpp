@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 20:27:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/19 15:27:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,22 @@ void Worker::reg_msg(int fd, int cmd)
 }
 
 void Worker::reg_err_msg(int fd)
+{
+
+}
+
+int Worker::_read_client(Client *op_cl)
+{
+	//op_cl->client_read();
+	//if (op_cl)
+}
+
+int Worker::_write_client(Client *op_cl)
+{
+
+}
+
+int Worker::_parsing_msg(std::string str)
 {
 
 }

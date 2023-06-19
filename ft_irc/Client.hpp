@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 21:58:51 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/19 22:14:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 #include <sys/socket.h>
 
 #define INPUT_BUF_SIZE 1024
+
+enum e_result
+{
+	LOCK_FAIL = -2,
+	ERROR = -1,
+	DISCONNECT = 0,
+	SUCCESS = 1
+};
 
 class Client
 {
@@ -42,10 +50,16 @@ private:
 	bool _client_lock(void);
 	void _client_unlock(void);
 
-	pthread_mutex_t _client_m;
-	bool _lock_client;
+	// pthread_mutex_t _client_m;
+	// bool _lock_client;
+
 	int _fd;
+
+	std::string _input_buf;
+	pthread_mutex_t _client_input_m;
+
 	std::deque<std::string> _output_buf;
+	pthread_mutex_t _client_output_m;
 	// std::vector<unsigned char> _file_buf;
 
 	Client(const Client &copy);

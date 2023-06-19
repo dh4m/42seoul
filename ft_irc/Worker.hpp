@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 20:26:31 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/19 22:17:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 #include "ClientInfo.hpp"
 #include <deque>
+#include <map>
+#include <set>
 
 #define NUM_THREAD 12
 
@@ -32,6 +34,13 @@ typedef struct s_msg
 	int cmd;
 } t_msg;
 
+typedef struct s_messageQ
+{
+	std::deque<t_msg> _messageQ;
+}	t_messageQ;
+
+typedef std::map<std::string, std::set<Client*>> t_chanlist;
+
 class Worker
 {
 public:
@@ -44,8 +53,12 @@ public:
 	void reg_msg(int fd, int cmd);
 	void reg_err_msg(int fd);
 private:
+	int _read_client(Client *op_cl);
+	int _write_client(Client *op_cl);
+	int _parsing_msg(std::string str);
 	ClientInfo _client;
-	std::deque<t_msg> _messageQ;
+	t_chanlist _channel;
+	t_messageQ _msgQ;
 
 	Worker(const Worker &copy);
 	Worker	&operator=(const Worker &copy);
