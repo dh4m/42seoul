@@ -6,60 +6,108 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/06/19 15:27:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 21:12:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Worker.hpp"
+#include <iostream>
 
 Worker::Worker(void)
 {
-
+	pthread_cond_init(&_msgQ._q_fill_cond, NULL);
+	pthread_mutex_init(&_msgQ._msgq_m, NULL);
+	_thread_list.reserve(NUM_THREAD);
 }
 
 Worker::~Worker(void)
 {
-
+	pthread_cond_destroy(&_msgQ._q_fill_cond);
+	pthread_mutex_destroy(&_msgQ._msgq_m);
 }
 
 int Worker::init(void)
 {
-
+	for(int i = 0; i < NUM_THREAD; i++)
+	{
+		pthread_create(&_thread_list[i], NULL, \
+						_worker_thread_func, this);
+	}
+	return (1);
 }
 
 void Worker::add_client(int fd)
 {
-
+	_client.add_client(fd);
 }
 
 void Worker::remove_client(int fd, const char *msg)
 {
-
+	_client.remove_client(fd, msg);
 }
 
 void Worker::reg_msg(int fd, int cmd)
 {
+	t_msg insert_msg = {.fd = fd, .cmd = cmd};
 
+	pthread_mutex_lock(&_msgQ._msgq_m);
+	_msgQ._messageQ.push_back(insert_msg);
+	pthread_cond_signal(&_msgQ._q_fill_cond);
+	pthread_mutex_unlock(&_msgQ._msgq_m);
 }
 
 void Worker::reg_err_msg(int fd)
 {
-
+	(void) fd;
 }
 
 int Worker::_read_client(Client *op_cl)
 {
-	//op_cl->client_read();
-	//if (op_cl)
+	(void) op_cl;
+	return (0);
 }
 
 int Worker::_write_client(Client *op_cl)
 {
-
+	(void)op_cl;
+	return (0);
 }
 
-int Worker::_parsing_msg(std::string str)
+int Worker::_ctrl_msg(std::string str)
 {
-
+	(void) str;
+	return (0);
 }
 
+void *Worker::_worker_thread_func(void *args)
+{
+	Worker &info = *(Worker *)args;
+	t_messageQ &q = info._msgQ;
+	t_msg curr_msg;
+	Client *op_cl;
+
+	while (1)
+	{
+		pthread_mutex_lock(&q._msgq_m);
+		while (q._messageQ.empty())
+		{
+			pthread_cond_wait(&q._q_fill_cond, &q._msgq_m);
+		}
+		curr_msg = q._messageQ.front();
+		q._messageQ.pop_front();
+		pthread_mutex_unlock(&q._msgq_m);
+		op_cl = info._client.find_client(curr_msg.fd);
+		if (!op_cl)
+			continue;
+		if (curr_msg.cmd == M_READ)
+		{
+			std::cout << op_cl->get_fd() << " read accept!!!" << std::endl;
+			op_cl->client_read();
+		}
+		else if (curr_msg.cmd == M_WRITE)
+		{
+			op_cl->client_write();
+		}
+	}
+	return (NULL);
+}

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
-/*   Updated: 2023/06/19 22:17:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 19:44:22 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@ enum e_command
 
 typedef struct s_msg
 {
-	std::string str;
+	int fd;
 	int cmd;
 } t_msg;
 
 typedef struct s_messageQ
 {
 	std::deque<t_msg> _messageQ;
+	pthread_mutex_t _msgq_m;
+	pthread_cond_t _q_fill_cond;
 }	t_messageQ;
 
-typedef std::map<std::string, std::set<Client*>> t_chanlist;
+typedef std::map< std::string, std::set<Client*> > t_chanlist;
 
 class Worker
 {
@@ -55,10 +57,14 @@ public:
 private:
 	int _read_client(Client *op_cl);
 	int _write_client(Client *op_cl);
-	int _parsing_msg(std::string str);
+	int _ctrl_msg(std::string str);
+
+	static void *_worker_thread_func(void *args);
 	ClientInfo _client;
 	t_chanlist _channel;
 	t_messageQ _msgQ;
+
+	std::vector<pthread_t> _thread_list;
 
 	Worker(const Worker &copy);
 	Worker	&operator=(const Worker &copy);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 19:14:23 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 12:05:34 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 20:04:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void invalid_input(void)
 {
 	std::cerr << "Invalid input!" << std::endl;
-	std::cerr << "Usage: " << std::endl; // usage 쓸 것
+	std::cerr << "Usage: ./ircserv port passwd" << std::endl; // usage 쓸 것
 	exit(EXIT_FAILURE);
 }
 
@@ -42,6 +42,6 @@ int main(int argc, char *argv[])
 	if (!serv.init())
 		return (1);
 	if (!serv.run())
-		serv.errDetect();
+		return (2);
 	return (0);
 }

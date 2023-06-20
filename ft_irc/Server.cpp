@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 20:27:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 20:45:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <fcntl.h>
 
 Server::Server(int port, std::string passwd)
-: _port(port), _err_state(0)
+: _port(port)
 {
 	if (!passwd.empty())
 		_passwd = passwd;
@@ -31,6 +31,11 @@ Server::~Server(void)
 
 int Server::init(void)
 {
+	if (!_ev_q.init())
+	{
+		; //err
+		return (0);
+	}
 	_socket = socket(PF_INET, SOCK_STREAM, 0);
 	if (!_socket)
 	{
@@ -60,8 +65,10 @@ int Server::run(void)
 	int new_event;
 	t_event ev_list[ACCEPT_EV_NUM];
 	int i;
-	Client *op_cl;
+	// Client *op_cl;
 
+	std::cout << "Server Start" << std::endl;
+	_worker.init();
 	while (1)
 	{
 		new_event = _ev_q.get_event(ev_list, ACCEPT_EV_NUM);
@@ -75,7 +82,7 @@ int Server::run(void)
 		{
 			if (ev_list[i].flags & EV_ERROR)
 			{
-				if (ev_list[i].ident == _socket)
+				if ((int)ev_list[i].ident == _socket)
 				{
 					std::cerr << "server socket Error" << std::endl;
 					// server close
@@ -84,17 +91,16 @@ int Server::run(void)
 				else
 				{
 					_worker.reg_err_msg(ev_list[i].ident);
-					/*
-					op_cl = _client.find_client(ev_list[i].ident);
-					if (!op_cl)
-						continue;
-					_client.remove_client(ev_list[i].ident, "unknown client socker error");
-					*/
 				}
 			}
-			else if (ev_list[i].flags == EVFILT_READ)
+			else if (ev_list[i].flags & EV_EOF)
 			{
-				if (ev_list[i].ident == _socket)
+				std::cerr << ev_list[i].ident << " is disconnect" << std::endl;
+				_worker.remove_client(ev_list[i].ident, "");
+			}
+			else if ((int)ev_list[i].filter == EVFILT_READ)
+			{
+				if ((int)ev_list[i].ident == _socket)
 				{
 					int cl_fd;
 					
@@ -109,35 +115,23 @@ int Server::run(void)
 				}
 				else
 				{
-					int res_read;
-				
 					_worker.reg_msg(ev_list[i].ident, M_READ);
-					/*
-					op_cl = _client.find_client(ev_list[i].ident);
-					if (!op_cl)
-						continue;
-					res_read = op_cl->client_read();
-					if (res_read == -1)
-						_client.remove_client(ev_list[i].ident, "receive error");
-					else if (res_read == 0)
-						; // client disconnect
-					*/
 				}
 			}
-			else if (ev_list[i].flags == EVFILT_WRITE)
+			else if ((int)ev_list[i].filter == EVFILT_WRITE)
 			{
-				_worker.reg_msg(ev_list[i].ident, M_READ);
-				/*
-				op_cl = _client.find_client(ev_list[i].ident);
-				if (!op_cl)
-					continue;
-				if (op_cl->output_exist())
-				{
-					if (op_cl->client_write() == -1)
-						_client.remove_client(ev_list[i].ident, "send error");
-				}
-				*/
+				_worker.reg_msg(ev_list[i].ident, M_WRITE);
 			}
 		}
 	}
+}
+
+void Server::_add_client(int fd)
+{
+	std::cout << fd << " is new client" << std::endl;
+	fcntl(fd, F_SETFL, O_NONBLOCK);
+	_ev_q.reg_event(fd, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
+	_ev_q.reg_event(fd, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
+
+	_worker.add_client(fd);
 }

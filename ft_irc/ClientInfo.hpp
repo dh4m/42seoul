@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:20:58 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 16:09:53 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 17:55:07 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ public:
 	Client *find_client(int fd);
 	void remove_client(int fd, const char *msg);
 private:
-	std::map<int, Client> _cl_list;
+	std::map<int, Client *> _cl_list;
 
 	ClientInfo	&operator=(const ClientInfo &copy);
 	ClientInfo(const ClientInfo &copy);

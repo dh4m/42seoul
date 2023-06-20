@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 18:01:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 19:44:33 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,11 @@
 class Server
 {
 public:
-	Server::Server(int port, std::string passwd);
+	Server(int port, std::string passwd);
 	~Server(void);
 
 	int init(void);
 	int run(void);
-	void errDetect(void);
 private:
 	void _add_client(int fd);
 
@@ -45,12 +44,9 @@ private:
 	std::string _passwd;
 	int _socket;
 	struct sockaddr_in _addr;
-	int _err_state;
 
 	Worker _worker;
 	Eventq _ev_q;
-	ClientInfo _client;
-	// std::map<int, ClientInfo> _client_list;
 
 	Server	&operator=(const Server &copy);
 	Server(const Server &copy);

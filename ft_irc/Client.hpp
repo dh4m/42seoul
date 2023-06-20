@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/06/19 22:14:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 18:25:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,8 @@ public:
 	int get_fd(void);
 	int client_read(void);
 	int client_write(void);
-	bool output_exist(void);
-	bool usable_client(void);
-	void client_err_close(const char *err_msg);
 
 private:
-	bool _client_lock(void);
-	void _client_unlock(void);
-
-	// pthread_mutex_t _client_m;
-	// bool _lock_client;
-
 	int _fd;
 
 	std::string _input_buf;
@@ -62,8 +53,10 @@ private:
 	pthread_mutex_t _client_output_m;
 	// std::vector<unsigned char> _file_buf;
 
-	Client(const Client &copy);
+	std::vector<std::string> _chan;
+	
 	Client	&operator=(const Client &copy);
+	Client(const Client &copy);
 };
 
 #endif

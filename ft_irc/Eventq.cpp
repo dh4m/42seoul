@@ -6,11 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/18 12:23:34 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/20 19:54:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Eventq.hpp"
+#include <iostream>
 
 Eventq::Eventq(void)
 {}
@@ -28,6 +29,7 @@ int Eventq::init(void)
 		;/// err
 		return (0);
 	}
+	return (1);
 }
 
 int Eventq::reg_event(int socket, int16_t filter, uint16_t flag, uint16_t fflage, intptr_t data, void *udata)
@@ -36,6 +38,7 @@ int Eventq::reg_event(int socket, int16_t filter, uint16_t flag, uint16_t fflage
 
 	EV_SET(&temp, socket, filter, flag, fflage, data, udata);
 	change_list.push_back(temp);
+	return (1);
 }
 
 int Eventq::get_event(t_event event[], int len)
