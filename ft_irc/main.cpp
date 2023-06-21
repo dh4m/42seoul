@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 19:14:23 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 20:04:01 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/21 14:06:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void invalid_input(void)
 {
 	std::cerr << "Invalid input!" << std::endl;
-	std::cerr << "Usage: ./ircserv port passwd" << std::endl; // usage 쓸 것
+	std::cerr << "Usage: ./ircserv port password(optional)" << std::endl; // usage 쓸 것
 	exit(EXIT_FAILURE);
 }
 
@@ -35,10 +35,13 @@ bool isnum(char *str)
 
 int main(int argc, char *argv[])
 {
-	if (argc != 3 || !isnum(argv[1]))
+	const char *passwd = NULL;
+
+	if (argc < 2 || argc > 3 || !isnum(argv[1]))
 		invalid_input();
-	
-	Server serv(atoi(argv[1]), argv[2]);
+	if (argc == 3)
+		passwd = argv[2];
+	Server serv(atoi(argv[1]), passwd);
 	if (!serv.init())
 		return (1);
 	if (!serv.run())

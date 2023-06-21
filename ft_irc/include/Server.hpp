@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 19:44:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/21 20:12:06 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 class Server
 {
 public:
-	Server(int port, std::string passwd);
+	Server(int port, const char *passwd);
 	~Server(void);
 
 	int init(void);
@@ -46,7 +46,7 @@ private:
 	struct sockaddr_in _addr;
 
 	Worker _worker;
-	Eventq _ev_q;
+	Eventq &_ev_q;
 
 	Server	&operator=(const Server &copy);
 	Server(const Server &copy);

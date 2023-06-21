@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 20:45:17 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/21 20:35:39 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-Server::Server(int port, std::string passwd)
-: _port(port)
+Server::Server(int port, const char *passwd)
+: _port(port), _ev_q(Eventq::getInstance())
 {
-	if (!passwd.empty())
+	if (passwd)
 		_passwd = passwd;
 	memset(&_addr, 0, sizeof(_addr));
 }
 
 Server::~Server(void)
 {
-	
+	close (_socket);
 }
 
 int Server::init(void)

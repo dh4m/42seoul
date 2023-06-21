@@ -6,19 +6,20 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 19:54:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/21 20:17:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Eventq.hpp"
 #include <iostream>
 
-Eventq::Eventq(void)
-{}
+Eventq::Eventq(void) {}
+Eventq::~Eventq(void) {}
 
-Eventq::~Eventq(void)
+Eventq &Eventq::getInstance(void)
 {
-
+	static Eventq singleton_obj;
+	return (singleton_obj);
 }
 
 int Eventq::init(void)
