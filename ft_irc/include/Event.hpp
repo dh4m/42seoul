@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:42:04 by dham              #+#    #+#             */
-/*   Updated: 2023/06/21 21:53:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 12:43:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,31 @@
 
 class Event
 {
-
+private:
+	virtual int Handler(void) = 0;
+	Client *getClient(void);
+private:
+	int fd;
 };
 
 class ReadEvent : public Event
 {
-	
+	int Handler();
 };
 
 class WriteEvent : public Event
 {
-
+	int Handler();
 };
 
 class ListenEvent : public Event
 {
-
+	int Handler();
 };
 
 class ErrorEvent : public Event
 {
-
+	int Handler();
 };
 
 #endif
