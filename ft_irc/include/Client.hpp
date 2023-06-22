@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 18:25:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 16:46:25 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ public:
 	int get_fd(void);
 	int client_read(void);
 	int client_write(void);
+	bool exist_output(void);
 
 private:
 	int _fd;

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 19:44:22 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 15:54:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,13 @@ typedef struct s_messageQ
 	pthread_cond_t _q_fill_cond;
 }	t_messageQ;
 
-typedef std::map< std::string, std::set<Client*> > t_chanlist;
+typedef struct s_channelInfo
+{
+	std::set<Client*> member;
+	// info
+}	t_chnnelInfo;
+
+typedef std::map< std::string, t_chnnelInfo > t_chanlist;
 
 class Worker
 {

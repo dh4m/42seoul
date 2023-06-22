@@ -6,11 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 21:22:31 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 21:29:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
+#include "Eventq.hpp"
 #include <iostream>
 
 Client::Client(int fd)
@@ -32,6 +33,17 @@ void Client::add_output(std::string &str)
 	pthread_mutex_lock(&_client_output_m);
 	_output_buf.push_back(str);
 	pthread_mutex_unlock(&_client_output_m);
+	Eventq::getInstance().reg_event(_fd, EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
+}
+
+bool Client::exist_output(void)
+{
+	bool res;
+
+	pthread_mutex_lock(&_client_output_m);
+	res = !_output_buf.empty();
+	pthread_mutex_unlock(&_client_output_m);
+	return (res);
 }
 
 int Client::get_fd(void)
@@ -50,33 +62,30 @@ int Client::client_read(void)
 	ret_recv = recv(_fd, buf, INPUT_BUF_SIZE - 1, 0);
 	if (ret_recv == 0)
 	{
-		pthread_mutex_unlock(&_client_input_m);
-
+		
 		///
 		std::cout << _fd << " disconnected" << std::endl;
 		///
 
+		pthread_mutex_unlock(&_client_input_m);
 		return (DISCONNECT); //client disconnect
 	}
-	while (ret_recv > 0)
+	if (ret_recv < 0)
 	{
-		buf[ret_recv] = 0;
-		_input_buf += buf;
-		ret_recv = recv(_fd, buf, INPUT_BUF_SIZE - 1, 0);
+		std::cout << _fd << std::endl;
+		std::cout << "Error occuar  " << errno << std::endl;
+		pthread_mutex_unlock(&_client_input_m);
+		return (ERROR);
 	}
-	pthread_mutex_unlock(&_client_input_m);
-	
+	buf[ret_recv] = 0;
+	_input_buf += buf;
 	///
 	std::cout << _fd << " input " << _input_buf << std::endl;
 	add_output(_input_buf);
 	_input_buf.clear();
 	///
 
-
-	if (ret_recv < 0)
-	{
-		return (ERROR);
-	}
+	pthread_mutex_unlock(&_client_input_m);
 	return (ret_recv);
 }
 

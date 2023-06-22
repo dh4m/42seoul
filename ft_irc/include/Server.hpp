@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/21 20:12:06 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 16:05:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 #include <sys/time.h>
 #include <sys/event.h>
 #include <sys/types.h>
+
+#define COUNTOF(_x) (sizeof(_x) / sizeof((_x)[0]))
 
 class Server
 {

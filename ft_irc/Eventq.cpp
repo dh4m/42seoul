@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/21 20:17:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 21:49:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int Eventq::reg_event(int socket, int16_t filter, uint16_t flag, uint16_t fflage
 	t_event temp;
 
 	EV_SET(&temp, socket, filter, flag, fflage, data, udata);
-	change_list.push_back(temp);
+	kevent(_kq, &temp, 1, NULL, 0, NULL);
 	return (1);
 }
 
@@ -46,7 +46,6 @@ int Eventq::get_event(t_event event[], int len)
 {
 	int event_num;
 
-	event_num = kevent(_kq, change_list.data(), change_list.size(), event, len, NULL);
-	change_list.clear();
+	event_num = kevent(_kq, NULL, 0, event, len, NULL);
 	return (event_num);
 }

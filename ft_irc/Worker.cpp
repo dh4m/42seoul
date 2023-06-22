@@ -6,11 +6,12 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/06/20 21:12:15 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 21:48:21 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Worker.hpp"
+#include "Eventq.hpp"
 #include <iostream>
 
 Worker::Worker(void)
@@ -49,8 +50,13 @@ void Worker::remove_client(int fd, const char *msg)
 void Worker::reg_msg(int fd, int cmd)
 {
 	t_msg insert_msg = {.fd = fd, .cmd = cmd};
+	Eventq & ev_q = Eventq::getInstance();
 
 	pthread_mutex_lock(&_msgQ._msgq_m);
+	if (cmd == M_READ)
+		ev_q.reg_event(fd, EVFILT_READ, EV_DISABLE, 0, 0, NULL);
+	else if(cmd == M_WRITE)
+		ev_q.reg_event(fd, EVFILT_WRITE, EV_DISABLE, 0, 0, NULL);
 	_msgQ._messageQ.push_back(insert_msg);
 	pthread_cond_signal(&_msgQ._q_fill_cond);
 	pthread_mutex_unlock(&_msgQ._msgq_m);
@@ -85,6 +91,7 @@ void *Worker::_worker_thread_func(void *args)
 	t_messageQ &q = info._msgQ;
 	t_msg curr_msg;
 	Client *op_cl;
+	Eventq &ev_q = Eventq::getInstance();
 
 	while (1)
 	{
@@ -103,10 +110,14 @@ void *Worker::_worker_thread_func(void *args)
 		{
 			std::cout << op_cl->get_fd() << " read accept!!!" << std::endl;
 			op_cl->client_read();
+			ev_q.reg_event(op_cl->get_fd(), EVFILT_READ, EV_ENABLE, 0, 0, NULL);
+			//// read control
 		}
 		else if (curr_msg.cmd == M_WRITE)
 		{
 			op_cl->client_write();
+			if (op_cl->exist_output())
+				ev_q.reg_event(op_cl->get_fd(), EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
 		}
 	}
 	return (NULL);

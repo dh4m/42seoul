@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/06/21 20:35:39 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/22 20:30:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int Server::run(void)
 	_worker.init();
 	while (1)
 	{
-		new_event = _ev_q.get_event(ev_list, ACCEPT_EV_NUM);
+		new_event = _ev_q.get_event(ev_list, COUNTOF(ev_list));
 		if (new_event == -1)
 		{
 			;//err
@@ -131,7 +131,7 @@ void Server::_add_client(int fd)
 	std::cout << fd << " is new client" << std::endl;
 	fcntl(fd, F_SETFL, O_NONBLOCK);
 	_ev_q.reg_event(fd, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
-	_ev_q.reg_event(fd, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, NULL);
+	_ev_q.reg_event(fd, EVFILT_WRITE, EV_ADD | EV_DISABLE, 0, 0, NULL);
 
 	_worker.add_client(fd);
 }
