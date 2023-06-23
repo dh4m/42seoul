@@ -6,16 +6,18 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/22 21:29:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/23 17:35:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
+#include "ClientInfo.hpp"
 #include "Eventq.hpp"
 #include <iostream>
+#include <unistd.h>
 
-Client::Client(int fd)
-: _fd(fd)
+Client::Client(int fd, ClientInfo &info)
+: _fd(fd), _info_another(info)
 {
 	pthread_mutex_init(&_client_input_m, NULL);
 	pthread_mutex_init(&_client_output_m, NULL);
@@ -79,10 +81,24 @@ int Client::client_read(void)
 	}
 	buf[ret_recv] = 0;
 	_input_buf += buf;
+	
 	///
 	std::cout << _fd << " input " << _input_buf << std::endl;
-	add_output(_input_buf);
-	_input_buf.clear();
+
+	if (_input_buf.find(CRLF))
+	{
+		_info_another.server_all_notice(_input_buf, this);
+		_input_buf.clear();
+	}
+
+	//if (_input_buf.find(CRLF))
+	//{
+
+		// _info_another.find_chan("chan_name")
+		// for (t_clientlist::iterator it = _info_another.)
+		// add_output(_input_buf);
+		// _input_buf.clear();
+	//}
 	///
 
 	pthread_mutex_unlock(&_client_input_m);

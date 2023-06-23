@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
-/*   Updated: 2023/06/22 15:54:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/23 18:17:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,6 @@ typedef struct s_messageQ
 	pthread_cond_t _q_fill_cond;
 }	t_messageQ;
 
-typedef struct s_channelInfo
-{
-	std::set<Client*> member;
-	// info
-}	t_chnnelInfo;
-
-typedef std::map< std::string, t_chnnelInfo > t_chanlist;
-
 class Worker
 {
 public:
@@ -61,13 +53,10 @@ public:
 	void reg_msg(int fd, int cmd);
 	void reg_err_msg(int fd);
 private:
-	int _read_client(Client *op_cl);
-	int _write_client(Client *op_cl);
-	int _ctrl_msg(std::string str);
+	int _proc_msg(std::string str);
 
 	static void *_worker_thread_func(void *args);
 	ClientInfo _client;
-	t_chanlist _channel;
 	t_messageQ _msgQ;
 
 	std::vector<pthread_t> _thread_list;

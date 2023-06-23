@@ -6,12 +6,13 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/06/22 21:48:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/23 18:34:27 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Worker.hpp"
 #include "Eventq.hpp"
+#include "Operator.hpp"
 #include <iostream>
 
 Worker::Worker(void)
@@ -67,19 +68,7 @@ void Worker::reg_err_msg(int fd)
 	(void) fd;
 }
 
-int Worker::_read_client(Client *op_cl)
-{
-	(void) op_cl;
-	return (0);
-}
-
-int Worker::_write_client(Client *op_cl)
-{
-	(void)op_cl;
-	return (0);
-}
-
-int Worker::_ctrl_msg(std::string str)
+int Worker::_proc_msg(std::string str)
 {
 	(void) str;
 	return (0);
@@ -92,6 +81,7 @@ void *Worker::_worker_thread_func(void *args)
 	t_msg curr_msg;
 	Client *op_cl;
 	Eventq &ev_q = Eventq::getInstance();
+	Operator operate_cmd(info._client);
 
 	while (1)
 	{
@@ -110,8 +100,8 @@ void *Worker::_worker_thread_func(void *args)
 		{
 			std::cout << op_cl->get_fd() << " read accept!!!" << std::endl;
 			op_cl->client_read();
+			operate_cmd(op_cl->get_input_buffer(), op_cl);
 			ev_q.reg_event(op_cl->get_fd(), EVFILT_READ, EV_ENABLE, 0, 0, NULL);
-			//// read control
 		}
 		else if (curr_msg.cmd == M_WRITE)
 		{
