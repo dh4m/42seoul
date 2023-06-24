@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 19:14:23 by dham              #+#    #+#             */
-/*   Updated: 2023/06/21 14:06:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/24 18:38:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,9 @@ bool isnum(char *str)
 
 int main(int argc, char *argv[])
 {
-	const char *passwd = NULL;
-
-	if (argc < 2 || argc > 3 || !isnum(argv[1]))
+	if (argc != 3 || !isnum(argv[1]))
 		invalid_input();
-	if (argc == 3)
-		passwd = argv[2];
-	Server serv(atoi(argv[1]), passwd);
+	Server serv(atoi(argv[1]), argv[2]);
 	if (!serv.init())
 		return (1);
 	if (!serv.run())
