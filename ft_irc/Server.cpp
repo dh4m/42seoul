@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/06/22 20:30:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/24 18:33:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int Server::run(void)
 	// Client *op_cl;
 
 	std::cout << "Server Start" << std::endl;
-	_worker.init();
+	_worker.init(_passwd);
 	while (1)
 	{
 		new_event = _ev_q.get_event(ev_list, COUNTOF(ev_list));

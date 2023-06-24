@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 18:34:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/24 18:32:12 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ Worker::~Worker(void)
 	pthread_mutex_destroy(&_msgQ._msgq_m);
 }
 
-int Worker::init(void)
+int Worker::init(const std::string &passwd)
 {
+	_passwd = passwd;
 	for(int i = 0; i < NUM_THREAD; i++)
 	{
 		pthread_create(&_thread_list[i], NULL, \
@@ -66,12 +67,6 @@ void Worker::reg_msg(int fd, int cmd)
 void Worker::reg_err_msg(int fd)
 {
 	(void) fd;
-}
-
-int Worker::_proc_msg(std::string str)
-{
-	(void) str;
-	return (0);
 }
 
 void *Worker::_worker_thread_func(void *args)

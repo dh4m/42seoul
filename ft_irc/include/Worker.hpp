@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 18:17:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/24 18:32:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <deque>
 #include <map>
 #include <set>
+#include <string>
 
 #define NUM_THREAD 12
 
@@ -47,18 +48,17 @@ public:
 	Worker(void);
 	~Worker(void);
 
-	int init(void);
+	int init(const std::string &passwd);
 	void add_client(int fd);
 	void remove_client(int fd, const char *msg);
 	void reg_msg(int fd, int cmd);
 	void reg_err_msg(int fd);
 private:
-	int _proc_msg(std::string str);
-
 	static void *_worker_thread_func(void *args);
+
+	std::string _passwd;
 	ClientInfo _client;
 	t_messageQ _msgQ;
-
 	std::vector<pthread_t> _thread_list;
 
 	Worker(const Worker &copy);
