@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 18:21:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/25 22:18:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ enum e_result
 	ERROR = -1,
 	DISCONNECT = 0,
 	SUCCESS = 1
+};
+
+enum e_clientmode
+{
+	INVISIBLE,
+	NOTICE,
+	OPERATOR
 };
 
 class ClientInfo;

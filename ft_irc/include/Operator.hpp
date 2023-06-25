@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 20:29:24 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/25 22:19:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # define OPERATOR_HPP
 
 #include "ClientInfo.hpp"
+
+enum e_reply
+{
+	
+};
 
 class Operator
 {
