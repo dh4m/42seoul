@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/06/24 18:38:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/27 17:19:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <fcntl.h>
 
 Server::Server(int port, const char *passwd)
-: _port(port), _ev_q(Eventq::getInstance()), _passwd(passwd)
+: _port(port), _passwd(passwd), _ev_q(Eventq::getInstance())
 {
 	memset(&_addr, 0, sizeof(_addr));
 }
@@ -40,6 +40,8 @@ int Server::init(void)
 		;// err
 		return (0);
 	}
+	int opt = true;
+	setsockopt(_socket, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 	_addr.sin_family = AF_INET;
 	_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	_addr.sin_port = htons(_port);
