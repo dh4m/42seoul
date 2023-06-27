@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 17:35:55 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/27 22:22:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int Client::client_write(void)
 		return (LOCK_FAIL);
 	while (!_output_buf.empty())
 	{
-		if (send(_fd, _output_buf.front().data(), _output_buf.front().length(), 0) == -1)
+		if (send(_fd, _output_buf.data(), _output_buf.length(), 0) == -1)
 		{
 			pthread_mutex_unlock(&_client_output_m);
 			return (ERROR);

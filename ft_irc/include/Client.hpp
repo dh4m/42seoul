@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/06/25 22:18:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/27 22:22:13 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ private:
 	std::string _input_buf;
 	pthread_mutex_t _client_input_m;
 
-	std::deque<std::string> _output_buf;
+	std::string _output_buf;
 	pthread_mutex_t _client_output_m;
 
 	std::vector<std::string> _chan;
