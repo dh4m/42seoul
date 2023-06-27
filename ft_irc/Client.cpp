@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/27 22:22:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/27 22:26:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void Client::add_output(std::string &str)
 {
 	// 순서 보장 문제
 	pthread_mutex_lock(&_client_output_m);
-	_output_buf.push_back(str);
+	_output_buf += str;
 	pthread_mutex_unlock(&_client_output_m);
 	Eventq::getInstance().reg_event(_fd, EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
 }
@@ -108,19 +108,15 @@ int Client::client_read(void)
 int Client::client_write(void)
 {
 	int num_output = 0;
-
+// lock으로 그냥??
 	if (pthread_mutex_trylock(&_client_output_m) != 0)
 		return (LOCK_FAIL);
-	while (!_output_buf.empty())
+	if (send(_fd, _output_buf.data(), _output_buf.length(), 0) == -1)
 	{
-		if (send(_fd, _output_buf.data(), _output_buf.length(), 0) == -1)
-		{
-			pthread_mutex_unlock(&_client_output_m);
-			return (ERROR);
-		}
-		_output_buf.pop_front();
-		num_output++;
+		pthread_mutex_unlock(&_client_output_m);
+		return (ERROR);
 	}
+	_output_buf.clear();
 	pthread_mutex_unlock(&_client_output_m);
 	return (num_output);
 }
