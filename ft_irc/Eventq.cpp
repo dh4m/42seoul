@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/27 21:03:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/28 21:49:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int Eventq::init(void)
 		;/// err
 		return (0);
 	}
+	if (pipe(_trigger_pipe) == -1)
+	{
+		;/// err
+		return (0);
+	}
+	reg_event(_trigger_pipe[0], EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 	return (1);
 }
 
