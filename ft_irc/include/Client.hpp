@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/06/27 22:22:13 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/30 12:41:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ public:
 	~Client(void);
 
 	void add_output(std::string &str);
-	int get_fd(void);
+	int get_fd(void) const;
 	const std::string &get_input_buffer(void);
 	int client_read(void);
 	int client_write(void);

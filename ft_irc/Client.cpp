@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/27 22:26:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/06/30 12:41:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ bool Client::exist_output(void)
 	return (res);
 }
 
-int Client::get_fd(void)
+int Client::get_fd(void) const
 {
 	return (_fd);
 }
