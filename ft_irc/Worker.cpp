@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/06/24 18:32:12 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:57:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void *Worker::_worker_thread_func(void *args)
 	Worker &info = *(Worker *)args;
 	t_messageQ &q = info._msgQ;
 	t_msg curr_msg;
-	Client *op_cl;
+	ClientRef op_cl;
 	Eventq &ev_q = Eventq::getInstance();
 	Operator operate_cmd(info._client);
 
@@ -104,6 +104,7 @@ void *Worker::_worker_thread_func(void *args)
 			if (op_cl->exist_output())
 				ev_q.reg_event(op_cl->get_fd(), EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
 		}
+		op_cl = ClientRef::NullClientRef();
 	}
 	return (NULL);
 }

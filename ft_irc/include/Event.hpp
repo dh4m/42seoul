@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:42:04 by dham              #+#    #+#             */
-/*   Updated: 2023/06/27 17:08:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:17:59 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@
 # define EVENT_HPP
 
 #include "Client.hpp"
+#include "ClientRef.hpp"
 
 class Event
 {
 private:
 	virtual int Handler(void) = 0;
-	Client *getClient(void);
+	ClientRef getClient(void);
 private:
-	Client *cl;
+	ClientRef cl;
 }; 
 
 class ReadEvent : public Event

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 20:25:27 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:14:05 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Operator::~Operator(void)
 
 }
 
-int Operator::operator()(const std::string &cmd_str, Client *sender)
+int Operator::operator()(const std::string &cmd_str, ClientRef sender)
 {
 	_cmd = cmd_str;
 	_sender = sender;

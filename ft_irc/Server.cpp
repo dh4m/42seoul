@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/06/27 17:19:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:15:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int Server::run(void)
 	int new_event;
 	t_event ev_list[ACCEPT_EV_NUM];
 	int i;
-	// Client *op_cl;
 
 	std::cout << "Server Start" << std::endl;
 	_worker.init(_passwd);

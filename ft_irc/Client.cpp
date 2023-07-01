@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/06/30 12:41:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:49:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Client::Client(int fd, ClientInfo &info)
 
 Client::~Client(void)
 {
+	close(_fd);
 	pthread_mutex_destroy(&_client_input_m);
 	pthread_mutex_destroy(&_client_output_m);
 }
@@ -87,7 +88,7 @@ int Client::client_read(void)
 
 	if (_input_buf.find(CRLF))
 	{
-		_info_another.server_all_notice(_input_buf, this);
+		_info_another.server_all_notice(_input_buf, _fd);
 		_input_buf.clear();
 	}
 

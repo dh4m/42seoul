@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:58:28 by dham              #+#    #+#             */
-/*   Updated: 2023/06/30 22:14:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:16:26 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 #include "Client.hpp"
 #include <pthread.h>
 
-struct ClientRefData
+struct ClientRefSet
 {
-	Client	*client;
-	int		*cnt;
-	pthread_mutex_t *mut_cnt;
+	ClientRefSet(int fd, ClientInfo &info);
+	Client	_client;
+	pthread_mutex_t _mut_cnt;
+	int		_cnt;
 };
 
 class ClientRef
@@ -33,10 +34,18 @@ public:
 	~ClientRef(void);
 
 	ClientRef	&operator=(const ClientRef &copy);
+	Client		&operator*(void) const;
+	Client		*operator->(void) const;
+	bool		operator==(const ClientRef &cmp) const;
+	bool		operator!=(const ClientRef &cmp) const;
+	bool		operator!(void) const;
 	
 	static ClientRef make_ClientRef(int fd, ClientInfo &info);
+	static ClientRef NullClientRef(void);
 private:
-	ClientRefData _data;
+	void _delete_object(void);
+
+	ClientRefSet *_alloc_data;
 };
 
 #endif

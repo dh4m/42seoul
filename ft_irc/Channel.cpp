@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:34:09 by dham              #+#    #+#             */
-/*   Updated: 2023/06/23 15:57:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 21:52:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ Channel::~Channel(void)
 	;
 }
 
-int Channel::channel_output(std::string &content, Client *talker)
+int Channel::channel_output(std::string &content, int talker_fd)
 {
-	for (std::set<Client*>::iterator it = _member.begin();
+	for (std::set<ClientRef>::iterator it = _member.begin();
 		it != _member.end();
 		++it)
 	{
-		if ((*it) != talker)
+		if ((*it)->get_fd() != talker_fd)
 		{
 			(*it)->add_output(content);
 		}
