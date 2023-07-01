@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 22:01:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/01 22:01:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ private:
 
 	ClientInfo &_info;
 	std::string _cmd;
-	int _sender_fd; /////// 여기 얘 있으면 안될듯
+	int _sender_fd;
 
 	Operator(const Operator &copy);
 	Operator	&operator=(const Operator &copy);
