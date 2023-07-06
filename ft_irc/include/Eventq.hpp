@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:03:05 by dham              #+#    #+#             */
-/*   Updated: 2023/07/05 21:23:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/06 22:07:25 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@
 #include <vector>
 #include <pthread.h>
 
-#ifndef PIPE_BUF
-# define PIPE_BUF 512
-#endif
+#define NOTIFY_IDENT 42
+
 
 typedef struct kevent t_event;
 
@@ -39,12 +38,10 @@ public:
 	void destroy_eventq(void);
 private:
 	int _kq;
-	int _trigger_pipe[2];
 	std::vector<t_event> _change_list;
 	pthread_mutex_t _mutex_change_list;
-	char _flush_buf[PIPE_BUF];
 
-	int _trigger_send(void);
+	void _forced_trigger(void);
 	
 	Eventq	&operator=(const Eventq &copy);
 	Eventq(const Eventq &copy);
