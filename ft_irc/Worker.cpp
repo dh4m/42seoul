@@ -6,13 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:57:44 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 18:46:31 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Worker.hpp"
 #include "Eventq.hpp"
 #include "Operator.hpp"
+#include "ScopeLock.hpp"
 #include <iostream>
 
 Worker::Worker(void)
@@ -54,14 +55,13 @@ void Worker::reg_msg(int fd, int cmd)
 	t_msg insert_msg = {.fd = fd, .cmd = cmd};
 	Eventq & ev_q = Eventq::getInstance();
 
-	pthread_mutex_lock(&_msgQ._msgq_m);
+	ScopeLock lock(&_msgQ._msgq_m);
 	if (cmd == M_READ)
 		ev_q.reg_event(fd, EVFILT_READ, EV_DISABLE, 0, 0, NULL);
 	else if(cmd == M_WRITE)
 		ev_q.reg_event(fd, EVFILT_WRITE, EV_DISABLE, 0, 0, NULL);
 	_msgQ._messageQ.push_back(insert_msg);
 	pthread_cond_signal(&_msgQ._q_fill_cond);
-	pthread_mutex_unlock(&_msgQ._msgq_m);
 }
 
 void Worker::reg_err_msg(int fd)

@@ -6,13 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:49:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 18:42:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Client.hpp"
 #include "ClientInfo.hpp"
 #include "Eventq.hpp"
+#include "ScopeLock.hpp"
 #include <iostream>
 #include <unistd.h>
 
@@ -33,9 +34,10 @@ Client::~Client(void)
 void Client::add_output(std::string &str)
 {
 	// 순서 보장 문제
-	pthread_mutex_lock(&_client_output_m);
-	_output_buf += str;
-	pthread_mutex_unlock(&_client_output_m);
+	{
+		ScopeLock lock(&_client_output_m);
+		_output_buf += str;
+	}
 	Eventq::getInstance().reg_event(_fd, EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
 }
 

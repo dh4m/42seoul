@@ -6,13 +6,14 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/07/06 22:07:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 18:44:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Eventq.hpp"
 #include <iostream>
 #include <fcntl.h>
+#include "ScopeLock.hpp"
 
 Eventq::Eventq(void) {}
 Eventq::~Eventq(void) {}
@@ -25,6 +26,8 @@ Eventq &Eventq::getInstance(void)
 
 int Eventq::init(void)
 {
+	t_event temp;
+
 	_kq = kqueue();
 	if (!_kq)
 	{
@@ -32,7 +35,8 @@ int Eventq::init(void)
 		return (0);
 	}
 	pthread_mutex_init(&_mutex_change_list, NULL);
-	reg_event(NOTIFY_IDENT, EVFILT_USER, EV_ADD | EV_ENABLE, 0, 0, NULL);
+	EV_SET(&temp, NOTIFY_IDENT, EVFILT_USER, EV_ADD | EV_ENABLE, 0, 0, NULL);
+	kevent(_kq, &temp, 1, NULL, 0, NULL);
 	return (1);
 }
 
@@ -41,22 +45,27 @@ int Eventq::reg_event(int socket, int16_t filter, uint16_t flag, uint16_t fflage
 	t_event temp;
 
 	EV_SET(&temp, socket, filter, flag, fflage, data, udata);
-	pthread_mutex_lock(&_mutex_change_list);
-	_change_list.push_back(temp);
-	pthread_mutex_unlock(&_mutex_change_list);
+	{
+		ScopeLock lock(&_mutex_change_list);
+		_change_list.push_back(temp);
+	}
+	_forced_trigger();
 	return (1);
 }
 
 int Eventq::get_event(t_event event[], int len)
 {
 	int event_num;
-
-	pthread_mutex_lock(&_mutex_change_list);
-	std::vector<t_event> tmp_list(_change_list);
-	pthread_mutex_unlock(&_mutex_change_list);
-	event_num = kevent(_kq, tmp_list.data(), tmp_list.size(), event, len, NULL);
-
-	while (USER)
+	std::vector<t_event> tmp_list;
+	
+	do
+	{
+		{
+			ScopeLock lock(&_mutex_change_list);
+			tmp_list = _change_list;
+		}
+		event_num = kevent(_kq, tmp_list.data(), tmp_list.size(), event, len, NULL);
+	} while (event_num == 1 && event[0].filter == EVFILT_USER && event[0].ident == NOTIFY_IDENT);
 	return (event_num);
 }
 

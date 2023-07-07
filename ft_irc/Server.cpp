@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:15:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 18:31:30 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int Server::run(void)
 		
 		for (i = 0; i < new_event; i++)
 		{
+			if (ev_list[i].filter == EVFILT_USER)
+				continue ;
 			if (ev_list[i].flags & EV_ERROR)
 			{
 				if ((int)ev_list[i].ident == _socket)
