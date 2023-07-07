@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 18:42:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 19:39:41 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Client::Client(int fd, ClientInfo &info)
 
 Client::~Client(void)
 {
+	leave_all_channel();
 	close(_fd);
 	pthread_mutex_destroy(&_client_input_m);
 	pthread_mutex_destroy(&_client_output_m);
@@ -45,9 +46,10 @@ bool Client::exist_output(void)
 {
 	bool res;
 
-	pthread_mutex_lock(&_client_output_m);
-	res = !_output_buf.empty();
-	pthread_mutex_unlock(&_client_output_m);
+	{
+		ScopeLock lock(&_client_output_m);
+		res = !_output_buf.empty();
+	}
 	return (res);
 }
 
@@ -61,8 +63,7 @@ int Client::client_read(void)
 	char buf[INPUT_BUF_SIZE];
 	int ret_recv;
 
-	if (pthread_mutex_trylock(&_client_input_m) != 0)
-		return (LOCK_FAIL);
+	ScopeLock lock(&_client_input_m);
 	// input 중복 문제 해결?
 	ret_recv = recv(_fd, buf, INPUT_BUF_SIZE - 1, 0);
 	if (ret_recv == 0)
@@ -72,14 +73,12 @@ int Client::client_read(void)
 		std::cout << _fd << " disconnected" << std::endl;
 		///
 
-		pthread_mutex_unlock(&_client_input_m);
 		return (DISCONNECT); //client disconnect
 	}
 	if (ret_recv < 0)
 	{
 		std::cout << _fd << std::endl;
 		std::cout << "Error occuar  " << errno << std::endl;
-		pthread_mutex_unlock(&_client_input_m);
 		return (ERROR);
 	}
 	buf[ret_recv] = 0;
@@ -104,22 +103,23 @@ int Client::client_read(void)
 	//}
 	///
 
-	pthread_mutex_unlock(&_client_input_m);
 	return (ret_recv);
 }
 
 int Client::client_write(void)
 {
 	int num_output = 0;
-// lock으로 그냥??
-	if (pthread_mutex_trylock(&_client_output_m) != 0)
-		return (LOCK_FAIL);
+
+	ScopeLock lock(&_client_output_m);
 	if (send(_fd, _output_buf.data(), _output_buf.length(), 0) == -1)
 	{
-		pthread_mutex_unlock(&_client_output_m);
 		return (ERROR);
 	}
 	_output_buf.clear();
-	pthread_mutex_unlock(&_client_output_m);
 	return (num_output);
+}
+
+void Client::leave_all_channel(void)
+{
+	
 }

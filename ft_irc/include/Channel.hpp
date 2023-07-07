@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:33:52 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:53:01 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 19:33:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ public:
 	~Channel(void);
 
 	int channel_output(std::string &content, int talker_fd);
+	int add_user(ClientRef client);
+	int remove_user(ClientRef client);
+
 private:
 	const std::string _name;
 	std::string _passwd;

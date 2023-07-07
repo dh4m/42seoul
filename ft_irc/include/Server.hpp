@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:07 by dham              #+#    #+#             */
-/*   Updated: 2023/06/22 16:05:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 19:24:25 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ public:
 
 	int init(void);
 	int run(void);
+	int destroy(void);
 private:
 	void _add_client(int fd);
 

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:21:08 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:55:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 19:30:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,6 @@ void ClientInfo::remove_client(int fd, const char *msg)
 		return ;
 	
 	// cl_list mutex 처리
-	// delete 전 과정 채널에서도지워야됨
-	//close(it->first);
-	//delete (it->second);
 	_cl_list.erase(it);
 	(void) msg;
 }

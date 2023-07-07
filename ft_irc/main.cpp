@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 19:14:23 by dham              #+#    #+#             */
-/*   Updated: 2023/06/24 18:38:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 19:24:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ int main(int argc, char *argv[])
 		return (1);
 	if (!serv.run())
 		return (2);
+	serv.destroy();
 	return (0);
 }

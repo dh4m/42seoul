@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 18:44:48 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/07 19:22:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ int Eventq::get_event(t_event event[], int len)
 	{
 		{
 			ScopeLock lock(&_mutex_change_list);
-			tmp_list = _change_list;
+			if (_change_list.size())
+			{
+				tmp_list = _change_list;
+				_change_list.clear();
+			}
 		}
 		event_num = kevent(_kq, tmp_list.data(), tmp_list.size(), event, len, NULL);
 	} while (event_num == 1 && event[0].filter == EVFILT_USER && event[0].ident == NOTIFY_IDENT);
