@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 18:46:31 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/09 17:57:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void *Worker::_worker_thread_func(void *args)
 	ClientRef op_cl;
 	Eventq &ev_q = Eventq::getInstance();
 	Operator operate_cmd(info._client);
+	std::string input;
 
 	while (1)
 	{
@@ -95,7 +96,8 @@ void *Worker::_worker_thread_func(void *args)
 		{
 			std::cout << op_cl->get_fd() << " read accept!!!" << std::endl;
 			op_cl->client_read();
-			operate_cmd(op_cl->get_input_buffer(), op_cl);
+			op_cl->get_input_buffer(input);
+			operate_cmd(input, op_cl);
 			ev_q.reg_event(op_cl->get_fd(), EVFILT_READ, EV_ENABLE, 0, 0, NULL);
 		}
 		else if (curr_msg.cmd == M_WRITE)

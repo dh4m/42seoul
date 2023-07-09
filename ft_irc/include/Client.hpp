@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 19:29:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/09 17:52:33 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ public:
 
 	void add_output(std::string &str);
 	int get_fd(void) const;
-	const std::string &get_input_buffer(void);
+	void get_input_buffer(std::string &str);
 	int client_read(void);
 	int client_write(void);
 	bool exist_output(void);

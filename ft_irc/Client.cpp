@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 19:39:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/09 18:03:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ Client::~Client(void)
 
 void Client::add_output(std::string &str)
 {
-	// 순서 보장 문제
 	{
 		ScopeLock lock(&_client_output_m);
 		_output_buf += str;
@@ -92,17 +91,6 @@ int Client::client_read(void)
 		_info_another.server_all_notice(_input_buf, _fd);
 		_input_buf.clear();
 	}
-
-	//if (_input_buf.find(CRLF))
-	//{
-
-		// _info_another.find_chan("chan_name")
-		// for (t_clientlist::iterator it = _info_another.)
-		// add_output(_input_buf);
-		// _input_buf.clear();
-	//}
-	///
-
 	return (ret_recv);
 }
 
@@ -122,4 +110,21 @@ int Client::client_write(void)
 void Client::leave_all_channel(void)
 {
 	
+}
+
+void Client::get_input_buffer(std::string &str)
+{
+	int del = 0;
+
+	{
+		ScopeLock lock(&_client_input_m);
+		del = _input_buf.find(CRLF);
+		if (del != std::string::npos)
+		{
+			str = _input_buf.substr(0, del + 2);
+			_input_buf = _input_buf.substr(del + 2);
+		}
+		else
+			str.clear();
+	}
 }

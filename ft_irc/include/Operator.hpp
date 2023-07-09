@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 22:01:36 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/09 17:26:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,28 @@
 #ifndef OPERATOR_HPP
 # define OPERATOR_HPP
 
+#include <vector>
+
 #include "ClientInfo.hpp"
+
+enum e_command
+{
+	CMD_PASS, 
+	CMD_NICK,
+	CMD_USER,
+	CMD_JOIN,
+	CMD_PRIVMSG,
+	CMD_NOTICE,
+	CMD_OPER,
+	CMD_KILL,
+	CMD_KICK,
+	CMD_INVITE,
+	CMD_MODE,
+	CMD_TOPIC,
+	CMD_QUIT,
+	CMD_PART,
+	UNKNOWN
+};
 
 enum e_reply
 {
@@ -31,12 +52,28 @@ public:
 	int operator()(const std::string &cmd_str, ClientRef sender);
 private:
 	int _parsing_msg(void);
-
-
+	int _pass(void);
+	int _nick(void);
+	int _user(void);
+	int _join(void);
+	int _privmsg(void);
+	int _notice(void);
+	int _oper(void);
+	int _kill(void);
+	int _kick(void);
+	int _invite(void);
+	int _mode(void);
+	int _topic(void);
+	int _quit(void);
+	int _part(void);
 
 	ClientInfo &_info;
-	std::string _cmd;
-	int _sender_fd;
+	std::string _cmd_str;
+	ClientRef _sender;
+
+	std::string _prefix;
+	int _command;
+	std::vector<std::string> _argu;
 
 	Operator(const Operator &copy);
 	Operator	&operator=(const Operator &copy);
