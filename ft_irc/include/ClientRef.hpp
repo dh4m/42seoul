@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:58:28 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:16:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:29:55 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 struct ClientRefSet
 {
-	ClientRefSet(int fd, ClientInfo &info);
+	ClientRefSet(int fd);
 	Client	_client;
 	pthread_mutex_t _mut_cnt;
 	int		_cnt;
@@ -40,7 +40,7 @@ public:
 	bool		operator!=(const ClientRef &cmp) const;
 	bool		operator!(void) const;
 	
-	static ClientRef make_ClientRef(int fd, ClientInfo &info);
+	static ClientRef make_ClientRef(int fd);
 	static ClientRef NullClientRef(void);
 private:
 	void _delete_object(void);

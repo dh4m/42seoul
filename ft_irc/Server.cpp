@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 19:27:23 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:30:46 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,5 @@ int Server::destroy(void)
 {
 	_ev_q.destroy_eventq();
 	close(_socket);
+	return (1);
 }

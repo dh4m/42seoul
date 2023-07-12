@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:59:20 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:16:57 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:29:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,11 @@ bool ClientRef::operator!(void) const
 	return (_alloc_data == NULL);
 }
 
-ClientRef ClientRef::make_ClientRef(int fd, ClientInfo &info)
+ClientRef ClientRef::make_ClientRef(int fd)
 {
 	ClientRef ret_ref;
 
-	ret_ref._alloc_data = new ClientRefSet(fd, info);
+	ret_ref._alloc_data = new ClientRefSet(fd);
 	pthread_mutex_init(&ret_ref._alloc_data->_mut_cnt, NULL);
 	return (ret_ref);
 }
@@ -115,6 +115,6 @@ void ClientRef::_delete_object(void)
 	_alloc_data = NULL;
 }
 
-ClientRefSet::ClientRefSet(int fd, ClientInfo &info)
-: _client(fd, info), _cnt(1)
+ClientRefSet::ClientRefSet(int fd)
+: _client(fd), _cnt(1)
 {}

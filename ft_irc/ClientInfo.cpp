@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:21:08 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 16:57:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:30:30 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ClientInfo::~ClientInfo(void)
 
 void ClientInfo::add_client(int fd)
 {
-	ClientRef cl = ClientRef::make_ClientRef(fd, *this);
+	ClientRef cl = ClientRef::make_ClientRef(fd);
 
 	pthread_rwlock_wrlock(&_cl_list_lock);
 	_cl_list.insert(std::pair<int, ClientRef>(fd, cl));

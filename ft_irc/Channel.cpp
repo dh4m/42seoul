@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:34:09 by dham              #+#    #+#             */
-/*   Updated: 2023/07/01 21:52:41 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:23:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,5 @@ int Channel::channel_output(std::string &content, int talker_fd)
 			(*it)->add_output(content);
 		}
 	}
+	return (1);
 }

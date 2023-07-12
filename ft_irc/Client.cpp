@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 19:43:01 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:28:39 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <iostream>
 #include <unistd.h>
 
-Client::Client(int fd, ClientInfo &info)
+Client::Client(int fd)
 : _fd(fd), _user_state(NEEDPASS)
 {
 	pthread_mutex_init(&_client_input_m, NULL);
@@ -144,7 +144,7 @@ void Client::get_input_buffer(std::string &str)
 	{
 		ScopeLock lock(&_client_input_m);
 		del = _input_buf.find(CRLF);
-		if (del != std::string::npos)
+		if (del != (int)std::string::npos)
 		{
 			str = _input_buf.substr(0, del + 2);
 			_input_buf = _input_buf.substr(del + 2);

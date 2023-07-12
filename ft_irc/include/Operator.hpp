@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 19:38:17 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:31:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #include "ClientInfo.hpp"
 
-enum e_command
+enum e_cmd_msg
 {
 	CMD_PASS, 
 	CMD_NICK,

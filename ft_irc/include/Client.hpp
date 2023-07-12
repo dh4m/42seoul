@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 17:16:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 20:28:50 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ class ClientInfo;
 class Client
 {
 public:
-	Client(int fd, ClientInfo &info);
+	Client(int fd);
 	~Client(void);
 
 	void pass_client(void);
