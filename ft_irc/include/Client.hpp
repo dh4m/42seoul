@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 17:52:33 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 17:16:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ enum e_clientmode
 	OPERATOR
 };
 
+enum e_userstate
+{
+	NEEDPASS,
+	NEEDNICK,
+	NEEDUSER,
+	AVAIL_USER
+};
+
 class ClientInfo;
 
 class Client
@@ -47,6 +55,12 @@ class Client
 public:
 	Client(int fd, ClientInfo &info);
 	~Client(void);
+
+	void pass_client(void);
+	void nick_set(std::string &nick);
+	void user_init(std::string &user, std::string &real);
+
+	int avail_client(void);
 
 	void add_output(std::string &str);
 	int get_fd(void) const;
@@ -58,7 +72,11 @@ public:
 
 private:
 	int _fd;
-	ClientInfo &_info_another;
+	std::string _username;
+	std::string _nickname;
+	std::string _realname;
+
+	int _user_state;
 
 	std::string _input_buf;
 	pthread_mutex_t _client_input_m;

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 17:57:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 19:40:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ void *Worker::_worker_thread_func(void *args)
 			std::cout << op_cl->get_fd() << " read accept!!!" << std::endl;
 			op_cl->client_read();
 			op_cl->get_input_buffer(input);
-			operate_cmd(input, op_cl);
+			if (!input.empty())
+				operate_cmd.cmd_proc(input, op_cl);
 			ev_q.reg_event(op_cl->get_fd(), EVFILT_READ, EV_ENABLE, 0, 0, NULL);
 		}
 		else if (curr_msg.cmd == M_WRITE)

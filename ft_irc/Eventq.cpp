@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:05:07 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 19:22:28 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 17:18:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int Eventq::init(void)
 		return (0);
 	}
 	pthread_mutex_init(&_mutex_change_list, NULL);
-	EV_SET(&temp, NOTIFY_IDENT, EVFILT_USER, EV_ADD | EV_ENABLE, 0, 0, NULL);
+	EV_SET(&temp, NOTIFY_IDENT, EVFILT_USER, EV_ADD | EV_ENABLE | EV_CLEAR, 0, 0, NULL);
 	kevent(_kq, &temp, 1, NULL, 0, NULL);
 	return (1);
 }

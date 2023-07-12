@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 17:29:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 19:40:58 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ Operator::~Operator(void)
 
 }
 
-int Operator::operator()(const std::string &cmd_str, ClientRef sender)
+int Operator::cmd_proc(const std::string &cmd_str, ClientRef sender)
 {
 	int res = 0;
 
@@ -85,5 +85,6 @@ int Operator::operator()(const std::string &cmd_str, ClientRef sender)
 	default:
 		break;
 	}
+	_argu.clear();
 	return (1);
 }

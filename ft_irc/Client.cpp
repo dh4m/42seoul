@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 18:03:44 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 19:43:01 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 Client::Client(int fd, ClientInfo &info)
-: _fd(fd), _info_another(info)
+: _fd(fd), _user_state(NEEDPASS)
 {
 	pthread_mutex_init(&_client_input_m, NULL);
 	pthread_mutex_init(&_client_output_m, NULL);
@@ -30,6 +30,30 @@ Client::~Client(void)
 	close(_fd);
 	pthread_mutex_destroy(&_client_input_m);
 	pthread_mutex_destroy(&_client_output_m);
+}
+
+/// 유저인증과정 개선   
+void Client::pass_client(void)
+{
+	_user_state = NEEDNICK;
+}
+
+void Client::nick_set(std::string &nick)
+{
+	_nickname = nick;
+	_user_state = NEEDUSER;
+}
+
+void Client::user_init(std::string &user, std::string &real)
+{
+	_username = user;
+	_realname = real;
+	_user_state = AVAIL_USER;
+}
+
+int Client::avail_client(void)
+{
+	return (_user_state);
 }
 
 void Client::add_output(std::string &str)
@@ -85,12 +109,13 @@ int Client::client_read(void)
 	
 	///
 	std::cout << _fd << " input " << _input_buf << std::endl;
-
+/*
 	if (_input_buf.find(CRLF))
 	{
 		_info_another.server_all_notice(_input_buf, _fd);
 		_input_buf.clear();
 	}
+*/
 	return (ret_recv);
 }
 

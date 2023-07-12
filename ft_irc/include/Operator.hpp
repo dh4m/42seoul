@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 17:26:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/12 19:38:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ public:
 	Operator(ClientInfo &info);
 	~Operator(void);
 
-	int operator()(const std::string &cmd_str, ClientRef sender);
+	int cmd_proc(const std::string &cmd_str, ClientRef sender);
 private:
 	int _parsing_msg(void);
 	int _pass(void);
