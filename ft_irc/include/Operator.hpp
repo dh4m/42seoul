@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 20:31:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/14 18:44:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <vector>
 
 #include "ClientInfo.hpp"
+
+#define SPACE ' '
 
 enum e_cmd_msg
 {
@@ -52,6 +54,10 @@ public:
 	int cmd_proc(const std::string &cmd_str, ClientRef sender);
 private:
 	int _parsing_msg(void);
+	int _prefix_setting(void);
+	int _cmd_setting(void);
+	void _argu_setting(void);
+
 	int _pass(void);
 	int _nick(void);
 	int _user(void);
@@ -69,11 +75,13 @@ private:
 
 	ClientInfo &_info;
 	std::string _cmd_str;
+	size_t _cmd_idx;
 	ClientRef _sender;
 
 	std::string _prefix;
 	int _command;
 	std::vector<std::string> _argu;
+	size_t _argu_idx;
 
 	Operator(const Operator &copy);
 	Operator	&operator=(const Operator &copy);
