@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 20:28:50 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/16 21:49:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,15 @@ enum e_result
 	SUCCESS = 1
 };
 
-enum e_clientmode
-{
-	INVISIBLE,
-	NOTICE,
-	OPERATOR
-};
-
 enum e_userstate
 {
 	NEEDPASS,
 	NEEDNICK,
 	NEEDUSER,
-	AVAIL_USER
+	AVAIL_USER,
+	OPERATOR,
+	UNAVAIL_USER
 };
-
-class ClientInfo;
 
 class Client
 {
@@ -58,8 +51,8 @@ public:
 
 	void pass_client(void);
 	void nick_set(std::string &nick);
+	std::string get_nick(void);
 	void user_init(std::string &user, std::string &real);
-
 	int avail_client(void);
 
 	void add_output(std::string &str);
@@ -74,6 +67,7 @@ private:
 	int _fd;
 	std::string _username;
 	std::string _nickname;
+	pthread_mutex_t _client_nickname_m;
 	std::string _realname;
 
 	int _user_state;

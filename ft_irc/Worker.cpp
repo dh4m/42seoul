@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 20:15:49 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/16 18:48:09 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void *Worker::_worker_thread_func(void *args)
 	t_msg curr_msg;
 	ClientRef op_cl;
 	Eventq &ev_q = Eventq::getInstance();
-	Operator operate_cmd(info._client);
+	Operator operate_cmd(info._client, info._passwd);
 	std::string input;
 
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:20:58 by dham              #+#    #+#             */
-/*   Updated: 2023/07/09 16:56:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/16 21:17:18 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 typedef std::map< std::string, Channel * > t_chanlist;
 typedef std::map< int, ClientRef > t_clientlist;
+typedef std::map< std::string, ClientRef > t_nicklist;
 
 class ClientInfo
 {
@@ -36,15 +37,18 @@ public:
 	void add_client(int fd);
 	ClientRef find_client(int fd);
 	void remove_client(int fd, const char *msg);
+	int client_nick_change(int fd, std::string nick);
 
 	void add_chan(const std::string &name);
+	int join_chan(const std::string &name, ClientRef ref);
 	Channel *find_chan(const std::string &name);
 	void remove_chan(const std::string &name, const char *msg);
-
-	int server_all_notice(std::string &str, int talker_fd);
 private:
 	t_clientlist _cl_list;
 	pthread_rwlock_t _cl_list_lock;
+
+	t_nicklist _cl_nick_list;
+	pthread_rwlock_t _cl_nick_list_lock;
 
 	t_chanlist _channel;
 

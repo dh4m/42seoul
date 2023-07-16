@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 20:28:39 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/16 21:49:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Client::Client(int fd)
 {
 	pthread_mutex_init(&_client_input_m, NULL);
 	pthread_mutex_init(&_client_output_m, NULL);
+	pthread_mutex_init(&_client_nickname_m, NULL);
 }
 
 Client::~Client(void)
@@ -30,6 +31,7 @@ Client::~Client(void)
 	close(_fd);
 	pthread_mutex_destroy(&_client_input_m);
 	pthread_mutex_destroy(&_client_output_m);
+	pthread_mutex_destroy(&_client_nickname_m);
 }
 
 /// 유저인증과정 개선   
@@ -40,8 +42,12 @@ void Client::pass_client(void)
 
 void Client::nick_set(std::string &nick)
 {
-	_nickname = nick;
-	_user_state = NEEDUSER;
+	{
+		ScopeLock lock(&_client_nickname_m);
+		_nickname = nick;
+	}
+	if (_user_state == NEEDNICK)
+		_user_state = NEEDUSER;
 }
 
 void Client::user_init(std::string &user, std::string &real)
@@ -54,6 +60,13 @@ void Client::user_init(std::string &user, std::string &real)
 int Client::avail_client(void)
 {
 	return (_user_state);
+}
+
+std::string Client::get_nick(void)
+{
+	ScopeLock lock(&_client_nickname_m);
+	std::string ret_nick = _nickname;
+	return (ret_nick);
 }
 
 void Client::add_output(std::string &str)
@@ -109,13 +122,6 @@ int Client::client_read(void)
 	
 	///
 	std::cout << _fd << " input " << _input_buf << std::endl;
-/*
-	if (_input_buf.find(CRLF))
-	{
-		_info_another.server_all_notice(_input_buf, _fd);
-		_input_buf.clear();
-	}
-*/
 	return (ret_recv);
 }
 
@@ -139,14 +145,14 @@ void Client::leave_all_channel(void)
 
 void Client::get_input_buffer(std::string &str)
 {
-	int del = 0;
+	size_t del = 0;
 
 	{
 		ScopeLock lock(&_client_input_m);
 		del = _input_buf.find(CRLF);
-		if (del != (int)std::string::npos)
+		if (del != std::string::npos)
 		{
-			str = _input_buf.substr(0, del + 2);
+			str = _input_buf.substr(0, del);
 			_input_buf = _input_buf.substr(del + 2);
 		}
 		else
