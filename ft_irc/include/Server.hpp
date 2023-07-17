@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:07 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 19:24:25 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/17 19:23:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 #include <sys/types.h>
 
 #define COUNTOF(_x) (sizeof(_x) / sizeof((_x)[0]))
+#define SERVER_NAME "ftirc.local"
+#define OPER_NAME "root"
+#define OPER_PASSWD "ircishard"
 
 class Server
 {

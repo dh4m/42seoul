@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:20:58 by dham              #+#    #+#             */
-/*   Updated: 2023/07/16 21:17:18 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/17 19:59:23 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ public:
 
 	void add_client(int fd);
 	ClientRef find_client(int fd);
+	ClientRef find_client(std::string nick);
 	void remove_client(int fd, const char *msg);
 	int client_nick_change(int fd, std::string nick);
 
 	void add_chan(const std::string &name);
-	int join_chan(const std::string &name, ClientRef ref);
+	int join_chan(const std::string &name, const std::string key, ClientRef ref);
+	int leave_chan(const std::string &name, ClientRef ref);
 	Channel *find_chan(const std::string &name);
 	void remove_chan(const std::string &name, const char *msg);
 private:

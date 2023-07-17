@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:33:52 by dham              #+#    #+#             */
-/*   Updated: 2023/07/07 19:33:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/17 13:15:49 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include <set>
 #include <string>
 #include <bitset>
+#include <pthread.h>
+#include <ScopeLock.hpp>
 
 #include "Client.hpp"
 #include "ClientRef.hpp"
@@ -25,8 +27,7 @@
 enum e_chanmode
 {
 	INVITEONLY,
-	TOPICEXIST,
-	MODERATED
+	TOPICRESTRICT
 };
 
 class Channel
@@ -37,15 +38,37 @@ public:
 
 	int channel_output(std::string &content, int talker_fd);
 	int add_user(ClientRef client);
+	int add_operator(ClientRef client);
 	int remove_user(ClientRef client);
+	int remove_operator(ClientRef client);
+
+	int is_user(ClientRef client);
+	int is_operator(ClientRef client);
+
+	int add_invite(ClientRef client);
+
+	size_t limit_memb(void);
+	size_t curr_memb(void);
+
+	int set_topic(std::string topic);
+	int set_limit(std::string topic);
+	int set_passwd(std::string topic);
+	int mode_set(int mode);
+	int mode_unset(int mode);
 
 private:
 	const std::string _name;
 	std::string _passwd;
+	std::string _topic;
+
 	std::set<ClientRef> _member;
+	pthread_mutex_t _member_m;
+
 	std::set<ClientRef> _operator;
-	std::set<ClientRef> _ban_list;
-	std::bitset<3> _mode;
+	std::bitset<2> _mode;
+
+	std::set<ClientRef> _invite_list;
+	size_t _user_limit;
 
 	Channel	&operator=(const Channel &copy);
 	Channel(const Channel &copy);

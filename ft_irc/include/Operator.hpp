@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/16 21:04:58 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/17 18:20:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # define OPERATOR_HPP
 
 #include <vector>
+#include <string>
+#include <sstream>
 
+#include "Server.hpp"
 #include "ClientInfo.hpp"
 
 #define SPACE ' '
@@ -36,7 +39,7 @@ enum e_cmd_msg
 	CMD_TOPIC,
 	CMD_QUIT,
 	CMD_PART,
-	CMD_PONG,
+	CMD_PING,
 	UNKNOWN
 };
 
@@ -74,7 +77,9 @@ private:
 	int _topic(void);
 	int _quit(void);
 	int _part(void);
-	int _pong(void);
+	int _ping(void);
+
+	std::string _reply_make(int reply);
 
 	ClientInfo &_info;
 	std::string _cmd_str;

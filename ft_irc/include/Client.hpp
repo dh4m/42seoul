@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/16 21:49:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/17 19:25:56 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ public:
 	void pass_client(void);
 	void nick_set(std::string &nick);
 	std::string get_nick(void);
+	std::string get_user(void);
+	std::string get_host(void);
 	void user_init(std::string &user, std::string &real);
 	int avail_client(void);
+	int set_user_state(int state);
 
 	void add_output(std::string &str);
 	int get_fd(void) const;
@@ -63,6 +66,7 @@ public:
 	bool exist_output(void);
 	void leave_all_channel(void);
 
+	int include_chan(std::string &channame);
 private:
 	int _fd;
 	std::string _username;
