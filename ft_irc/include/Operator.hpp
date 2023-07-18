@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/17 18:20:57 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/18 22:10:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,36 @@ enum e_reply
 {
 	ERR_ALREADYRGISTRED,
 	ERR_NEEDMOREPARAMS,
-	ERR_PASSWDMISMATCH
+	ERR_PASSWDMISMATCH,
+	ERR_NICKNAMEINUSE,
+	ERR_ERRONEUSNICKNAME,
+	ERR_NONICKNAMEGIVEN,
+	ERR_INVITEONLYCHAN,
+	ERR_BADCHANNELKEY,
+	ERR_CHANNELISFULL,
+	ERR_NOSUCHCHANNEL,
+	ERR_NORECIPIENT,
+	ERR_CANNOTSENDTOCHAN,
+	ERR_NOSUCHNICK,
+	ERR_NOTEXTTOSEND,
+	ERR_NOOPERHOST,
+	ERR_NOTONCHANNEL,
+	ERR_CHANOPRIVSNEEDED,
+	ERR_USERONCHANNEL,
+	ERR_UNKNOWNMODE,
+	ERR_USERSDONTMATCH,
+	ERR_UMODEUNKNOWNFLAG,
+
+	RPL_WELCOME,
+	RPL_TOPIC,
+	RPL_NAMREPLY,
+	RPL_ENDOFNAMES,
+	RPL_YOUREOPER,
+	RPL_NOTOPIC,
+	RPL_INVITING,
+	RPL_CHANNELMODEIS,
+	RPL_ENDOFBANLIST,
+	RPL_UMODEIS
 };
 
 class Operator
@@ -79,7 +108,7 @@ private:
 	int _part(void);
 	int _ping(void);
 
-	std::string _reply_make(int reply);
+	int _reply_send(int reply, std::string param);
 
 	ClientInfo &_info;
 	std::string _cmd_str;
@@ -89,6 +118,7 @@ private:
 
 	std::string _prefix;
 	int _command;
+	std::string _command_str;
 	std::vector<std::string> _argu;
 
 	std::string _passwd;

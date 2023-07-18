@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/17 19:59:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/18 22:13:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,35 +113,35 @@ int Operator::_prefix_setting(void)
 int Operator::_cmd_setting(void)
 {
 	size_t cmd_len = _cmd_str.find(SPACE, _cmd_idx) - _cmd_idx;
-	std::string cmd = _cmd_str.substr(_cmd_idx, cmd_len);
+	std::string _command_str = _cmd_str.substr(_cmd_idx, cmd_len);
 
-	if (cmd == "PASS")
+	if (_command_str == "PASS")
 		_command = CMD_PASS;
-	else if (cmd == "NICK")
+	else if (_command_str == "NICK")
 		_command = CMD_NICK;
-	else if (cmd == "USER")
+	else if (_command_str == "USER")
 		_command = CMD_USER;
-	else if (cmd == "JOIN")
+	else if (_command_str == "JOIN")
 		_command = CMD_JOIN;
-	else if (cmd == "PRIVMSG")
+	else if (_command_str == "PRIVMSG")
 		_command = CMD_PRIVMSG;
-	else if (cmd == "NOTICE")
+	else if (_command_str == "NOTICE")
 		_command = CMD_NOTICE;
-	else if (cmd == "OPER")
+	else if (_command_str == "OPER")
 		_command = CMD_OPER;
-	else if (cmd == "KICK")
+	else if (_command_str == "KICK")
 		_command = CMD_KICK;
-	else if (cmd == "INVITE")
+	else if (_command_str == "INVITE")
 		_command = CMD_INVITE;
-	else if (cmd == "MODE")
+	else if (_command_str == "MODE")
 		_command = CMD_MODE;
-	else if (cmd == "TOPIC")
+	else if (_command_str == "TOPIC")
 		_command = CMD_TOPIC;
-	else if (cmd == "QUIT")
+	else if (_command_str == "QUIT")
 		_command = CMD_QUIT;
-	else if (cmd == "PART")
+	else if (_command_str == "PART")
 		_command = CMD_PART;
-	else if (cmd == "PING")
+	else if (_command_str == "PING")
 		_command = CMD_PING;
 	else
 		_command = UNKNOWN;
@@ -184,18 +184,18 @@ int Operator::_pass(void)
 {
 	if ((*_sender).avail_client() != NEEDPASS)
 	{
-		; // ERR_ALREADYRGISTRED
+		_reply_send(ERR_ALREADYRGISTRED, ""); // ERR_ALREADYRGISTRED
 		return (0);
 	}
 	if (_argu.empty())
 	{
-		; // ERR_NEEDMOREPARAMS
+		_reply_send(ERR_NEEDMOREPARAMS, ""); // ERR_NEEDMOREPARAMS
 		// 클라이언트 제거
 		return (0);
 	}
 	if (_argu[0] != _passwd)
 	{
-		; // ERR_PASSWDMISMATCH
+		_reply_send(ERR_PASSWDMISMATCH, ""); // ERR_PASSWDMISMATCH
 		// 클라이언트 제거
 		return (0);
 	}
@@ -400,15 +400,122 @@ int Operator::_ping(void) // good
 	return (1);
 }
 
-std::string Operator::_reply_make(int reply)
+int Operator::_reply_send(int reply, std::string param)
 {
+	std::stringstream cmd;
+
+	cmd << ":" << SERVER_NAME << " ";
 	switch (reply)
 	{
 	case ERR_ALREADYRGISTRED:
-		/* code */
+		cmd << "462 " << _sender->get_nick() << " :You may not reregister";
 		break;
-	
+	case ERR_NEEDMOREPARAMS:
+		cmd << "461 " << _sender->get_nick() << " " << _command_str \
+			<< " :Not enough parameters";
+		break;
+	case ERR_PASSWDMISMATCH:
+		cmd << "464 " << _sender->get_nick() << " :Password incorrect";
+		break;
+	case ERR_NICKNAMEINUSE:
+		cmd << "433 " << _sender->get_nick() << " " << param \
+			<< " :Nickname is already in use.";
+		break;
+	case ERR_ERRONEUSNICKNAME:
+		cmd << "432 " << _sender->get_nick() << " " << param \
+			<< " :Erroneus nickname";
+		break;
+	case ERR_NONICKNAMEGIVEN:
+		cmd << "431 " << _sender->get_nick() << " :No nickname given";
+		break;
+	case ERR_INVITEONLYCHAN:
+		cmd << "473 " << _sender->get_nick() << " " << param \
+			<< " :Cannot join channel (+i)";
+		break;
+	case ERR_BADCHANNELKEY:
+		cmd << "475 " << _sender->get_nick() << " " << param \
+			<< " :Cannot join channel (+k)";
+		break;
+	case ERR_CHANNELISFULL:
+		cmd << "471 " << _sender->get_nick() << " " << param \
+			<< " :Cannot join channel (+l)";
+		break;
+	case ERR_NOSUCHCHANNEL:
+		cmd << "403 " << _sender->get_nick() << " " << param \
+			<< " :No such channel";
+		break;
+	case ERR_NORECIPIENT:
+		cmd << "411 " << _sender->get_nick() 
+			<< " :No recipient given (" << param << ")";
+		break;
+	case ERR_CANNOTSENDTOCHAN:
+		cmd << "404 " << _sender->get_nick() << " " << param \
+			<< " :Cannot send to channel";
+		break;
+	case ERR_NOSUCHNICK:
+		cmd << "401 " << _sender->get_nick() << " " << param \
+			<< " :No such nick/channel";
+		break;
+	case ERR_NOTEXTTOSEND:
+		cmd << "412 " << _sender->get_nick() << " :No text to send";
+		break;
+	case ERR_NOOPERHOST:
+		cmd << "491 " << _sender->get_nick() << " :No O-lines for your host";
+		break;
+	case ERR_NOTONCHANNEL:
+		cmd << "442 " << _sender->get_nick() << " " << param \
+			<< " :You're not on that channel";
+		break;
+	case ERR_CHANOPRIVSNEEDED:
+		cmd << "482 " << _sender->get_nick() << " " << param \
+			<< " :You're not channel operator";
+		break;
+	case ERR_USERONCHANNEL:
+		cmd << "443 " << _sender->get_nick() << " " << param \
+			<< " :is already on channel";
+		break;
+	case ERR_UNKNOWNMODE:
+		cmd << "472 " << _sender->get_nick() << " " << param \
+			<< " :is unknown mode char to me";
+		break;
+	case ERR_USERSDONTMATCH:
+		cmd << "502 " << _sender->get_nick() << " :Cant change mode for other users";
+		break;
+	case ERR_UMODEUNKNOWNFLAG:
+		cmd << "501 " << _sender->get_nick() << " :Unknown MODE flag";
+		break;
+
+	case RPL_WELCOME:
+		cmd << "001 " << _sender->get_nick() << " :Welcome to the 42_IRC Network, " << param;
+		break;
+	case RPL_TOPIC:
+		cmd << "332 " << _sender->get_nick() << " " << param;
+		break;
+	case RPL_NAMREPLY:
+		cmd << "353 " << _sender->get_nick() << " = " << param;
+		break;
+	case RPL_ENDOFNAMES:
+		cmd << "366 " << _sender->get_nick() << " " << param << " :End of /NAMES list";
+		break;
+	case RPL_YOUREOPER:
+		cmd << "381 " << _sender->get_nick() << " :You are now an IRC operator";
+		break;
+	case RPL_NOTOPIC:
+		cmd << "331 " << _sender->get_nick() << " " << param << " :No topic is set";
+		break;
+	case RPL_INVITING:
+		cmd << "341 " << _sender->get_nick() << param;
+		break;
+	case RPL_CHANNELMODEIS:
+		break;
+	case RPL_ENDOFBANLIST:
+		break;
+	case RPL_UMODEIS:
+		break;
 	default:
-		break;
+		return (0);
 	}
+	std::string reply_str = cmd.str();
+	_sender->add_output(reply_str);
+	return (1);
 }

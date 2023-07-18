@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:21:08 by dham              #+#    #+#             */
-/*   Updated: 2023/07/16 20:33:07 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/18 18:42:48 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@
 ClientInfo::ClientInfo(void)
 {
 	pthread_rwlock_init(&_cl_list_lock, NULL);
-	pthread_rwlock_init(&_cl_nick_list_lock, NULL);
 }
 
 ClientInfo::~ClientInfo(void)
 {
 	pthread_rwlock_destroy(&_cl_list_lock);
-	pthread_rwlock_destroy(&_cl_nick_list_lock);
 }
 
 void ClientInfo::add_client(int fd)
@@ -49,17 +47,14 @@ ClientRef ClientInfo::find_client(int fd)
 
 void ClientInfo::remove_client(int fd, const char *msg)
 {
-	pthread_rwlock_rdlock(&_cl_list_lock);
+	pthread_rwlock_wrlock(&_cl_list_lock);
 	std::map<int, ClientRef>::iterator it = _cl_list.find(fd);
 	if (it == _cl_list.end())
 	{
 		pthread_rwlock_unlock(&_cl_list_lock);
 		return ;
 	}
-	pthread_rwlock_unlock(&_cl_list_lock);
-	
-	// cl_list mutex 처리
-	pthread_rwlock_wrlock(&_cl_list_lock);
+	_cl_nick_list.erase(it->second->get_nick());
 	_cl_list.erase(it);
 	pthread_rwlock_unlock(&_cl_list_lock);
 	(void) msg;
@@ -67,12 +62,16 @@ void ClientInfo::remove_client(int fd, const char *msg)
 
 int ClientInfo::client_nick_change(int fd, std::string nick)
 {
-	
+	;
 }
 
-void ClientInfo::add_chan(const std::string &name)
+int join_chan(const std::string &name, const std::string key, ClientRef ref)
 {
-	(void) name;
+	;
+}
+
+int leave_chan(const std::string &name, ClientRef ref)
+{
 	;
 }
 
@@ -80,12 +79,6 @@ Channel *ClientInfo::find_chan(const std::string &name)
 {
 	(void) name;
 	return (NULL);
-}
-
-void ClientInfo::remove_chan(const std::string &name, const char *msg)
-{
-	(void) name;
-	(void) msg;
 }
 
 /*

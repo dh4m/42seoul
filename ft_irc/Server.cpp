@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/07/12 20:30:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/18 20:11:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ Server::Server(int port, const char *passwd)
 }
 
 Server::~Server(void)
-{
-	close (_socket);
-}
+{}
 
 int Server::init(void)
 {
@@ -131,10 +129,9 @@ void Server::_add_client(int fd)
 {
 	std::cout << fd << " is new client" << std::endl;
 	fcntl(fd, F_SETFL, O_NONBLOCK);
+	_worker.add_client(fd);
 	_ev_q.reg_event(fd, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
 	_ev_q.reg_event(fd, EVFILT_WRITE, EV_ADD | EV_DISABLE, 0, 0, NULL);
-
-	_worker.add_client(fd);
 }
 
 int Server::destroy(void)

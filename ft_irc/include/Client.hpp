@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/17 19:25:56 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/18 18:29:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,9 @@ private:
 	int _fd;
 	std::string _username;
 	std::string _nickname;
-	pthread_mutex_t _client_nickname_m;
+	pthread_mutex_t _client_nickname_m; // rwlock 변경
 	std::string _realname;
+	std::string _passwd;
 
 	int _user_state;
 

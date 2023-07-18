@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/16 21:49:36 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/18 19:47:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 #include <unistd.h>
 
 Client::Client(int fd)
-: _fd(fd), _user_state(NEEDPASS)
+: _fd(fd), _user_state(NEEDPASS), \
+_username("*"), _realname("*"), _nickname("*")
 {
 	pthread_mutex_init(&_client_input_m, NULL);
 	pthread_mutex_init(&_client_output_m, NULL);
@@ -71,6 +72,7 @@ std::string Client::get_nick(void)
 
 void Client::add_output(std::string &str)
 {
+	str += CRLF;
 	{
 		ScopeLock lock(&_client_output_m);
 		_output_buf += str;
