@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/18 18:29:53 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 21:39:14 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ public:
 	std::string get_nick(void);
 	std::string get_user(void);
 	std::string get_host(void);
-	void user_init(std::string &user, std::string &real);
+	std::string get_prifix(void);
+	void user_init(std::string &user, std::string &host, std::string &real);
 	int avail_client(void);
 	int set_user_state(int state);
 
@@ -72,6 +73,7 @@ private:
 	std::string _username;
 	std::string _nickname;
 	pthread_mutex_t _client_nickname_m; // rwlock 변경
+	std::string _hostname;
 	std::string _realname;
 	std::string _passwd;
 

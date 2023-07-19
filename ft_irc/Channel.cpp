@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:34:09 by dham              #+#    #+#             */
-/*   Updated: 2023/07/17 13:05:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 21:45:43 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int Channel::is_operator(ClientRef client)
 
 }
 
-int Channel::add_invite(ClientRef client)
+int Channel::add_invite(std::string &user)
 {
 
 }

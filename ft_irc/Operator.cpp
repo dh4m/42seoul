@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/18 22:13:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 21:47:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ Operator::~Operator(void)
 int Operator::cmd_proc(const std::string &cmd_str, ClientRef sender)
 {
 	int res = 0;
+	int sender_del = 0;
 
 	_cmd_idx = 0;
 	_cmd_str = cmd_str;
@@ -30,7 +31,7 @@ int Operator::cmd_proc(const std::string &cmd_str, ClientRef sender)
 
 	if (!_parsing_msg())
 	{
-		return (0); // unknown cmd
+		return (1); // unknown cmd
 	}
 	switch (_command)
 	{
@@ -81,6 +82,8 @@ int Operator::cmd_proc(const std::string &cmd_str, ClientRef sender)
 	default:
 		break;
 	}
+	if (sender_del)
+		return (0);
 	return (1);
 }
 
@@ -161,7 +164,7 @@ void Operator::_argu_setting(void)
 	{
 		if (_cmd_str[_cmd_idx] == ':')
 		{
-			std::string cmd = _cmd_str.substr(_cmd_idx + 1);
+			std::string cmd = _cmd_str.substr(_cmd_idx);
 			_argu.push_back(cmd);
 			_cmd_idx = std::string::npos;
 		}
@@ -190,13 +193,13 @@ int Operator::_pass(void)
 	if (_argu.empty())
 	{
 		_reply_send(ERR_NEEDMOREPARAMS, ""); // ERR_NEEDMOREPARAMS
-		// 클라이언트 제거
+		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
 	if (_argu[0] != _passwd)
 	{
 		_reply_send(ERR_PASSWDMISMATCH, ""); // ERR_PASSWDMISMATCH
-		// 클라이언트 제거
+		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
 	_sender->pass_client();
@@ -248,33 +251,71 @@ int Operator::_user(void)
 	}
 	///////
 	///////
-	_sender->user_init(_argu[0], _argu[1]);
+	_argu[3].erase(0, 1); // :삭제
+	_sender->user_init(_argu[0], _argu[1], _argu[3]);
 }
 
 int Operator::_join(void)
 {
-	//////
-	/////////
-	if (!_info.join_chan(_argu[0], _argu[1], _sender))
+	if (_argu.size() == 0)
 	{
-		; // join실패
+		_reply_send(ERR_NEEDMOREPARAMS, "");
 		return (0);
 	}
+
+	int res;
+	std::stringstream chan_list(_argu[0]);
+	std::stringstream key_list;
+	if (_argu.size() == 2)
+		key_list << _argu[1];
 	else
+		key_list.clear();
+	std::string chan, key;
+	std::getline(chan_list, chan, ',');
+	std::getline(key_list, key, ',');
+	while (chan_list)
 	{
-		; // join 성공
+		if (res = _info.join_chan(chan, key, _sender)) // join 안에서 에러 처리
+		{
+			_reply_send(res, chan); // join실패
+		}
+		else
+		{
+			Channel *join_chan = _info.find_chan(chan);
+			std::string topic = join_chan->get_topic();
+			if (topic.empty())
+				_reply_send(RPL_NOTOPIC);
+			else
+				_reply_send(RPL_TOPIC);
+			_reply_send(RPL_NAMREPLY);
+			_reply_send(RPL_ENDOFNAMES);
+		}
+		std::getline(chan_list, chan, ',');
+		if (key_list)
+			std::getline(key_list, key, ',');
+		else
+			key = "";
 	}
 	return (1);
 }
 
 int Operator::_privmsg(void)
 {
-	//////
-	//////
+	if (_argu.size() < 2)
+	{
+		if (_argu.size() == 0 || _argu[0][0] == ':')
+		{
+			_reply_send(ERR_NORECIPIENT);
+		}
+		else
+		{
+			_reply_send(ERR_NOTEXTTOSEND);
+		}
+		return (0);
+	}
 	std::stringstream send_msgstream;
 	//prefix
-	send_msgstream << ":" << _sender->get_nick() << "!" << _sender->get_user()
-				<< "@" << _sender->get_host() << " ";
+	send_msgstream << _sender->get_prifix() << " ";
 	//cmd
 	send_msgstream << "PRIVMSG" << " ";
 	std::string send_msg = send_msgstream.str();
@@ -291,11 +332,14 @@ int Operator::_privmsg(void)
 			if (_sender->include_chan(recv))
 			{
 				Channel *recv_chan = _info.find_chan(recv);
-				recv_chan->channel_output(full_msg, _sender->get_fd());
+				if (recv_chan)
+					recv_chan->channel_output(full_msg, _sender->get_fd());
+				else
+					_reply_send(ERR_CANNOTSENDTOCHAN);
 			}
 			else
 			{
-				;// ERR_CANNOTSENDTOCHAN
+				_reply_send(ERR_CANNOTSENDTOCHAN);
 			}
 		}
 		else
@@ -303,7 +347,7 @@ int Operator::_privmsg(void)
 			ClientRef recv_cl = _info.find_client(recv); // user send
 			if (!recv_cl)
 			{
-				;// 유저 없음
+				_reply_send(ERR_NOSUCHNICK);// 유저 없음
 			}
 			else
 				recv_cl->add_output(full_msg);
@@ -320,27 +364,91 @@ int Operator::_notice(void)
 
 int Operator::_oper(void)
 {
-	//////
-	//////
-	//////
-	if (_argu[0] != OPER_NAME || _argu[1] != OPER_PASSWD)
+	if (_argu.size() < 2)
 	{
-		; // 넌 나가라
+		_reply_send(ERR_NEEDMOREPARAMS);
+		return (0);
+	}
+	if (_argu[0] != OPER_NAME)
+	{
+		_reply_send(ERR_NOOPERHOST);
+	}
+	if (_argu[1] != OPER_PASSWD)
+	{
+		_reply_send(ERR_PASSWDMISMATCH);
 	}
 	_sender->set_user_state(OPERATOR);
+	_reply_send(RPL_YOUREOPER);
 }
 
 int Operator::_kick(void)
 {
-	////
-	////
-	//////only operator
-	;
+	if (_argu.size() < 2)
+	{
+		_reply_send(ERR_NEEDMOREPARAMS);
+		return (0);
+	}
+	Channel *kick_chan = _info.find_chan(_argu[0]);
+	if (!kick_chan)
+	{
+		_reply_send(ERR_NOSUCHCHANNEL);
+		return (0);
+	}
+	if (_sender->include_chan(_argu[0]))
+	{
+		if (kick_chan->is_operator(_sender) || _sender->avail_client() == OPERATOR)
+		{
+			; ///// kick 수행
+		}
+		else
+		{
+			_reply_send(ERR_CHANOPRIVSNEEDED);
+			return (0);
+		}
+	}
+	else
+	{
+		_reply_send(ERR_NOTONCHANNEL);
+		return (0);
+	}
 }
 
 int Operator::_invite(void)
 {
-	;
+	if (_argu.size() < 2)
+	{
+		_reply_send(ERR_NEEDMOREPARAMS);
+		return (0);
+	}
+	ClientRef invite_cl = _info.find_client(_argu[0]);
+	if (!invite_cl)
+	{
+		_reply_send(ERR_NOSUCHNICK);
+		return (0);
+	}
+	if (!_sender->include_chan(_argu[1]))
+	{
+		_reply_send(ERR_NOTONCHANNEL);
+		return (0);
+	}
+	if (invite_cl->include_chan(_argu[1]))
+	{
+		_reply_send(ERR_USERONCHANNEL);
+		return (0);
+	}
+	Channel *invite_chan = _info.find_chan(_argu[1]);
+	if (!invite_chan->is_operator(_sender))
+	{
+		_reply_send(ERR_CHANOPRIVSNEEDED);
+		return (0);
+	}
+	invite_chan->add_invite(_argu[0]);
+	std::stringstream send_msg;
+	send_msg << _sender->get_prifix() << " INVITE " << _argu[0] << " " << _argu[1];
+	std::string invite_msg = send_msg.str();
+	invite_cl->add_output(invite_msg);
+	_reply_send(RPL_INVITING);
+	return (1);
 }
 
 int Operator::_mode(void)
@@ -393,7 +501,7 @@ int Operator::_ping(void) // good
 	pong_msg += SERVER_NAME;
 	if (!_argu.empty())
 	{
-		pong_msg += " :";
+		pong_msg += " ";
 		pong_msg += _argu[0];
 	}
 	_sender->add_output(pong_msg);
@@ -504,13 +612,13 @@ int Operator::_reply_send(int reply, std::string param)
 		cmd << "331 " << _sender->get_nick() << " " << param << " :No topic is set";
 		break;
 	case RPL_INVITING:
-		cmd << "341 " << _sender->get_nick() << param;
+		cmd << "341 " << _sender->get_nick() << " " << param; // doc 참조
 		break;
 	case RPL_CHANNELMODEIS:
-		break;
-	case RPL_ENDOFBANLIST:
+		cmd << "324 " << _sender->get_nick() << " " << param; // doc 참조
 		break;
 	case RPL_UMODEIS:
+		cmd << "221 " << _sender->get_nick() << " " << param;
 		break;
 	default:
 		return (0);

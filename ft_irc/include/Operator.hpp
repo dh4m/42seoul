@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/18 22:10:54 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 15:29:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ enum e_reply
 	RPL_NOTOPIC,
 	RPL_INVITING,
 	RPL_CHANNELMODEIS,
-	RPL_ENDOFBANLIST,
 	RPL_UMODEIS
 };
 

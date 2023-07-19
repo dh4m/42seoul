@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/16 18:48:09 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 16:47:45 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void *Worker::_worker_thread_func(void *args)
 
 	while (1)
 	{
+		op_cl = ClientRef::NullClientRef();
 		pthread_mutex_lock(&q._msgq_m);
 		while (q._messageQ.empty())
 		{
@@ -102,15 +103,15 @@ void *Worker::_worker_thread_func(void *args)
 				operate_cmd.cmd_proc(input, op_cl);
 				op_cl->get_input_buffer(input);
 			}
-			ev_q.reg_event(op_cl->get_fd(), EVFILT_READ, EV_ENABLE, 0, 0, NULL);
+			if (op_cl->avail_client() != UNAVAIL_USER)
+				ev_q.reg_event(op_cl->get_fd(), EVFILT_READ, EV_ENABLE, 0, 0, NULL);
 		}
 		else if (curr_msg.cmd == M_WRITE)
 		{
 			op_cl->client_write();
-			if (op_cl->exist_output())
+			if (op_cl->exist_output() && op_cl->avail_client() != UNAVAIL_USER)
 				ev_q.reg_event(op_cl->get_fd(), EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
 		}
-		op_cl = ClientRef::NullClientRef();
 	}
 	return (NULL);
 }

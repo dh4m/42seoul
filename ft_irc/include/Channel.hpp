@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:33:52 by dham              #+#    #+#             */
-/*   Updated: 2023/07/17 13:15:49 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 21:45:47 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ public:
 	int is_user(ClientRef client);
 	int is_operator(ClientRef client);
 
-	int add_invite(ClientRef client);
+	int add_invite(std::string &user);
 
 	size_t limit_memb(void);
 	size_t curr_memb(void);
@@ -56,6 +56,8 @@ public:
 	int mode_set(int mode);
 	int mode_unset(int mode);
 
+	std::string get_topic(void);
+	std::string get_namelist(void);
 private:
 	const std::string _name;
 	std::string _passwd;
@@ -67,7 +69,8 @@ private:
 	std::set<ClientRef> _operator;
 	std::bitset<2> _mode;
 
-	std::set<ClientRef> _invite_list;
+	std::set<std::string> _invite_list;
+
 	size_t _user_limit;
 
 	Channel	&operator=(const Channel &copy);

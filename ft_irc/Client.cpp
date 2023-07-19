@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/18 19:47:02 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/19 16:53:32 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,11 @@ void Client::nick_set(std::string &nick)
 		_user_state = NEEDUSER;
 }
 
-void Client::user_init(std::string &user, std::string &real)
+void Client::user_init(std::string &user, std::string &host, std::string &real)
 {
 	_username = user;
 	_realname = real;
+	_hostname = host;
 	_user_state = AVAIL_USER;
 }
 
@@ -63,12 +64,26 @@ int Client::avail_client(void)
 	return (_user_state);
 }
 
+int Client::set_user_state(int state)
+{
+	_user_state = state;
+}
+
 std::string Client::get_nick(void)
 {
 	ScopeLock lock(&_client_nickname_m);
-	std::string ret_nick = _nickname;
-	return (ret_nick);
+	return (_nickname);
 }
+std::string Client::get_user(void)
+{
+	return (_username);
+}
+
+std::string Client::get_host(void)
+{
+	return (_hostname);
+}
+
 
 void Client::add_output(std::string &str)
 {
@@ -129,15 +144,16 @@ int Client::client_read(void)
 
 int Client::client_write(void)
 {
-	int num_output = 0;
+	int output = 0;
+
 
 	ScopeLock lock(&_client_output_m);
-	if (send(_fd, _output_buf.data(), _output_buf.length(), 0) == -1)
+	if ((output = send(_fd, _output_buf.data(), _output_buf.length(), 0)) == -1)
 	{
 		return (ERROR);
 	}
-	_output_buf.clear();
-	return (num_output);
+	_output_buf.erase(0, output);
+	return (_output_buf.length());
 }
 
 void Client::leave_all_channel(void)
