@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/19 16:47:45 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 16:22:11 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ Worker::Worker(void)
 	pthread_mutex_init(&_msgQ._msgq_m, NULL);
 	_thread_list.reserve(NUM_THREAD);
 }
+
+int Worker::_worker_status = 1;
 
 Worker::~Worker(void)
 {
@@ -64,9 +66,16 @@ void Worker::reg_msg(int fd, int cmd)
 	pthread_cond_signal(&_msgQ._q_fill_cond);
 }
 
-void Worker::reg_err_msg(int fd)
+int Worker::destroy(void)
 {
-	(void) fd;
+	_worker_status = 0;
+	pthread_cond_broadcast(&_msgQ._q_fill_cond);
+	for (int i = 0; i < NUM_THREAD; i++)
+	{
+		pthread_join(_thread_list[i], NULL);
+	}
+	_client.destroy();
+	return (0);
 }
 
 void *Worker::_worker_thread_func(void *args)
@@ -79,13 +88,18 @@ void *Worker::_worker_thread_func(void *args)
 	Operator operate_cmd(info._client, info._passwd);
 	std::string input;
 
-	while (1)
+	while (_worker_status)
 	{
 		op_cl = ClientRef::NullClientRef();
 		pthread_mutex_lock(&q._msgq_m);
 		while (q._messageQ.empty())
 		{
 			pthread_cond_wait(&q._q_fill_cond, &q._msgq_m);
+			if (!_worker_status)
+			{
+				pthread_mutex_unlock(&q._msgq_m);
+				return (NULL);
+			}
 		}
 		curr_msg = q._messageQ.front();
 		q._messageQ.pop_front();
@@ -113,5 +127,6 @@ void *Worker::_worker_thread_func(void *args)
 				ev_q.reg_event(op_cl->get_fd(), EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
 		}
 	}
+	op_cl = ClientRef::NullClientRef();
 	return (NULL);
 }

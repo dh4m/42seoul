@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 21:54:01 by dham              #+#    #+#             */
-/*   Updated: 2023/07/18 20:11:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 17:13:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,9 @@ int Server::run(void)
 				}
 				else
 				{
-					_worker.reg_err_msg(ev_list[i].ident);
+					std::cerr << ev_list[i].ident << " client socket Error" << std::endl;
+					// client remove
 				}
-			}
-			else if (ev_list[i].flags & EV_EOF)
-			{
-				std::cerr << ev_list[i].ident << " is disconnect" << std::endl;
-				_worker.remove_client(ev_list[i].ident, "");
 			}
 			else if ((int)ev_list[i].filter == EVFILT_READ)
 			{
@@ -123,19 +119,17 @@ int Server::run(void)
 			}
 		}
 	}
+	return (1);
 }
 
 void Server::_add_client(int fd)
 {
-	std::cout << fd << " is new client" << std::endl;
-	fcntl(fd, F_SETFL, O_NONBLOCK);
 	_worker.add_client(fd);
-	_ev_q.reg_event(fd, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
-	_ev_q.reg_event(fd, EVFILT_WRITE, EV_ADD | EV_DISABLE, 0, 0, NULL);
 }
 
 int Server::destroy(void)
 {
+	_worker.destroy();
 	_ev_q.destroy_eventq();
 	close(_socket);
 	return (1);

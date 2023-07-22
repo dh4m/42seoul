@@ -6,12 +6,15 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:21:08 by dham              #+#    #+#             */
-/*   Updated: 2023/07/19 16:21:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 14:30:36 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClientInfo.hpp"
+#include "Eventq.hpp"
 #include <unistd.h>
+#include <fcntl.h>
+#include <iostream>
 
 ClientInfo::ClientInfo(void)
 {
@@ -25,11 +28,16 @@ ClientInfo::~ClientInfo(void)
 
 void ClientInfo::add_client(int fd)
 {
+	Eventq &ev_q = Eventq::getInstance();
 	ClientRef cl = ClientRef::make_ClientRef(fd);
 
+	std::cout << fd << " is new client" << std::endl;
+	fcntl(fd, F_SETFL, O_NONBLOCK);
 	pthread_rwlock_wrlock(&_cl_list_lock);
 	_cl_list.insert(std::pair<int, ClientRef>(fd, cl));
 	pthread_rwlock_unlock(&_cl_list_lock);
+	ev_q.reg_event(fd, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, NULL);
+	ev_q.reg_event(fd, EVFILT_WRITE, EV_ADD | EV_DISABLE, 0, 0, NULL);
 }
 
 ClientRef ClientInfo::find_client(int fd)
@@ -47,6 +55,10 @@ ClientRef ClientInfo::find_client(int fd)
 
 void ClientInfo::remove_client(int fd, const char *msg)
 {
+	Eventq &ev_q = Eventq::getInstance();
+
+	ev_q.reg_event(fd, EVFILT_READ, EV_DELETE, 0, 0, NULL);
+	ev_q.reg_event(fd, EVFILT_WRITE, EV_DELETE, 0, 0, NULL);
 	pthread_rwlock_wrlock(&_cl_list_lock);
 	std::map<int, ClientRef>::iterator it = _cl_list.find(fd);
 	if (it == _cl_list.end())
@@ -57,6 +69,7 @@ void ClientInfo::remove_client(int fd, const char *msg)
 	_cl_nick_list.erase(it->second->get_nick());
 	_cl_list.erase(it);
 	pthread_rwlock_unlock(&_cl_list_lock);
+	it->second->leave_all_channel();
 	(void) msg;
 }
 

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:20:58 by dham              #+#    #+#             */
-/*   Updated: 2023/07/18 18:34:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 16:14:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ public:
 	int join_chan(const std::string &name, const std::string key, ClientRef ref);
 	int leave_chan(const std::string &name, ClientRef ref);
 	Channel *find_chan(const std::string &name);
+
+	int destroy(void);
 private:
 	t_clientlist _cl_list;
 	t_nicklist _cl_nick_list;

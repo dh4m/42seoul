@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/19 16:53:32 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 14:51:10 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ _username("*"), _realname("*"), _nickname("*")
 
 Client::~Client(void)
 {
-	leave_all_channel();
 	close(_fd);
 	pthread_mutex_destroy(&_client_input_m);
 	pthread_mutex_destroy(&_client_output_m);
@@ -121,11 +120,9 @@ int Client::client_read(void)
 	ret_recv = recv(_fd, buf, INPUT_BUF_SIZE - 1, 0);
 	if (ret_recv == 0)
 	{
-		
 		///
 		std::cout << _fd << " disconnected" << std::endl;
-		///
-
+		///remove client
 		return (DISCONNECT); //client disconnect
 	}
 	if (ret_recv < 0)

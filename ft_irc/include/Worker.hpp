@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:45 by dham              #+#    #+#             */
-/*   Updated: 2023/06/24 18:32:36 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 16:12:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ public:
 	void add_client(int fd);
 	void remove_client(int fd, const char *msg);
 	void reg_msg(int fd, int cmd);
-	void reg_err_msg(int fd);
+	int destroy(void);
 private:
 	static void *_worker_thread_func(void *args);
+	static int _worker_status;
 
 	std::string _passwd;
 	ClientInfo _client;
