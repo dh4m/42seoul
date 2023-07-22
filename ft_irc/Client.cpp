@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 14:51:10 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 20:48:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int Client::client_write(void)
 		return (ERROR);
 	}
 	_output_buf.erase(0, output);
-	return (_output_buf.length());
+	return (1);
 }
 
 void Client::leave_all_channel(void)

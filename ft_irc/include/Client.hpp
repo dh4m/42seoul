@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/19 21:39:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 19:57:08 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ enum e_result
 
 enum e_userstate
 {
-	NEEDPASS,
 	NEEDNICK,
 	NEEDUSER,
 	AVAIL_USER,
@@ -78,6 +77,7 @@ private:
 	std::string _passwd;
 
 	int _user_state;
+	std::bitset<3> _client_regist;
 
 	std::string _input_buf;
 	pthread_mutex_t _client_input_m;

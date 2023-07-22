@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 17:32:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 20:36:38 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,20 +185,20 @@ void Operator::_argu_setting(void)
 
 int Operator::_pass(void)
 {
-	if ((*_sender).avail_client() != NEEDPASS)
+	if ((*_sender).avail_client() == NEEDPASS)
 	{
-		_reply_send(ERR_ALREADYRGISTRED); // ERR_ALREADYRGISTRED
+		_reply_send(ERR_ALREADYRGISTRED, ""); // ERR_ALREADYRGISTRED
 		return (0);
 	}
 	if (_argu.empty())
 	{
-		_reply_send(ERR_NEEDMOREPARAMS); // ERR_NEEDMOREPARAMS
+		_reply_send(ERR_NEEDMOREPARAMS, ""); // ERR_NEEDMOREPARAMS
 		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
 	if (_argu[0] != _passwd)
 	{
-		_reply_send(ERR_PASSWDMISMATCH); // ERR_PASSWDMISMATCH
+		_reply_send(ERR_PASSWDMISMATCH, ""); // ERR_PASSWDMISMATCH
 		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
@@ -259,7 +259,7 @@ int Operator::_join(void)
 {
 	if (_argu.size() == 0)
 	{
-		_reply_send(ERR_NEEDMOREPARAMS);
+		_reply_send(ERR_NEEDMOREPARAMS, "");
 		return (0);
 	}
 

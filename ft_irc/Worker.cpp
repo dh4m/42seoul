@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:58:24 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 16:22:11 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/22 17:48:33 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void Worker::reg_msg(int fd, int cmd)
 		ev_q.reg_event(fd, EVFILT_READ, EV_DISABLE, 0, 0, NULL);
 	else if(cmd == M_WRITE)
 		ev_q.reg_event(fd, EVFILT_WRITE, EV_DISABLE, 0, 0, NULL);
+	else
+		return ;
 	_msgQ._messageQ.push_back(insert_msg);
 	pthread_cond_signal(&_msgQ._q_fill_cond);
 }
