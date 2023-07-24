@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 20:48:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/24 16:06:20 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ Client::~Client(void)
 }
 
 /// 유저인증과정 개선   
-void Client::pass_client(void)
+void Client::pass_set(std::string pass)
 {
-	_user_state = NEEDNICK;
+	_passwd = pass;
 }
 
 void Client::nick_set(std::string &nick)
@@ -46,8 +46,6 @@ void Client::nick_set(std::string &nick)
 		ScopeLock lock(&_client_nickname_m);
 		_nickname = nick;
 	}
-	if (_user_state == NEEDNICK)
-		_user_state = NEEDUSER;
 }
 
 void Client::user_init(std::string &user, std::string &host, std::string &real)
@@ -55,7 +53,6 @@ void Client::user_init(std::string &user, std::string &host, std::string &real)
 	_username = user;
 	_realname = real;
 	_hostname = host;
-	_user_state = AVAIL_USER;
 }
 
 int Client::avail_client(void)

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:34:09 by dham              #+#    #+#             */
-/*   Updated: 2023/07/19 21:45:43 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/24 15:05:44 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int Channel::set_topic(std::string topic)
 
 }
 
-int Channel::set_limit(std::string topic)
+int Channel::set_limit(size_t limit)
 {
 
 }
 
-int Channel::set_passwd(std::string topic)
+int Channel::set_passwd(std::string passwd)
 {
 
 }

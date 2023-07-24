@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 13:33:52 by dham              #+#    #+#             */
-/*   Updated: 2023/07/19 21:45:47 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/24 17:08:22 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,19 @@ public:
 	int is_user(ClientRef client);
 	int is_operator(ClientRef client);
 
-	int add_invite(std::string &user);
+	int is_inviteonly(void);
+	int is_needpasswd(void);
+
+	int add_invite(std::string user);
+	int is_invite_memb(std::string user);
 
 	size_t limit_memb(void);
 	size_t curr_memb(void);
 
 	int set_topic(std::string topic);
-	int set_limit(std::string topic);
-	int set_passwd(std::string topic);
+	int set_limit(size_t limit);
+	int set_passwd(std::string passwd);
+	int passwd_check(std::string passwd);
 	int mode_set(int mode);
 	int mode_unset(int mode);
 

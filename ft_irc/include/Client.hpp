@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 19:57:08 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/24 19:05:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ public:
 	Client(int fd);
 	~Client(void);
 
-	void pass_client(void);
+	void pass_set(std::string pass);
 	void nick_set(std::string &nick);
 	std::string get_nick(void);
 	std::string get_user(void);
@@ -66,7 +66,9 @@ public:
 	bool exist_output(void);
 	void leave_all_channel(void);
 
-	int include_chan(std::string &channame);
+	int add_chan(const std::string &channame);
+	int del_chan(const std::string &channame);
+	int include_chan(const std::string &channame);
 private:
 	int _fd;
 	std::string _username;
@@ -85,7 +87,7 @@ private:
 	std::string _output_buf;
 	pthread_mutex_t _client_output_m;
 
-	std::vector<std::string> _chan;
+	std::set<std::string> _chan;
 	
 	Client	&operator=(const Client &copy);
 	Client(const Client &copy);

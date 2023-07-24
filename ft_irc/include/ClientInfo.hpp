@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:20:58 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 16:14:42 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/24 16:23:00 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ public:
 	ClientInfo(void);
 	~ClientInfo(void);
 
-	void add_client(int fd);
+	int add_client(int fd);
+	int reg_client(ClientRef cl, std::string nick);
 	ClientRef find_client(int fd);
 	ClientRef find_client(std::string nick);
 	void remove_client(int fd, const char *msg);
 	int client_nick_change(int fd, std::string nick);
+	int nick_dup_check(std::string nick);
 
 	int join_chan(const std::string &name, const std::string key, ClientRef ref);
 	int leave_chan(const std::string &name, ClientRef ref);
@@ -51,6 +53,7 @@ private:
 	pthread_rwlock_t _cl_list_lock;
 
 	t_chanlist _channel;
+	pthread_rwlock_t _ch_list_lock;
 
 	ClientInfo	&operator=(const ClientInfo &copy);
 	ClientInfo(const ClientInfo &copy);

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/22 20:36:38 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/24 17:53:04 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ void Operator::_argu_setting(void)
 
 int Operator::_pass(void)
 {
+	/*
 	if ((*_sender).avail_client() == NEEDPASS)
 	{
 		_reply_send(ERR_ALREADYRGISTRED, ""); // ERR_ALREADYRGISTRED
@@ -202,7 +203,8 @@ int Operator::_pass(void)
 		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
-	_sender->pass_client();
+	*/
+	_sender->pass_set(_argu[0]);
 	return (1);
 }
 
@@ -275,7 +277,8 @@ int Operator::_join(void)
 	std::getline(key_list, key, ',');
 	while (chan_list)
 	{
-		if (res = _info.join_chan(chan, key, _sender)) // join 안에서 에러 처리
+		res = _info.join_chan(chan, key, _sender);
+		if (res != 0 && res != -1) // join 안에서 에러 처리
 		{
 			_reply_send(res, chan); // join실패
 		}
