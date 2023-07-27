@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/24 16:06:20 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/27 20:19:24 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 #include <unistd.h>
 
 Client::Client(int fd)
-: _fd(fd), _user_state(NEEDPASS), \
-_username("*"), _realname("*"), _nickname("*")
+: _fd(fd), _user_state(NEEDREG), \
+_username("*"), _realname("*"), _nickname("*"), \
+_passwd_ok(false)
 {
 	pthread_mutex_init(&_client_input_m, NULL);
 	pthread_mutex_init(&_client_output_m, NULL);
@@ -35,9 +36,9 @@ Client::~Client(void)
 }
 
 /// 유저인증과정 개선   
-void Client::pass_set(std::string pass)
+void Client::pass_set(void)
 {
-	_passwd = pass;
+	_passwd_ok = true;
 }
 
 void Client::nick_set(std::string &nick)
@@ -65,6 +66,11 @@ int Client::set_user_state(int state)
 	_user_state = state;
 }
 
+bool Client::is_passuser(void)
+{
+	return (_passwd_ok);
+}
+
 std::string Client::get_nick(void)
 {
 	ScopeLock lock(&_client_nickname_m);
@@ -89,6 +95,18 @@ void Client::add_output(std::string &str)
 		_output_buf += str;
 	}
 	Eventq::getInstance().reg_event(_fd, EVFILT_WRITE, EV_ENABLE, 0, 0, NULL);
+}
+
+void Client::clear_buffer(void)
+{
+	{
+		ScopeLock lock(&_client_output_m);
+		_output_buf.clear();
+	}
+	{
+		ScopeLock lock(&_client_input_m);
+		_input_buf.clear();
+	}
 }
 
 bool Client::exist_output(void)

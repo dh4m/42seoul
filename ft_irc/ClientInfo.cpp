@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:21:08 by dham              #+#    #+#             */
-/*   Updated: 2023/07/24 19:18:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/27 20:09:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void ClientInfo::remove_client(int fd, const char *msg)
 	_cl_list.erase(it);
 	pthread_rwlock_unlock(&_cl_list_lock);
 	it->second->leave_all_channel();
+	it->second->clear_buffer();
 	(void) msg;
 }
 

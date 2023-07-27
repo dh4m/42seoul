@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/24 19:05:00 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/27 20:17:40 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ enum e_result
 
 enum e_userstate
 {
+	NEEDREG,
 	NEEDNICK,
-	NEEDUSER,
 	AVAIL_USER,
 	OPERATOR,
 	UNAVAIL_USER
@@ -48,8 +48,9 @@ public:
 	Client(int fd);
 	~Client(void);
 
-	void pass_set(std::string pass);
+	void pass_set(void);
 	void nick_set(std::string &nick);
+	bool is_passuser(void);
 	std::string get_nick(void);
 	std::string get_user(void);
 	std::string get_host(void);
@@ -59,6 +60,7 @@ public:
 	int set_user_state(int state);
 
 	void add_output(std::string &str);
+	void clear_buffer(void);
 	int get_fd(void) const;
 	void get_input_buffer(std::string &str);
 	int client_read(void);
@@ -76,7 +78,7 @@ private:
 	pthread_mutex_t _client_nickname_m; // rwlock 변경
 	std::string _hostname;
 	std::string _realname;
-	std::string _passwd;
+	bool _passwd_ok;
 
 	int _user_state;
 	std::bitset<3> _client_regist;

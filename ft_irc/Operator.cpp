@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/24 17:53:04 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/27 20:21:52 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,13 @@ void Operator::_argu_setting(void)
 
 int Operator::_pass(void)
 {
-	/*
-	if ((*_sender).avail_client() == NEEDPASS)
+	if (_argu[0] != _passwd)
+	{
+		_reply_send(ERR_PASSWDMISMATCH, ""); // ERR_PASSWDMISMATCH
+		_info.remove_client(_sender->get_fd(), "");
+		return (0);
+	}
+	if ((*_sender).avail_client() != NEEDREG)
 	{
 		_reply_send(ERR_ALREADYRGISTRED, ""); // ERR_ALREADYRGISTRED
 		return (0);
@@ -194,17 +199,9 @@ int Operator::_pass(void)
 	if (_argu.empty())
 	{
 		_reply_send(ERR_NEEDMOREPARAMS, ""); // ERR_NEEDMOREPARAMS
-		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
-	if (_argu[0] != _passwd)
-	{
-		_reply_send(ERR_PASSWDMISMATCH, ""); // ERR_PASSWDMISMATCH
-		_info.remove_client(_sender->get_fd(), "");
-		return (0);
-	}
-	*/
-	_sender->pass_set(_argu[0]);
+	_sender->pass_set();
 	return (1);
 }
 
@@ -220,7 +217,7 @@ int Operator::_avail_nick(void)
 	{
 		if (!isalpha(nick[i]) && !isdigit(nick[i]) && nick[i] != '-' \
 			&& nick[i] != '[' && nick[i] != ']' && nick[i] != '\\' && nick[i] != '`' \
-			&& nick[i] != '^' && nick[i] != '{' && nick[i] != '}')
+			&& nick[i] != '^' && nick[i] != '{' && nick[i] != '}' && nick[i] != '_')
 			return (0);
 	}
 	return (1);
@@ -228,33 +225,61 @@ int Operator::_avail_nick(void)
 
 int Operator::_nick(void)
 {
-	if (_sender->avail_client() == NEEDPASS)
-	{
-		;
-		return (0);
-	}
-	if (!_avail_nick())
-	{
-		;
-		return (0);
-	}
-	//
-	//
-	//
 	_sender->nick_set(_argu[0]);
+	if (_sender->avail_client() == NEEDREG) //첫 등록
+	{
+		if (!_avail_nick())
+		{
+			_reply_send(ERR_ERRONEUSNICKNAME, "");
+			_info.remove_client(_sender->get_fd(), "");
+			return (0);
+		}
+	}
+	else if (_sender->avail_client() == NEEDNICK) // 등록시 닉네임 중복된경우
+	{
+		if (!_avail_nick())
+		{
+			_reply_send(ERR_ERRONEUSNICKNAME, "");
+			return (0);
+		}
+	}
+	else // 닉네임 변경
+	{
+		if (!_avail_nick())
+		{
+			_reply_send(ERR_ERRONEUSNICKNAME, "");
+			return (0);
+		}
+	}
+	//
+	//
+	//
+	// 
 }
 
 int Operator::_user(void)
 {
-	if (_sender->avail_client() == NEEDPASS)
+	if (!_sender->is_passuser())
 	{
-		;
+		_reply_send(ERR_PASSWDMISMATCH, ""); // ERR_PASSWDMISMATCH
+		_info.remove_client(_sender->get_fd(), "");
+		return (0);
+	}
+	if (_sender->avail_client() != NEEDREG)
+	{
+		_reply_send(ERR_ALREADYRGISTRED, ""); // ERR_ALREADYRGISTRED
+		return (0);
+	}
+	if (_argu.size() < 4)
+	{
+		_reply_send(ERR_NEEDMOREPARAMS, ""); // ERR_NEEDMOREPARAMS
 		return (0);
 	}
 	///////
 	///////
-	_argu[3].erase(0, 1); // :삭제
+	_argu[3].erase(0, 1); // 인자에서 ':' 삭제
 	_sender->user_init(_argu[0], _argu[1], _argu[3]);
+	_info.reg_client(_sender, _sender->get_nick());
 }
 
 int Operator::_join(void)
