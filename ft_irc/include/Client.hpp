@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:59 by dham              #+#    #+#             */
-/*   Updated: 2023/07/27 20:17:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/28 14:09:37 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ public:
 	int add_chan(const std::string &channame);
 	int del_chan(const std::string &channame);
 	int include_chan(const std::string &channame);
+	int send_all_chan(std::string msg);
 private:
 	int _fd;
 	std::string _username;
@@ -81,7 +82,6 @@ private:
 	bool _passwd_ok;
 
 	int _user_state;
-	std::bitset<3> _client_regist;
 
 	std::string _input_buf;
 	pthread_mutex_t _client_input_m;

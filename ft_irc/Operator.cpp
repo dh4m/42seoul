@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/27 20:21:52 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/28 15:35:21 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,11 @@ int Operator::_avail_nick(void)
 
 int Operator::_nick(void)
 {
-	_sender->nick_set(_argu[0]);
+	if (_argu.size() == 0)
+	{
+		_reply_send(ERR_NONICKNAMEGIVEN, "");
+		return (0);
+	}
 	if (_sender->avail_client() == NEEDREG) //첫 등록
 	{
 		if (!_avail_nick())
@@ -234,6 +238,13 @@ int Operator::_nick(void)
 			_info.remove_client(_sender->get_fd(), "");
 			return (0);
 		}
+		if (_info.nick_dup_check(_argu[0]))
+		{
+			_reply_send(ERR_NICKNAMEINUSE, "");
+			_sender->set_user_state(NEEDNICK);
+			return (0);
+		}
+		_sender->nick_set(_argu[0]);
 	}
 	else if (_sender->avail_client() == NEEDNICK) // 등록시 닉네임 중복된경우
 	{
@@ -241,6 +252,17 @@ int Operator::_nick(void)
 		{
 			_reply_send(ERR_ERRONEUSNICKNAME, "");
 			return (0);
+		}
+		if (_info.nick_dup_check(_argu[0]))
+		{
+			_reply_send(ERR_NICKNAMEINUSE, "");
+			return (0);
+		}
+		_sender->nick_set(_argu[0]);
+		if (_sender->get_user() != "*") // user커맨드를 거친 경우
+		{
+			_info.reg_client(_sender, _sender->get_nick());
+			_sender->set_user_state(AVAIL_USER);
 		}
 	}
 	else // 닉네임 변경
@@ -250,11 +272,14 @@ int Operator::_nick(void)
 			_reply_send(ERR_ERRONEUSNICKNAME, "");
 			return (0);
 		}
+		if (_info.nick_dup_check(_argu[0]))
+		{
+			_reply_send(ERR_NICKNAMEINUSE, "");
+			return (0);
+		}
+		_info.client_nick_change(_sender->get_fd(), _argu[0]);
 	}
-	//
-	//
-	//
-	// 
+	return (1);
 }
 
 int Operator::_user(void)
@@ -265,7 +290,7 @@ int Operator::_user(void)
 		_info.remove_client(_sender->get_fd(), "");
 		return (0);
 	}
-	if (_sender->avail_client() != NEEDREG)
+	if (_sender->get_user() != "*")
 	{
 		_reply_send(ERR_ALREADYRGISTRED, ""); // ERR_ALREADYRGISTRED
 		return (0);
@@ -279,7 +304,16 @@ int Operator::_user(void)
 	///////
 	_argu[3].erase(0, 1); // 인자에서 ':' 삭제
 	_sender->user_init(_argu[0], _argu[1], _argu[3]);
-	_info.reg_client(_sender, _sender->get_nick());
+	if (_sender->get_nick() == "*")
+	{
+		_sender->set_user_state(NEEDNICK);
+	}
+	else if (_sender->avail_client() != NEEDNICK)
+	{
+		_info.reg_client(_sender, _sender->get_nick());
+		_sender->set_user_state(AVAIL_USER);
+	}
+	return (1);
 }
 
 int Operator::_join(void)
@@ -465,7 +499,7 @@ int Operator::_invite(void)
 		return (0);
 	}
 	Channel *invite_chan = _info.find_chan(_argu[1]);
-	if (!invite_chan->is_operator(_sender))
+	if (!invite_chan->is_operator(_sender) && _sender->avail_client() != OPERATOR)
 	{
 		_reply_send(ERR_CHANOPRIVSNEEDED);
 		return (0);
@@ -481,7 +515,121 @@ int Operator::_invite(void)
 
 int Operator::_mode(void)
 {
-	;
+	if (_argu.size() < 1)
+	{
+		_reply_send(ERR_NEEDMOREPARAMS);
+		return (0);
+	}
+	if (!_sender->include_chan(_argu[0]))
+	{
+		_reply_send(ERR_NOTONCHANNEL);
+		return (0);
+	}
+	Channel *mode_chan = _info.find_chan(_argu[0]);
+	if (_argu.size() == 1)
+	{
+		_reply_send(RPL_CHANNELMODEIS);
+		return (1);
+	}
+	if (!mode_chan->is_operator(_sender) && _sender->avail_client() != OPERATOR)
+	{
+		_reply_send(ERR_CHANOPRIVSNEEDED);
+		return (0);
+	}
+	char flag;
+	char mode;
+	if (_argu[1].length() == 1)
+	{
+		flag = '+';
+		mode = _argu[1][0];
+	}
+	else if (_argu[1].length() == 2)
+	{
+		flag = _argu[1][0];
+		mode = _argu[1][1];
+	}
+	else
+	{
+		_reply_send(ERR_UNKNOWNMODE);
+		return (0);
+	}
+	if (!(flag == '+' || flag == '-')
+		|| !(mode == 'o' || mode == 'i' || mode == 't' || mode == 'l' || mode == 'k'))
+	{
+		_reply_send(ERR_UNKNOWNMODE);
+		return (0);
+	}
+	ClientRef oper_user;
+	switch (mode)
+	{
+	case 'o':
+		oper_user = _info.find_client(_argu[2]);
+		if (_argu.size() < 3 || !mode_chan->is_user(oper_user))
+		{
+			_reply_send(ERR_NOSUCHNICK);
+			return (0);
+		}
+		if (flag == '+')
+		{
+			mode_chan->add_operator(oper_user);
+		}
+		else if (flag == '-')
+		{
+			mode_chan->remove_operator(oper_user);
+		}
+		break;
+	case 'i':
+		if (flag == '+')
+		{
+			mode_chan->mode_set(INVITEONLY);
+		}
+		else if (flag == '-')
+		{
+			mode_chan->mode_unset(INVITEONLY);
+		}
+		break;
+	case 't':
+		if (flag == '+')
+		{
+			mode_chan->mode_set(TOPICRESTRICT);
+		}
+		else if (flag == '-')
+		{
+			mode_chan->mode_unset(TOPICRESTRICT);
+		}
+		break;
+	case 'l':
+		if (_argu.size() < 3)
+		{
+			_reply_send(ERR_NEEDMOREPARAMS);
+			return (0);
+		}
+		if (flag == '+')
+		{
+			mode_chan->set_limit(atoi(_argu[2].c_str()));
+		}
+		else if (flag == '-')
+		{
+			mode_chan->set_limit(-1);
+		}
+		break;
+	case 'k':
+		if (_argu.size() < 3)
+		{
+			_reply_send(ERR_NEEDMOREPARAMS);
+			return (0);
+		}
+		if (flag == '+')
+		{
+			mode_chan->set_passwd(_argu[2]);
+		}
+		else if (flag == '-')
+		{
+			mode_chan->set_passwd("");
+		}
+		break;
+	}
+	return (1);
 }
 
 int Operator::_topic(void)

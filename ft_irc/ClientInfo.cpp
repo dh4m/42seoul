@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/09 16:21:08 by dham              #+#    #+#             */
-/*   Updated: 2023/07/27 20:09:40 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/28 13:34:57 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void ClientInfo::remove_client(int fd, const char *msg)
 
 int ClientInfo::client_nick_change(int fd, std::string nick)
 {
+	std::stringstream nickmsg;
+
 	pthread_rwlock_wrlock(&_cl_list_lock);
 	std::map<int, ClientRef>::iterator it = _cl_list.find(fd);
 	if (it == _cl_list.end())
@@ -107,10 +109,12 @@ int ClientInfo::client_nick_change(int fd, std::string nick)
 		pthread_rwlock_unlock(&_cl_list_lock);
 		return ;
 	}
+	nickmsg << it->second->get_prifix() << " NICK " << nick;
 	_cl_nick_list.erase(it->second->get_nick());
 	it->second->nick_set(nick);
 	_cl_nick_list.insert(std::pair<std::string, ClientRef>(nick, it->second));
 	pthread_rwlock_unlock(&_cl_list_lock);
+	it->second->send_all_chan(nickmsg.str());
 }
 
 int ClientInfo::nick_dup_check(std::string nick)
