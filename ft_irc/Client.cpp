@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 18:12:40 by dham              #+#    #+#             */
-/*   Updated: 2023/07/27 20:19:24 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/31 15:56:54 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ void Client::add_output(std::string &str)
 void Client::clear_buffer(void)
 {
 	{
-		ScopeLock lock(&_client_output_m);
-		_output_buf.clear();
-	}
-	{
 		ScopeLock lock(&_client_input_m);
 		_input_buf.clear();
+	}
+	{
+		ScopeLock lock(&_client_output_m);
+		_output_buf.clear();
 	}
 }
 

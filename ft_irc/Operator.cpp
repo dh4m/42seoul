@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:23:26 by dham              #+#    #+#             */
-/*   Updated: 2023/07/28 15:35:21 by dham             ###   ########.fr       */
+/*   Updated: 2023/07/31 16:26:17 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -634,7 +634,25 @@ int Operator::_mode(void)
 
 int Operator::_topic(void)
 {
-	;
+	if (_argu.size() < 2)
+	{
+		_reply_send(ERR_NEEDMOREPARAMS);
+		return (0);
+	}
+	if (!_sender->include_chan(_argu[0]))
+	{
+		_reply_send(ERR_NOTONCHANNEL);
+		return (0);
+	}
+	Channel *topic_chan = _info.find_chan(_argu[0]);
+	if (_argu.size() == 2) // 토픽 응답
+	{
+
+	}
+	else // 토픽 설정
+	{
+
+	}
 }
 
 int Operator::_quit(void)
