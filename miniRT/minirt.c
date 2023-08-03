@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:28:37 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 16:07:37 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/19 16:21:16 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 #include "libft.h"
 #include <stdio.h>
 #include <math.h>
+#include <pthread.h>
 
-int	make_image(t_info *info, t_img *img, const char *rt_file)
+int	make_image(t_img *img, const char *rt_file)
 {
 	int			res;
 	t_content	content;
@@ -24,107 +25,37 @@ int	make_image(t_info *info, t_img *img, const char *rt_file)
 	ft_memset(&content, 0, sizeof(t_content));
 	res = parsing(rt_file, &content);
 	if (res != SUCCESS)
-		return (res);
-	res = draw_img(info, img, &content);
-	clear_list(&content);
+		return (error_msg(res, &content));
+	res = draw_img(img, &content);
 	if (res != SUCCESS)
-		return (res);
+		return (error_msg(res, &content));
+	clear_list(&content);
 	return (res);
 }
 
-t_color	take_average(t_color *buf[], int x, int y)
-{
-	t_color	average;
-
-	average.r = 0;
-	average.g = 0;
-	average.b = 0;
-	average = color_combine(&average, &buf[x][y]);
-	average = color_combine(&average, &buf[x + 1][y]);
-	average = color_combine(&average, &buf[x][y + 1]);
-	average = color_combine(&average, &buf[x + 1][y + 1]);
-	bright_set(&average, 0.25);
-	return (average);
-}
-
-void	antialiasing(t_color *buf[], int *anti_buf[])
+int	draw_img(t_img *img, t_content *content)
 {
 	int		x;
 	int		y;
-	t_color	average;
-
-	x = -1;
-	while (++x < WIDTH)
-	{
-		y = -1;
-		while (++y < HEIGHT)
-		{
-			average = take_average(buf, x * 2, y * 2);
-			anti_buf[x][y] = color_to_int(&average);
-		}
-	}
-}
-
-int	draw_img(t_info *info, t_img *img, t_content *content)
-{
-	int		x;
-	int		y;
-	int		color;
-	t_color	*buf[WIDTH * 2];
-	int		*anti_buf[WIDTH];
+	t_color	*buf[WIDTH];
 
 	bright_normalize(content);
 	camera_set(content);
-	// obj nomal vec nomalize
-	x = -1;
-	while (++x < WIDTH * 2)
-	{
-		buf[x] = malloc(sizeof(t_color) * (HEIGHT * 2));
-		if (!buf[x])
-		{
-			y = -1;
-			while (++y < x)
-				free(buf[y]);
-			return (FATAL_ERROR);
-		}
-	}
-	x = -1;
-	while (++x < WIDTH)
-	{
-		anti_buf[x] = malloc(sizeof(int) * HEIGHT);
-		if (!anti_buf[x])
-		{
-			y = -1;
-			while (++y < x)
-				free(anti_buf[x]);
-			y = -1;
-			while (++y < WIDTH * 2)
-				free(buf[x]);
-			return (FATAL_ERROR);
-		}
-	}
-	x = -1;
-	while (++x < WIDTH * 2)
-	{
-		y = -1;
-		while (++y < HEIGHT * 2)
-			buf[x][y] = ray_calculate(x, y, content);
-	}
+	obj_vec_nomalize(content);
+	if (buf_init(buf) == FATAL_ERROR)
+		return (FATAL_ERROR);
+	buf_drawing(buf, content);
 	buf_nomalize(buf);
-	antialiasing(buf, anti_buf);
 	x = -1;
 	while (++x < WIDTH)
 	{
 		y = -1;
 		while (++y < HEIGHT)
-			my_mlx_pixel_put(img, x, y, anti_buf[x][y]);
+			my_mlx_pixel_put(img, x, y, color_to_int(&buf[x][y]));
 	}
 	x = -1;
-	while (++x < WIDTH * 2)
-		free(buf[x]);
-	x = -1;
 	while (++x < WIDTH)
-		free(anti_buf[x]);
+		free(buf[x]);
 	return (SUCCESS);
 }
 
@@ -151,7 +82,7 @@ t_color	ray_calculate(int x, int y, t_content *content)
 		obj = obj->next;
 	}
 	if (min_t < 0)
-		return (BACKGROUND);
+		return ((t_color){0, 0, 0});
 	else
 		return (color_cal(&ray, min_t, content, hit_obj));
 }

@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:50 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 14:41:26 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/18 14:32:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ float	sphere_distance(t_ray *ray, t_obj *obj)
 	if (det < 0)
 		return (-1);
 	if (vec_inner(&ray->dir, &ce) > 0 || \
-		(vec_inner(&ray->dir, &ce) < 0 && square_f(vec_inner(&ray->dir, &ce)) < det))
+		(vec_inner(&ray->dir, &ce) < 0 \
+			&& square_f(vec_inner(&ray->dir, &ce)) < det))
 		return (-vec_inner(&ray->dir, &ce) + sqrtf(det));
 	return (-vec_inner(&ray->dir, &ce) - sqrtf(det));
 }

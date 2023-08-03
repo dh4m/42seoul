@@ -6,13 +6,15 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 19:34:06 by dham              #+#    #+#             */
-/*   Updated: 2023/03/11 16:43:46 by dham             ###   ########.fr       */
+/*   Updated: 2023/04/02 16:12:53 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "mlx/mlx.h"
 #include "minirt.h"
-#include "libft.h"
+#include "libft/libft.h"
+#include "libft/get_next_line.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 void	insert_content_list(t_content *content, int type, void *object)
@@ -25,7 +27,7 @@ void	insert_content_list(t_content *content, int type, void *object)
 		light = &content->light_list;
 		while (light->next)
 			light = light->next;
-		light->next = (t_light*)object;
+		light->next = (t_light *)object;
 		light->next->next = NULL;
 	}
 	else if (type == OBJECT)
@@ -33,164 +35,93 @@ void	insert_content_list(t_content *content, int type, void *object)
 		obj = &content->obj_list;
 		while (obj->next)
 			obj = obj->next;
-		obj->next = (t_obj*)object;
+		obj->next = (t_obj *)object;
 		obj->next->next = NULL;
 	}
 }
 
+int	check_type(char *str)
+{
+	if (!str)
+		return (UNKNOWN);
+	else if (str[0] == 'A')
+		return (AMBIENT);
+	else if (str[0] == 'C')
+		return (CAMERA);
+	else if (str[0] == 'L')
+		return (LIGHT);
+	else if (ft_strncmp(str, "sp", 3) == 0)
+		return (SPHERE);
+	else if (ft_strncmp(str, "pl", 3) == 0)
+		return (PLANE);
+	else if (ft_strncmp(str, "cy", 3) == 0)
+		return (CYLINDER);
+	else if (ft_strncmp(str, "co", 3) == 0)
+		return (CONE);
+	else
+		return (UNKNOWN);
+}
+
+int	parsing_str(char *str, t_content *content)
+{
+	const char	**token = (const char **)ft_split(str, ' ');
+	const int	type = check_type((char *)token[0]);
+	int			res;
+
+	if (type == AMBIENT)
+		res = parse_ambient(token, &content->ambient);
+	else if (type == CAMERA)
+		res = parse_camera(token, &content->camera);
+	else if (type == LIGHT)
+		res = parse_light(token, &content->light_list);
+	else if (type != UNKNOWN)
+		res = parse_objects(token, &content->obj_list, type);
+	else
+	{
+		ft_split_free((char **)token);
+		free(str);
+		return (UNAVILABLE_RT_FILE);
+	}
+	ft_split_free((char **)token);
+	free(str);
+	return (res);
+}
+
+int	_ignore_str(char *str)
+{
+	if (str[0] == '/' || str[0] == '\n')
+	{
+		free(str);
+		return (1);
+	}
+	return (0);
+}
+
 int	parsing(const char *rt_file, t_content *content)
 {
-	(void) rt_file;
-	t_light	*temp_l;
-	t_obj	*temp_o;
-	
-	// camera
-	content->camera.loc.x = 0;
-	content->camera.loc.y = 0;
-	content->camera.loc.z = 0;
-	content->camera.dir.x = 1;
-	content->camera.dir.y = 0;
-	content->camera.dir.z = 0;
-	content->camera.fov = 120;
-	
-	// ambient
-	content->ambient.bright = 0.2;
-	content->ambient.color.r = 255;
-	content->ambient.color.g = 255;
-	content->ambient.color.b = 255;
+	int			fd;
+	int			res;
+	char		*str;
+	const int	file_len = ft_strlen(rt_file);
 
-	// light 1
-	temp_l = ft_calloc(1, sizeof(t_light));
-	temp_l->bright = 100.0;
-	temp_l->color.r = 255;
-	temp_l->color.g = 255;
-	temp_l->color.b = 255;
-	temp_l->loc.x = -5;
-	temp_l->loc.y = 10;
-	temp_l->loc.z = 10;
-	insert_content_list(content, LIGHT, temp_l);
-
-	// light 2
-	temp_l = ft_calloc(1, sizeof(t_light));
-	temp_l->bright = 100.0;
-	temp_l->color.r = 255;
-	temp_l->color.g = 255;
-	temp_l->color.b = 255;
-	temp_l->loc.x = -5;
-	temp_l->loc.y = -10;
-	temp_l->loc.z = 10;
-	insert_content_list(content, LIGHT, temp_l);
-
-	// obj 1
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = SPHERE;
-	temp_o->loc.x = 5;
-	temp_o->loc.y = 0;
-	temp_o->loc.z = 0;
-	temp_o->color.r = 255;
-	temp_o->color.g = 255;
-	temp_o->color.b = 255;
-	temp_o->reflection = 0;
-	temp_o->diameter = 3;
-	temp_o->texture = bmp_texture("./lion.bmp");
-	insert_content_list(content, OBJECT, temp_o);
-
-	// obj 2
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = SPHERE;
-	temp_o->loc.x = 3;
-	temp_o->loc.y = 1;
-	temp_o->loc.z = 0.5;
-	temp_o->color.r = 255;
-	temp_o->color.g = 255;
-	temp_o->color.b = 100;
-	temp_o->reflection = 0.4;
-	temp_o->diameter = 1;
-	insert_content_list(content, OBJECT, temp_o);
-
-	// obj 3
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = SPHERE;
-	temp_o->loc.x = 3;
-	temp_o->loc.y = -1.5;
-	temp_o->loc.z = -1;
-	temp_o->color.r = 255;
-	temp_o->color.g = 100;
-	temp_o->color.b = 255;
-	temp_o->reflection = 0;
-	temp_o->diameter = 1;
-	insert_content_list(content, OBJECT, temp_o);
-
-
-	// obj 4
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = PLANE;
-	temp_o->loc.x = 0;
-	temp_o->loc.y = 0;
-	temp_o->loc.z = -1.6;
-	temp_o->nomal_v.x = 0;
-	temp_o->nomal_v.y = 0;
-	temp_o->nomal_v.z = 1;
-	temp_o->color.r = 200;
-	temp_o->color.g = 255;
-	temp_o->color.b = 255;
-	temp_o->reflection = 0.4;
-	temp_o->diameter = -1;
-	temp_o->checker = 1;
-	//temp_o->texture = bmp_texture("./lion.bmp");
-	insert_content_list(content, OBJECT, temp_o);
-
-	// obj 5
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = PLANE;
-	temp_o->loc.x = 25;
-	temp_o->loc.y = 0;
-	temp_o->loc.z = 0;
-	temp_o->nomal_v.x = 1;
-	temp_o->nomal_v.y = 0;
-	temp_o->nomal_v.z = 0;
-	temp_o->color.r = 255;
-	temp_o->color.g = 255;
-	temp_o->color.b = 255;
-	temp_o->reflection = 0;
-	temp_o->diameter = 40;
-	insert_content_list(content, OBJECT, temp_o);
-
-	// obj 6
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = CYLINDER;
-	temp_o->loc.x = 3;
-	temp_o->loc.y = 2;
-	temp_o->loc.z = -1.6;
-	temp_o->nomal_v.x = 0;
-	temp_o->nomal_v.y = 0;
-	temp_o->nomal_v.z = 1;
-	temp_o->color.r = 255;
-	temp_o->color.g = 255;
-	temp_o->color.b = 255;
-	temp_o->reflection = 0.2;
-	temp_o->diameter = 2;
-	temp_o->height = 1;
-	temp_o->checker = 1;
-	insert_content_list(content, OBJECT, temp_o);
-
-	// obj 7
-	temp_o = ft_calloc(1, sizeof(t_obj));
-	temp_o->shape = CONE;
-	temp_o->loc.x = 3;
-	temp_o->loc.y = 0;
-	temp_o->loc.z = -0.6;
-	temp_o->nomal_v.x = 0;
-	temp_o->nomal_v.y = 0;
-	temp_o->nomal_v.z = -1;
-	temp_o->color.r = 255;
-	temp_o->color.g = 255;
-	temp_o->color.b = 255;
-	temp_o->reflection = 0.2;
-	temp_o->diameter = 0.8;
-	temp_o->height = 1;
-	temp_o->checker = 1;
-	insert_content_list(content, OBJECT, temp_o);
-
+	if (file_len <= 3 || ft_strncmp(&rt_file[file_len - 3], ".rt", 3))
+		return (RT_FILE_OPEN_ERROR);
+	fd = open_rtfile(rt_file);
+	if (fd < 0)
+		return (RT_FILE_OPEN_ERROR);
+	while (1)
+	{
+		str = get_next_line(fd);
+		if (!str)
+			break ;
+		if (_ignore_str(str))
+			continue ;
+		str[ft_strlen(str) - 1] = 0;
+		res = parsing_str(str, content);
+		if (res != SUCCESS)
+			return (res);
+	}
+	if (content->camera.active != PARSING_SUCCESS)
+		return (RT_FILE_OPEN_ERROR);
 	return (SUCCESS);
 }

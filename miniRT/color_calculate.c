@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 14:38:29 by dham              #+#    #+#             */
-/*   Updated: 2023/03/11 16:46:05 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/19 16:05:03 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_vec	bump_nomal_v_cal(t_vec *nomal_v, int bump_code)
 	t_vec		defalt_x;
 	const t_vec	bump_v = int_to_bump_v(bump_code);
 	t_vec		ret_v;
-	
+
 	defalt_x = (t_vec){0, 0, 1};
 	if (eq_f(nomal_v->z, 1))
 		defalt_x = (t_vec){1, 0, 0};
@@ -51,11 +51,12 @@ t_vec	bump_nomal_v_cal(t_vec *nomal_v, int bump_code)
 t_vec	nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir)
 {
 	t_vec	ret_v;
+	int		bump_val;
 
 	if (hit_obj->shape == SPHERE)
 		ret_v = sphere_nomal_v(&hitinfo->hit_p, hit_obj);
 	else if (hit_obj->shape == PLANE)
-		ret_v = plane_nomal_v(&hitinfo->hit_p, hit_obj);
+		ret_v = plane_nomal_v(hit_obj);
 	else if (hit_obj->shape == CYLINDER)
 		ret_v = cylinder_nomal_v(&hitinfo->hit_p, hit_obj);
 	else
@@ -64,26 +65,25 @@ t_vec	nomal_v_cal(t_hitpoint *hitinfo, t_obj *hit_obj, t_vec *ray_dir)
 		ret_v = vec_multi(&ret_v, -1);
 	if (hit_obj->bump)
 	{
-		return (bump_nomal_v_cal(
-				&ret_v, \
-				hit_obj->bump->data\
-				[(int)roundf(hitinfo->uv.y * hit_obj->bump->height)]\
-				[(int)roundf(hitinfo->uv.x * hit_obj->bump->width)]
-				)
-			);
+		bump_val = hit_obj->bump->data \
+				[(int)roundf(hitinfo->uv.y * (hit_obj->bump->height - 1))] \
+				[(int)roundf(hitinfo->uv.x * (hit_obj->bump->width - 1))];
+		return (bump_nomal_v_cal(&ret_v, bump_val));
 	}
 	return (ret_v);
 }
 
 t_color	mapped_color(t_hitpoint *hitinfo, t_obj *obj)
 {
-	int			checker_num;
+	float		checker_num;
 	const t_vec	uv = hitinfo->uv;
 	int			color_code;
-	
+
 	if (obj->checker)
 	{
-		checker_num = obj->diameter * 4;
+		checker_num = obj->diameter * 13;
+		if (obj->shape == PLANE)
+			checker_num = 1;
 		if ((int)(roundf(uv.x * checker_num) + roundf(uv.y * checker_num)) % 2)
 			return (obj->color);
 		else
@@ -91,14 +91,13 @@ t_color	mapped_color(t_hitpoint *hitinfo, t_obj *obj)
 	}
 	else if (obj->texture)
 	{
-		color_code = obj->texture->data\
-					[(int)roundf(uv.y * (obj->texture->height - 1))]\
+		color_code = obj->texture->data \
+					[(int)roundf(uv.y * (obj->texture->height - 1))] \
 					[(int)roundf(uv.x * (obj->texture->width - 1))];
 		return (int_to_color(color_code));
 	}
 	return (obj->color);
 }
-
 
 t_color	color_cal(t_ray *ray, float t, t_content *content, t_obj *hit_obj)
 {

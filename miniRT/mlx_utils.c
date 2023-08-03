@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:22:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/07 23:12:12 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/19 16:51:42 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,47 +30,6 @@ int	win_destroy(void *param)
 	exit(0);
 }
 
-void	bright_normalize(t_content *content)
-{
-	float	total_b;
-	t_light	*light;
-
-	total_b = 0;
-	total_b += content->ambient.bright;
-	light = content->light_list.next;
-	while (light)
-	{
-		total_b += light->bright;
-		light = light->next;
-	}
-	bright_set(&content->ambient.color, content->ambient.bright);
-	light = content->light_list.next;
-	while (light)
-	{
-		bright_set(&light->color, light->bright);
-		light = light->next;
-	}
-}
-
-void	make_ray(int x, int y, t_ray *ray, t_content *content)
-{
-	float	e;
-	t_vec	temp;
-	static const double degree = M_PI / 180;
-
-	e = (2 * tan(content->camera.fov * degree / 2.)) / ((WIDTH * 2) - 1);
-	x -= WIDTH;
-	y = -y + (HEIGHT);
-	ray->start = content->camera.loc;
-	ray->dir = content->camera.dir;
-	temp = vec_multi(&(content->camera.hor), e * x);
-	ray->dir = vec_plus(&ray->dir, &temp);
-	temp = vec_multi(&(content->camera.ver), e * y);
-	ray->dir = vec_plus(&ray->dir, &temp);
-	vector_normalize(&(ray->dir));
-	ray->reflect = 0;
-}
-
 void	camera_set(t_content *content)
 {
 	vector_normalize(&(content->camera.dir));
@@ -90,163 +49,15 @@ void	camera_set(t_content *content)
 										&content->camera.dir);
 }
 
-int	clear_list(t_content *content)
+void	obj_vec_nomalize(t_content *contect)
 {
-	;
-}
+	t_obj	*obj;
 
-void	bright_set(t_color *color, float bright)
-{
-	if (color->r)
+	obj = contect->obj_list.next;
+	while (obj)
 	{
-		color->r = round(color->r * bright);
-		if (color->r == 0)
-			color->r = 1;
-	}
-	if (color->g)
-	{
-		color->g = round(color->g * bright);
-		if (color->g == 0)
-			color->g = 1;
-	}
-	if (color->b)
-	{
-		color->b = round(color->b * bright);
-		if (color->b == 0)
-			color->b = 1;
-	}
-}
-
-t_color	reflex_color(t_color *light, t_color *obj)
-{
-	t_color	ret_c;
-
-	ret_c.r = round(obj->r * (light->r / 255.));
-	ret_c.g = round(obj->g * (light->g / 255.));
-	ret_c.b = round(obj->b * (light->b / 255.));
-	return (ret_c);
-}
-
-t_color	color_combine(t_color *a, t_color *b)
-{
-	t_color	ret_c;
-
-	ret_c.r = a->r + b->r;
-	ret_c.g = a->g + b->g;
-	ret_c.b = a->b + b->b;
-	return (ret_c);
-}
-
-int	color_to_int(t_color *color)
-{
-	int	ret_i;
-
-	ret_i = 0;
-	ret_i += (color->r << 16);
-	ret_i += (color->g << 8);
-	ret_i += color->b;
-	return (ret_i);
-}
-
-t_color	int_to_color(int code)
-{
-	t_color	ret_c;
-
-	ret_c.r = (code >> 16) & 0xff;
-	ret_c.g = (code >> 8) & 0xff;
-	ret_c.b = code & 0xff;
-	return (ret_c);
-}
-
-float	distance_point(t_vec *v1, t_vec *v2)
-{
-	t_vec	temp;
-	
-	temp = vec_minus(v2, v1);
-	return (vector_size(&temp));
-}
-
-int	light_hit(t_light *light, t_vec *hit_p, t_content *content, t_obj *hit_obj)
-{
-	const float	light_distance = distance_point(&light->loc, hit_p);
-	float		obj_distance;
-	t_obj		*obj;
-	t_ray		ray;
-
-	ray.start = *hit_p;
-	ray.dir = vec_minus(&light->loc, hit_p);
-	vector_normalize(&ray.dir);
-	obj = content->obj_list.next;
-	while(obj)
-	{
-		if (obj != hit_obj)
-		{
-			obj_distance = cam_obj_distance(&ray, obj);
-			if (obj_distance > 0 && obj_distance < light_distance)
-				return (0);
-		}
+		if (obj->shape != SPHERE)
+			vector_normalize(&obj->nomal_v);
 		obj = obj->next;
 	}
-	return (1);
-}
-
-void	buf_nomalize(t_color *buf[])
-{
-	int		y;
-	int		x;
-	int		max = 255;
-	float	r;
-
-	x = -1;
-	while (++x < WIDTH * 2)
-	{
-		y = -1;
-		while (++y < HEIGHT * 2)
-		{
-			if (buf[x][y].r > max)
-				max = buf[x][y].r;
-			if (buf[x][y].g > max)
-				max = buf[x][y].g;
-			if (buf[x][y].b > max)
-				max = buf[x][y].b;
-		}
-	}
-	if (max == 255)
-		return ;
-	r = 255. / max;
-	x = -1;
-	while (++x < WIDTH * 2)
-	{
-		y = -1;
-		while (++y < HEIGHT * 2)
-			bright_set(&buf[x][y], r);
-	}
-}
-
-float	attenuation(t_light *light, t_hitpoint *hitinfo)
-{
-	float	d;
-	t_vec	light_to_obj;
-
-	light_to_obj = vec_minus(&light->loc, &hitinfo->hit_p);
-	d = vector_size(&light_to_obj);
-	return (1 / d);
-}
-
-t_color	color_reversal(t_color *origin)
-{
-	t_color	ret_c;
-	int		max;
-
-	max = 255;
-	if (origin->r > max)
-		max = origin->r;
-	if (origin->g > max)
-		max = origin->g;
-	if (origin->b > max)
-		max = origin->b;
-	ret_c.r = max - origin->r;
-	ret_c.g = max - origin->g;
-	ret_c.b = max - origin->b;
-	return (ret_c);
 }

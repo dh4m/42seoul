@@ -1,0 +1,5 @@
+A 0.2 255,255,255
+C 0,0,0.5 1,0,0 60
+L 5,3,3 5.0 255,255,255
+//loc diameter height color reflection normal_vector checker texture bump
+sp 10,0,0.5 3 255,255,255 0.3 0 0 0

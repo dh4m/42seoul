@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 16:58:17 by dham              #+#    #+#             */
-/*   Updated: 2023/03/11 16:07:14 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/18 14:38:28 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ t_vec	uv_plane(t_vec *hit_p, t_obj *obj)
 	y = vec_cross(&obj->nomal_v, &defalt_x);
 	x = vec_cross(&y, &obj->nomal_v);
 	uv.x = fmodf(vec_inner(hit_p, &x), 1);
-	if(uv.x < 0)
+	if (uv.x < 0)
 		uv.x += 1;
 	uv.y = fmodf(vec_inner(hit_p, &y), 1);
-	if(uv.y < 0)
+	if (uv.y < 0)
 		uv.y += 1;
 	return (uv);
 }
@@ -87,4 +87,17 @@ t_vec	uv_calculate(t_vec *hit_p, t_obj *obj)
 		return (uv_plane(hit_p, obj));
 	else
 		return (uv_cylinder_cone(hit_p, obj));
+}
+
+void	texture_free(t_texture *t)
+{
+	int	i;
+
+	if (!t)
+		return ;
+	i = 0;
+	while (i < t->height)
+		free(t->data[i++]);
+	free(t->data);
+	free(t);
 }

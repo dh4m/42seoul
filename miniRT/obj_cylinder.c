@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:41 by dham              #+#    #+#             */
-/*   Updated: 2023/03/05 14:03:53 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/19 13:50:02 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	hit_det(t_ray *ray, float t, t_obj *obj)
 	cp = vec_multi(&ray->dir, t);
 	cp = vec_plus(&cp, &ray->start);
 	cp = vec_minus(&cp, &obj->loc);
-	if (vec_inner(&cp, &obj->nomal_v) < 0 || vec_inner(&cp, &obj->nomal_v) > obj->height)
+	if (vec_inner(&cp, &obj->nomal_v) < 0 \
+		|| vec_inner(&cp, &obj->nomal_v) > obj->height)
 		return (0);
 	return (1);
 }
@@ -52,15 +53,15 @@ static float	t_val_calculate(float det_c[3], t_ray *ray, t_obj *obj)
 
 float	cylinder_distance(t_ray *ray, t_obj *obj)
 {
-	float	det;
 	float	det_c[3];
 	t_vec	ce;
 
 	ce = vec_minus(&ray->start, &obj->loc);
 	det_c[0] = square_f(vec_inner(&ray->dir, &obj->nomal_v)) - 1;
-	det_c[1] = vec_inner(&ray->dir, &obj->nomal_v) * vec_inner(&ce, &obj->nomal_v) \
-		- vec_inner(&ce, &ray->dir);
-	det_c[2] = square_f(obj->diameter / 2) - vec_square(&ce) + square_f(vec_inner(&ce, &obj->nomal_v));
+	det_c[1] = vec_inner(&ray->dir, &obj->nomal_v) \
+				* vec_inner(&ce, &obj->nomal_v) - vec_inner(&ce, &ray->dir);
+	det_c[2] = square_f(obj->diameter / 2) - vec_square(&ce) \
+				+ square_f(vec_inner(&ce, &obj->nomal_v));
 	return (t_val_calculate(det_c, ray, obj));
 }
 

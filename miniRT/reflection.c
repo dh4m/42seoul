@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 17:44:23 by dham              #+#    #+#             */
-/*   Updated: 2023/03/08 00:47:12 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/18 15:17:15 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,22 @@
 #include <math.h>
 #include <stdio.h>
 
-static void	make_reflect_ray(t_ray *ray, t_vec *ray_origin, t_hitpoint *hitinfo, int ref_num)
+static void	make_reflect_ray(t_ray *ray, t_vec *ray_origin, \
+								t_hitpoint *hitinfo, int ref_num)
 {
 	t_vec	temp;
 
-	temp = vec_multi(&hitinfo->nomal_v, 0.00001);
+	temp = vec_multi(&hitinfo->nomal_v, 0.00004);
 	ray->start = vec_plus(&hitinfo->hit_p, &temp);
-	temp = vec_multi(&hitinfo->nomal_v, 2 * vec_inner(&hitinfo->nomal_v, ray_origin));
+	temp = vec_multi(&hitinfo->nomal_v, 2 \
+			* vec_inner(&hitinfo->nomal_v, ray_origin));
 	ray->dir = vec_minus(ray_origin, &temp);
 	vector_normalize(&(ray->dir));
 	ray->reflect = ref_num + 1;
 }
 
-t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin)
+t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, \
+						t_ray *ray_origin)
 {
 	t_ray	ray;
 	float	t;
@@ -51,53 +54,66 @@ t_color	reflect_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin
 		obj = obj->next;
 	}
 	if (min_t < 0)
-		return (BACKGROUND);
+		return ((t_color){0, 0, 0});
 	return (color_cal(&ray, min_t, content, hit_obj));
 }
 
-static t_color	sparkle_value(t_hitpoint *hitinfo, t_content *content, t_obj *hit_obj)
+static t_color	light_sparkle(t_hitpoint *hitinfo, t_content *content, \
+								t_light *light)
 {
-	t_ray	ray;////
+	t_ray	ray;
+	t_vec	temp_v;
+	t_color	ret_c;
+
+	temp_v = vec_minus(&hitinfo->hit_p, &light->loc);
+	vector_normalize(&temp_v);
+	make_reflect_ray(&ray, &temp_v, hitinfo, 0);
+	ret_c = light->color;
+	temp_v = vec_minus(&content->camera.loc, &hitinfo->hit_p);
+	vector_normalize(&temp_v);
+	if (vec_inner(&ray.dir, &temp_v) > 0)
+	{
+		bright_set(&ret_c, \
+				powf(vec_inner(&ray.dir, &temp_v), SPARKLE_POWER) \
+				* attenuation(light, hitinfo));
+		return (ret_c);
+	}
+	return ((t_color){0, 0, 0});
+}
+
+static t_color	sparkle_value(t_hitpoint *hitinfo, t_content *content, \
+								t_obj *hit_obj)
+{
 	t_color	ret_c;
 	t_color	temp_c;
-	t_vec	temp_v;
 	t_light	*light;
 
 	ret_c.r = 0;
 	ret_c.g = 0;
 	ret_c.b = 0;
 	light = content->light_list.next;
-	while(light)
+	while (light)
 	{
 		if (light_hit(light, &hitinfo->hit_p, content, hit_obj))
 		{
-			temp_v = vec_minus(&hitinfo->hit_p, &light->loc);
-			vector_normalize(&temp_v);
-			make_reflect_ray(&ray, &temp_v, hitinfo, 0);
-			temp_c = light->color;
-			temp_v = vec_minus(&content->camera.loc, &hitinfo->hit_p);
-			vector_normalize(&temp_v);
-			if (vec_inner(&ray.dir, &temp_v) > 0)
-			{
-				bright_set(&temp_c, powf(vec_inner(&ray.dir, &temp_v), SPARKLE_POWER) \
-									* attenuation(light, hitinfo));
+			temp_c = light_sparkle(hitinfo, content, light);
+			if (temp_c.r || temp_c.g || temp_c.b)
 				ret_c = color_combine(&ret_c, &temp_c);
-			}
 		}
 		light = light->next;
 	}
 	return (ret_c);
 }
 
-t_color	specular_value(t_hitpoint *hitinfo, t_content *content, t_ray *ray_origin, t_obj *obj)
+t_color	specular_value(t_hitpoint *hitinfo, t_content *content, \
+						t_ray *ray_origin, t_obj *obj)
 {
 	t_color	ret_c;
 	t_color	sparkle;
 
 	ret_c = reflect_value(hitinfo, content, ray_origin);
-	ret_c = reflex_color(&ret_c, &obj->color);
+	ret_c = reflex_color(&ret_c, &hitinfo->point_color);
 	sparkle = sparkle_value(hitinfo, content, obj);
 	ret_c = color_combine(&ret_c, &sparkle);
-	
 	return (ret_c);
 }

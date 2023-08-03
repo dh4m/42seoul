@@ -6,7 +6,7 @@
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 18:23:53 by dham              #+#    #+#             */
-/*   Updated: 2023/03/04 14:41:16 by dham             ###   ########.fr       */
+/*   Updated: 2023/03/19 13:50:34 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ float	plane_distance(t_ray *ray, t_obj *obj)
 	return (t);
 }
 
-t_vec	plane_nomal_v(t_vec *hit_p, t_obj *hit_obj)
+t_vec	plane_nomal_v(t_obj *hit_obj)
 {
 	return (hit_obj->nomal_v);
 }
