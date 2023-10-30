@@ -1,138 +1,85 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dham <dham@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/11 19:37:18 by dham              #+#    #+#             */
-/*   Updated: 2022/08/07 17:44:43 by dham             ###   ########.fr       */
+/*   Created: 2023/10/30 20:12:44 by dham              #+#    #+#             */
+/*   Updated: 2023/10/30 22:35:35 by dham             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
-	static t_backup	*backup;
-	t_backup		*fd_buf;
-	char			*re_str;
-	int				len;
+	static char buf[BUFFER_SIZE + 1];
+	char *ret_str;
+	int read_buf;
+	int str_len;
 
-	fd_buf = buffer_fd(&backup, fd);
-	if (!fd_buf)
+	ret_str = NULL;
+	str_len = 0;
+	if (add_char(&ret_str, buf, &str_len, 0) == -1)
 		return (NULL);
-	len = init_str(fd_buf, &re_str);
-	if (len < 0)
-		return (NULL);
-	if (fd_buf->newline_exist)
-		return (complete_str(fd_buf, re_str, len));
-	while (readline(fd_buf, fd) == BUFFER_SIZE && !fd_buf->newline_exist)
+	if (str_len && ret_str[str_len - 1] == '\n')
+		return (ret_str);
+	read_buf = read(fd, buf, BUFFER_SIZE);
+	if (read_buf < BUFFER_SIZE)
+		buf[read_buf] = 0;
+	if (read_buf == 0 && !ret_str[0])
 	{
-		re_str = add_buffer(re_str, fd_buf, len);
-		len += fd_buf->len;
-		if (!re_str)
-			return (NULL);
+		free(ret_str);
+		return (NULL);
 	}
-	re_str = complete_str(fd_buf, re_str, len);
-	if ((!len && !fd_buf->len) || re_str == NULL)
-		del_eof_buf(&backup, fd_buf);
-	return (re_str);
+	while (add_char(&ret_str, buf, &str_len, 0) >= BUFFER_SIZE && ret_str[str_len - 1] != '\n')
+	{
+		read_buf = read(fd, buf, BUFFER_SIZE);
+		if (read_buf < BUFFER_SIZE)
+			buf[read_buf] = 0;
+	}
+	return (ret_str);
 }
 
-int	init_str(t_backup *buf, char **dst)
+int ft_strcpy(char *a, char *b)
 {
-	int	i;
+	!a || !b || !*b || ((*a = *b) && ft_strcpy(a + 1, b + 1));
+	return (1);
+}
 
-	if (buf->len <= 0 || buf->newline_exist)
+int	shift_buf(char *buf, char *curr, int size)
+{
+	int ret_val;
+
+	!(curr - buf > BUFFER_SIZE) && (*(curr - size) = *curr);
+	((curr - buf >= BUFFER_SIZE) && (ret_val = size)) \
+	|| (ret_val = shift_buf(buf, curr + 1, size));
+	return (ret_val);
+}
+
+int add_char(char **str, char *buf, int *len, int idx)
+{
+	char *temp;
+
+	temp = malloc(*len + 2);
+	if (!temp)
 	{
-		*dst = NULL;
-		return (0);
-	}
-	*dst = malloc(buf->len);
-	if (!*dst)
+		free(*str);
+		*str = NULL;
 		return (-1);
-	i = 0;
-	while (i < buf->len)
-	{
-		(*dst)[i] = buf->buffer[i];
-		i++;
 	}
-	buf->len = 0;
-	return (i);
-}
-
-char	*add_buffer(char *s1, t_backup *buf, int len)
-{
-	char	*re_str;
-	int		i;
-
-	i = 0;
-	re_str = malloc(len + BUFFER_SIZE);
-	if (!re_str)
-		return (NULL);
-	while (i < len)
-	{
-		re_str[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < BUFFER_SIZE)
-	{
-		re_str[i + len] = buf->buffer[i];
-		i++;
-	}
-	free(s1);
-	return (re_str);
-}
-
-char	*complete_str(t_backup *buf, char *str, int len)
-{
-	int		i;
-	int		count;
-	char	*re_str;
-
-	if (buf->len <= 0 && !len)
-		return (NULL);
-	count = 0;
-	while (buf->buffer[count] != '\n' && count < buf->len)
-		count++;
-	if (buf->buffer[count] == '\n' && ++count)
-		buf->newline_exist--;
-	re_str = malloc(count + len + 1);
-	if (!re_str)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		re_str[i] = str[i];
-		i++;
-	}
-	return (make_str(buf, str, re_str, (int [2]){len, count}));
-}
-
-char	*make_str(t_backup *buf, char *str, char *re_str, int arg[2])
-{
-	int	i;
-	int	len;
-	int	count;
-
-	len = arg[0];
-	count = arg[1];
-	i = 0;
-	while (i < count)
-	{
-		re_str[i + len] = buf->buffer[i];
-		i++;
-	}
-	re_str[count + len] = 0;
-	i = 0;
-	while (i < buf->len - count)
-	{
-		buf->buffer[i] = buf->buffer[i + count];
-		i++;
-	}
-	buf->len = buf->len - count;
-	free(str);
-	return (re_str);
+	ft_strcpy(temp, *str);
+	temp[*len] = buf[idx];
+	temp[*len + 1] = 0;
+	free(*str);
+	*str = temp;
+	if (temp[*len])
+		*len = *len + 1;
+	if (idx >= BUFFER_SIZE - 1 || buf[idx] == '\n' || !buf[idx])
+		return (shift_buf(buf, buf + idx + 1, idx + 1));
+	return (add_char(str, buf, len, idx + 1));
 }
