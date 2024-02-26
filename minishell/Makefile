@@ -18,22 +18,18 @@ OBJS = $(SRCS:.c=.o)
 RM = rm -f
 
 LIBFT_DIR = ./libft
-RDLN_DIR = ${shell brew --prefix readline}
 
 LIBFT_COMPILE = -I$(LIBFT_DIR)
 LIBFT_LINKING = -L$(LIBFT_DIR) -lft
-
-RDLN_COMPILE = -I$(RDLN_DIR)/include
-RDLN_LINKING = -L$(RDLN_DIR)/lib -lreadline
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C$(LIBFT_DIR) all
-	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_LINKING) $(RDLN_LINKING)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT_LINKING) -lreadline
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(LIBFT_COMPILE) $(RDLN_COMPILE)
+	$(CC) $(CFLAGS) -c $< -o $@ $(LIBFT_COMPILE)
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
